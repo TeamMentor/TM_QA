@@ -1,5 +1,5 @@
 require 'fluentnode'
-require('../node_modules/nwr/src/extra_fluentnode.coffee')
+
 NodeWebKit_Service = require('nwr')
 Jade_API           = require('./Jade_API')
 Flare_API          = require('./Flare_API')

@@ -24,7 +24,6 @@ describe '_dev_internal | QA-TM_4_0_Design',->
 
       @.chrome.url (url)->
         url.assert_Is_String()
-        "Current url is #{url}".log()
         done()
 
   it 'html', (done)->

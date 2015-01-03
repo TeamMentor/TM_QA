@@ -1,3 +1,5 @@
+return
+
 require 'fluentnode'
 wd = require('wd')
 chai = require("chai");

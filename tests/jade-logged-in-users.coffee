@@ -1,4 +1,4 @@
-QA_TM_Design = require '../API/QA-TM_4_0_Design'
+QA_TM_Design = require './API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for logged in  users
 describe 'jade-logged-in-users', ->
@@ -105,7 +105,7 @@ describe 'jade-logged-in-users', ->
       values.assert_Contains('(Web) Session Management')
       values.assert_Contains('.NET 3.5')
       done()
-      
+
   # need quicker load of TM 3.5 data
   xit 'Graph - Logging', (done)->
     jade.page_User_Graph 'Logging', (html,$)->

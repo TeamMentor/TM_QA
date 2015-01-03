@@ -1,5 +1,5 @@
 describe 'regression-sprint-1', ->                                                                         # name of this suite of tests (should match the file name)
-  page = require('../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
+  page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
   it 'Issue 88 - navigation page should not be accessible without a login', (done)->

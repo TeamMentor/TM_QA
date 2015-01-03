@@ -1,4 +1,4 @@
-QA_TM_Design = require '../API/QA-TM_4_0_Design'
+QA_TM_Design = require './API/QA-TM_4_0_Design'
 
 describe 'flare-anonymous-users', ->
   page  = QA_TM_Design.create(before, after);
