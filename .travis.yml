@@ -6,5 +6,6 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - "pwd"
   - "cd TM_4_0_Design"
+  - "npm install"
   - "npm start &"
   - "cd .."
