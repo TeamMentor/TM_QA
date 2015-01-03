@@ -1,8 +1,9 @@
-QA_TM_Design = require '../../API/QA-TM_4_0_Design'
+
 
 #skip all tests since this leave the test run in an unstable mode
 return
 
+QA_TM_Design = require '../API/QA-TM_4_0_Design'
 describe.only 'bugs-to-fix ', ->
   page = QA_TM_Design.create()
   before (done)->
