@@ -1,6 +1,3 @@
-require 'fluentnode'
-require('../node_modules/nwr/src/extra_fluentnode')
-
 QA_TM_Design = require '../API/QA-TM_4_0_Design'
 
 describe 'flare-anonymous-users', ->
