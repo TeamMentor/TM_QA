@@ -5,7 +5,6 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "pwd"
-  - "ls"
-  - "echo here"
   - "cd TM_4_0_Design"
   - "npm start &"
+  - "cd .."
