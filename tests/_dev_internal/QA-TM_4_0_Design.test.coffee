@@ -1,6 +1,6 @@
 QA_TM_Design = require '../../API/QA-TM_4_0_Design'
 
-describe.only '_dev_internal | QA-TM_4_0_Design',->
+describe '_dev_internal | QA-TM_4_0_Design',->
 
   @timeout(5000)
 
@@ -36,7 +36,7 @@ describe.only '_dev_internal | QA-TM_4_0_Design',->
     using qaTmDesign,->
 
       @.open '/', (html)=>
-        html.log()
+        html.assert_Contains('TEAM Mentor')
         done()
 
 
