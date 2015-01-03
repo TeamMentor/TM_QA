@@ -4,8 +4,11 @@ node_js:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "pwd"
   - "cd TM_4_0_Design"
   - "npm install"
   - "npm start &"
+  - "cd .."
+  - "cd TM_4_0_GraphDB"
+  - "npm install"
+  - "npm run dev &"
   - "cd .."
