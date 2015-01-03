@@ -28,21 +28,20 @@ class QA_TM_4_0_Design
           @chrome = @nodeWebKit.chrome
           done()
 
-
   after: (done)->
     if @chrome != null
       @chrome._chrome.close()
     @chrome = null
     done()
 
+  html: (callback)=>
+      @chrome.html (html,$) =>
+        callback(html,@add_Cheerio_Helpers($))
+
   open: (url, callback)=>
     @chrome.open @tm_Server + url, =>
       @open_Delay.wait =>
         @html(callback)
-
-  html: (callback)=>
-      @chrome.html (html,$) =>
-        callback(html,@add_Cheerio_Helpers($))
 
   show: (callback)-> @nodeWebKit.show(callback)
 
