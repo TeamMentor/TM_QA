@@ -119,8 +119,6 @@ singleton  = null
 
 
 QA_TM_4_0_Design.create = (before, after)->
-  "IN QA_TM_4_0_Design ***** ".log()
-
   #return new QA_TM_4_0_Design()              # uncomment this if a new instance is needed per test (and the 'after' mocha event is set)
   if singleton is null
     singleton = new QA_TM_4_0_Design()
