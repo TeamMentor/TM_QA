@@ -4,6 +4,11 @@ describe.only '_dev_internal | QA-TM_4_0_Design',->
 
   @timeout(5000)
 
+  "before qaTmDesign".log()
+  qaTmDesign = QA_TM_Design.create(before, after)
+  "qaTmDesign: #{qaTmDesign}".log()
+  "after qaTmDesign".log()
+
   it 'constructor',->
     QA_TM_Design.assert_Is_Function()
     using new QA_TM_Design(),->
@@ -14,7 +19,6 @@ describe.only '_dev_internal | QA-TM_4_0_Design',->
       @open_Delay.assert_Is(0)
       assert_Is_Null(@chrome)
 
-  qaTmDesign = QA_TM_Design.create(before, after)
   it 'create', (done)->
     using qaTmDesign,->
       @.assert_Is_Object()
