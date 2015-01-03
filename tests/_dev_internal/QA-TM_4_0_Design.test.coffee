@@ -38,12 +38,3 @@ describe '_dev_internal | QA-TM_4_0_Design',->
       @.open '/', (html)=>
         html.assert_Contains('TEAM Mentor')
         done()
-
-
-  it 'open (direct)', (done)->
-    using qaTmDesign,->
-      @tm_Server =''
-      google_Url  = 'https://www.google.co.uk'
-      @.open google_Url, (html)=>
-        html.assert_Contains('Google')
-        done()

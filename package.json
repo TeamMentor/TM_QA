@@ -20,6 +20,7 @@
     "async": "^0.9.0",
     "coffee-script": "^1.8.0",
     "fluentnode": "*",
+    "juice": "^0.5.0",
     "mocha": "^2.0.1",
     "nwr": "*",
     "wd": "^0.3.11"
