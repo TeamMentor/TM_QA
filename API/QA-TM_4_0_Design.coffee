@@ -9,7 +9,6 @@ class QA_TM_4_0_Design
     @nodeWebKit  = new NodeWebKit_Service(57777)
     @jade_API    = new Jade_API(@)
     @flare_API   = new Flare_API(@)
-    nodeWebKit   = @nodeWebKit
     @tm_Server   = 'http://localhost:1337'
     @chrome      = null
     @open_Delay  = 0
