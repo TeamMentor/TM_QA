@@ -11,5 +11,6 @@ before_install:
   - "cd .."
   - "cd TM_4_0_GraphDB"
   - "npm install"
+  - "npm test"
   - "npm run dev &"
   - "cd .."
