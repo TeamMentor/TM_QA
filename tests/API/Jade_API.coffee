@@ -4,7 +4,7 @@ class Jade_API
     @QA_Users = [{ name:'user', pwd: 'a'}]
 
   clear_Session: (callback)->
-                  @page.chrome.delete_Cookie 'connect.sid', 'http://localhost/', callback
+                  @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
 
   login          : (username, password, callback)=>
                     @page_Login =>
@@ -47,7 +47,7 @@ class Jade_API
   session_Cookie  : (callback) =>
                       @page.chrome.cookies (cookies)->
                         for cookie in cookies
-                          if cookie.name is "connect.sid"
+                          if cookie.name is "tm-session"
                             callback(cookie)
                             return
                         callback(null)

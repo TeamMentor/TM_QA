@@ -6,7 +6,7 @@ describe 'user-account', ->
     jade.clear_Session  (err, data)->
       jade.login_As_QA ->
         jade.session_Cookie (cookie)->
-          cookie.name.assert_Is('connect.sid')
+          cookie.name.assert_Is('tm-session')
           cookie.value.size().assert_Bigger_Than(30)
           #console.log cookie
           done()
