@@ -25,7 +25,7 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
-  it.only 'Issue 151 - Add asserts for new Login page content ', (done)->
+  it 'Issue 151 - Add asserts for new Login page content ', (done)->
     jade.page_Login (html,$)->
       $('#summary h1').html().assert_Is("Security Risk. Understood.")
       $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
