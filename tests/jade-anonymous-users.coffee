@@ -147,7 +147,7 @@ describe 'jade-anonymous-users', ->
 
   it 'Login Fail', (done)->
     jade.page_Login_Fail (html, $)->
-      $('.alert').html().assert_Is('Login failed, please try again :(')
+      $('.alert').html().assert_Is('Error Logging In : ')
       $('h3').html().assert_Is("Login")
       $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
       # Same as "it 'Login', (done)->" , so we should also check if those fields are here
@@ -198,7 +198,7 @@ describe 'jade-anonymous-users', ->
 
   it 'Sign Up Fail', (done) ->
     jade.page_Sign_Up_Fail (html,$)->
-      $('.alert').html().assert_Is('Sign Up failed, please try again :(')
+      $('.alert').html().assert_Is('Error Signing In : ')
       $('h3'    ).html().assert_Is("Sign Up")
       done()
 

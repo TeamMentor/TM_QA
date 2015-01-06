@@ -19,7 +19,11 @@ describe 'user-account', ->
 
   it 'Login fail', (done)->
     jade.login 'aaaa'.add_5_Random_Letters(),'bbbb',  (html, $) ->
-      $('.alert').html().assert_Is('Login failed, please try again :(')
+      $('.alert').html().assert_Is('Error Logging In : Username does not exist')
+      done()
+  it 'Login fail Password does not match', (done)->
+    jade.login 'a','bbbb',  (html, $) ->
+      $('.alert').html().assert_Is('Error Logging In : Wrong Password')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
@@ -42,7 +46,7 @@ describe 'user-account', ->
     assert_User_Sign_Up_Fail = (username, password, email, next)->
       jade.user_Sign_Up username, password, email, ->
         page.chrome.url (url)->
-          url.assert_Contains('/guest/sign-up-Fail.html')
+          url.assert_Contains('user/sign-up')
           next()
 
     randomUser  = 'abc_'.add_5_Random_Letters();

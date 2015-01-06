@@ -21,17 +21,20 @@ describe 'issues-sprint-1', ->                                                  
     @timeout(10000)
 
     assert_Weak_Pwd_Fail "", true, ->
-      assert_Weak_Pwd_Fail  "123", false, ->   # this should fail to create an account
+      assert_Weak_Pwd_Fail  "123", true, ->   # this should fail to create an account
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
   it 'Issue 151 - Add asserts for new Login page content ', (done)->
     jade.page_Login (html,$)->
-      $('#summary h1').html().assert_Is('Security Risk. Understood.')
-      $('#summary p').html().assert_Is('TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.')
+      $('#loginwall h3').html().assert_Is('Login')
+      $('#loginwall p').html().assert_Is('Returning customer? Please log in to access TEAM Mentor.')
+
+      $('.form-group label').html().assert_Is('Username')
+      $('div.form-group:nth-child(2) > label:nth-child(1)').html().assert_Is('Password')
+      $('#btn-login').html().assert_Is('Login')
+      $('#btn-forgot-pwd').html().assert_Is('Forgot your password?')
       done()
-
-
 
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test

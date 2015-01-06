@@ -69,6 +69,31 @@ describe 'regression-sprint-1', ->                                              
         $($('#title-area a').get(0)).attr().href.assert_Is('/user/main.html')
         done()
 
+  it 'Issue 105 - New users cannot be created with Weak Passwords', (done)->
+    assert_Weak_Pwd_Fail = (password)->
+      randomUser  = 'abcd_'.add_5_Random_Letters();
+      randomEmail = "#{randomUser}@teammentor.net"
+      jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
+        html= $('.alert').html();
+        console.log(html)
+        html.assert_Is("Error Signing In : Password must be 8 to 256 character long");
+        done();
+    @timeout(6000)
+    assert_Weak_Pwd_Fail "1223", ->
+      done()
+
+
+  it 'Issue 303 -Error message should be displayed if username already exist', (done)->
+    assert_User_Already_Exit = (username)->
+      randomEmail = "#{username}@teammentor.net";
+      password= '!#$TM'.add_5_Random_Letters();
+      jade.user_Sign_Up username, password, randomEmail, (html , $)->
+        html= $('.alert').html();
+        html.assert_Is("Error Signing In : Username already exist");
+        done();
+    assert_User_Already_Exit "tm", ->
+      done()
+
   #it 'Issue 119 - /returning-user-login.html is Blank', (done)->
   #  jade.page_Sign_Up_OK (html, $)->                                                       # open sign-up ok page
   #    $('p a').attr('href').assert_Is('/guest/login.html')                                 # confirm link is now ok
@@ -99,3 +124,22 @@ describe 'regression-sprint-1', ->                                              
     jade.page_About (html, $)->
       $("#footer h6").html().assert_Contains('TEAM Mentor v')
       done()
+
+  it 'User Sign Up Fail (different passwords)',(done)->
+
+    randomUser  = 'abc_'.add_5_Random_Letters();
+    randomEmail = "#{randomUser}@teammentor.net"
+    pwd1 = "aaaa"
+    pwd2 = "bbbb"
+    jade.page_Sign_Up (html, $)=>
+      code = "document.querySelector('#new-user-username').value='#{randomUser}';
+                                  document.querySelector('#new-user-password').value='#{pwd1}';
+                                  document.querySelector('#new-user-confirm-password').value='#{pwd2}';
+                                  document.querySelector('#new-user-email').value='#{randomEmail}';
+                                  document.querySelector('#btn-sign-up').click()"
+      page.chrome.eval_Script code, =>
+        page.wait_For_Complete (html, $)=>
+          page.chrome.url (url)->
+            url.assert_Contains('/user/sign-up')
+            html.assert_Contains('Signing In : Passwords don\'t match')
+            done()
