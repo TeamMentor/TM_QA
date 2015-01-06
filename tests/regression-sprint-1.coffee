@@ -89,6 +89,13 @@ describe 'regression-sprint-1', ->                                              
         $('h3').html().assert_Is("Forgot your password?")
         done();
 
+    it 'Issue 128 - Opening /Graph/{query} page with bad {query} should result in an "no results" page/view', (done)->
+    jade.login_As_User ->
+      page.open '/graph/aaaaaaa', (html)->
+        page.html (html, $)->
+          $('#containers a').length.assert_Is(0)
+          done()
+
   it "Issue 129 - 'Need to login page' missing from current 'guest' pages", (done)->
     jade.keys().assert_Contains('page_Login_Required')
     page.open '/guest/login-required.html', (html,$)->
