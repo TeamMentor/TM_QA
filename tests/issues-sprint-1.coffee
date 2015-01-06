@@ -35,6 +35,10 @@ describe 'issues-sprint-1', ->                                                  
       $('#btn-login').html().assert_Is('Login')
       $('#btn-forgot-pwd').html().assert_Is('Forgot your password?')
       done()
+  it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
+    jade.login_As_User ->
+      jade.page_User_Main ->
+      done()
 
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test

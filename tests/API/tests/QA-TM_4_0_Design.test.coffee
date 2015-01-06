@@ -1,6 +1,6 @@
-QA_TM_Design = require './QA-TM_4_0_Design'
+QA_TM_Design = require './../QA-TM_4_0_Design'
 
-describe '_dev_internal | QA-TM_4_0_Design',->
+describe 'API | QA-TM_4_0_Design',->
 
   @timeout(5000)
 
@@ -10,8 +10,8 @@ describe '_dev_internal | QA-TM_4_0_Design',->
     QA_TM_Design.assert_Is_Function()
     using new QA_TM_Design(),->
       @nodeWebKit.assert_Instance_Of(require('nwr'))
-      @jade_API  .assert_Instance_Of(require('./Jade_API'))
-      @flare_API .assert_Instance_Of(require('./Flare_API'))
+      @jade_API  .assert_Instance_Of(require('./../Jade-API'))
+      @flare_API .assert_Instance_Of(require('./../Flare-API'))
       @tm_Server .assert_Is('http://localhost:1337')
       @open_Delay.assert_Is(0)
       assert_Is_Null(@chrome)

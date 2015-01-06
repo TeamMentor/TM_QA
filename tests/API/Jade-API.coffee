@@ -4,7 +4,7 @@ class Jade_API
     @QA_Users = [{ name:'user', pwd: 'a'}]
 
   clear_Session: (callback)->
-                  @page.chrome.delete_Cookie 'connect.sid', 'http://localhost/', callback
+                  @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
 
   login          : (username, password, callback)=>
                     @page_Login =>
@@ -15,8 +15,28 @@ class Jade_API
                         @page.wait_For_Complete callback
 
   login_As_QA   : (callback) =>
-                    user = @QA_Users.first()
-                    @login user.name, user.pwd, callback
+    user = @QA_Users.first()
+    @login user.name, user.pwd, callback
+
+
+  login_As_User: (callback) =>
+    @is_User_Logged_In (value)=>
+      if value
+        callback()
+      else
+        @login_As_QA callback
+
+
+  is_User_Logged_In: (callback) =>
+
+    url = @page.tm_Server + '/user/main.html'
+    @.session_Cookie (cookie)->
+      if (cookie is null)
+        callback false
+      else
+        options = { headers: { 'Cookie':'tm-session='+ cookie.value} }
+        url.http_With_Options options, (err, html)->
+          callback html.contains('Logout')
 
   page_About          : (callback) => @page.open '/guest/about.html'                 , callback
   page_Help           : (callback) => @page.open '/help/index.html'                  , callback
@@ -47,10 +67,11 @@ class Jade_API
   session_Cookie  : (callback) =>
                       @page.chrome.cookies (cookies)->
                         for cookie in cookies
-                          if cookie.name is "connect.sid"
+                          if cookie.name is "tm-session"
                             callback(cookie)
                             return
                         callback(null)
+
   user_Sign_Up    : (username, password, email, callback) =>
                       @page_Sign_Up (html, $)=>
                         code = "document.querySelector('#new-user-username').value='#{username}';

@@ -1,8 +1,8 @@
 require 'fluentnode'
 
 NodeWebKit_Service = require('nwr')
-Jade_API           = require('./Jade_API')
-Flare_API          = require('./Flare_API')
+Jade_API           = require('./Jade-API')
+Flare_API          = require('./Flare-API')
 class QA_TM_4_0_Design
 
   constructor: ()->

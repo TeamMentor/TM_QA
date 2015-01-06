@@ -114,10 +114,28 @@ describe 'regression-sprint-1', ->                                              
         $('h3').html().assert_Is("Forgot your password?")
         done();
 
+    it 'Issue 128 - Opening /Graph/{query} page with bad {query} should result in an "no results" page/view', (done)->
+    jade.login_As_User ->
+      page.open '/graph/aaaaaaa', (html)->
+        page.html (html, $)->
+          $('#containers a').length.assert_Is(0)
+          done()
+
   it "Issue 129 - 'Need to login page' missing from current 'guest' pages", (done)->
     jade.keys().assert_Contains('page_Login_Required')
     page.open '/guest/login-required.html', (html,$)->
       $('h3').html().assert_Is('Login')
+      done()
+
+  it 'Issue 151 - Add asserts for new Login page content ', (done)->
+    jade.page_Login (html,$)->
+      $('#summary h1').html().assert_Is("Security Risk. Understood.")
+      $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
+      $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
+      $('#summary h3').html().assert_Is("With TEAM Mentor, you can...")
+      $($('.row p').get(2)).html().assert_Is("FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.")
+      $($('.row p').get(3)).html().assert_Is("REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.")
+      $($('.row p').get(4)).html().assert_Is("EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.")
       done()
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
