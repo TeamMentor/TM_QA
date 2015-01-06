@@ -135,3 +135,14 @@ describe 'regression-sprint-1', ->                                              
                 $(input).attr().id.assert_Is(value)
                 label.attr().for.assert_Is(value)
             done()
+
+  it 'Issue 198 - Right-hand-side query selection must have a visual clue and needs to be clickable (to clear filter)',(done)->
+    jade.login_As_User ->
+      page.open '/graph/Logging', (html, $)->
+        linkText = "Centralize Logging"
+        if $('#containers a').html() is null                  # return if link is not there
+          done()
+          return
+        page.click linkText, (html, $)->                      # click on link
+          $('#containers a').html().log().assert_Is(linkText)
+          done()
