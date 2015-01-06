@@ -117,3 +117,21 @@ describe 'regression-sprint-1', ->                                              
     jade.page_About (html, $)->
       $("#footer h6").html().assert_Contains('TEAM Mentor v')
       done()
+
+  it.only 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
+    jade.login_As_User ->
+      page.open '/graph/logging', ->
+        # this code removes two rows so that only have the right-hand-side nav showing on page
+        code = "children = document.documentElement.querySelector('.row').children;
+                children[0].remove();
+                children[0].remove();"
+        page.chrome.eval_Script code, ->
+          page.html (html,$)->
+            for td in $('td')
+              input = $(td).find('input')
+              if (input.length)
+                value = $(td).text()
+                label = $(td).find('label')
+                $(input).attr().id.assert_Is(value)
+                label.attr().for.assert_Is(value)
+            done()

@@ -25,12 +25,6 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
-  it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
-    jade.login_As_User ->
-      jade.page_User_Main ->
-      done()
-
-
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
