@@ -26,5 +26,8 @@
     "mocha": "latest",
     "nwr": "latest",
     "wd": "latest"
+  },
+  "devDependencies": {
+    "supertest": "^0.15.0"
   }
 }

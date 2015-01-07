@@ -2,7 +2,6 @@ describe 'issues-sprint-1', ->                                                  
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-
   it 'Issue 105 - New users can be created with Weak Passwords', (done)->
     assert_Weak_Pwd_Fail = (password, expectFail, next)->
       randomUser  = 'abc_'.add_5_Random_Letters();
@@ -25,6 +24,9 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
+  it 'Main user page has no content on TM Jade (user/main.html)', (done)->
+    page
+    done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
