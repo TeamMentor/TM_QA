@@ -125,3 +125,38 @@ describe 'regression-sprint-1', ->                                              
         page.click linkText, (html, $)->                      # click on link
           $('#containers a').html().log().assert_Is(linkText)
           done()
+
+  it 'Issue 212 - Add page to render jade mixins directly', (done)->
+
+    render = (file, mixin, viewModel, callback)->
+      mixinPage = "/render/mixin/#{file}/#{mixin}?#{viewModel}"
+      page.open mixinPage, (html, $)->
+        callback($)
+
+    no_Params = (next)->
+      render 'user-mixins', 'login-form', "", ($)->
+        $('form').attr().assert_Is({ id: 'login-form', role: 'form', method: 'post', action: '/user/login' })
+        next();
+
+    with_Params = (next)->
+      render 'search-mixins', 'directory-list', "title=AAAA", ($)->
+        $('h3').attr().id.assert_Is('title')
+        next()
+
+    with_Param_ViewModel_1 = (next)->
+      render 'search-mixins', 'directory-list', 'viewModel={"title":"AAAA_123"}', ($)->
+        $('h3').attr().id.assert_Is('title')
+        next()
+
+    with_Param_ViewModel_2 = (next)->
+      viewModel = { breadcrumbs :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
+      data = JSON.stringify(viewModel)
+      render 'articles-mixins', 'breadcrumbs', "viewModel=#{data}", ($)->
+        $('a').attr().href.assert_Is('abc')
+        next()
+
+    no_Params ->
+      with_Params ->
+        with_Param_ViewModel_1 ->
+          with_Param_ViewModel_2 ->
+            done()
