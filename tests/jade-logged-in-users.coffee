@@ -28,8 +28,8 @@ describe 'jade-logged-in-users', ->
         @.img_attr .assert_Is img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {"href":'/library/Uno'    }, { class: 'fi-map'   }, 'Navigate')
-    checkValues(1, {"href":'/user/main.html' }, { class: 'fi-home'  }, 'Home'    )
+    checkValues(0, {"href":'/user/main.html' }, { class: 'fi-home'  }, 'Home'    )
+    checkValues(1, {"href":'/library/Uno'    }, { class: 'fi-map'   }, 'Navigate')
     checkValues(2, {"href":'/help/index.html'}, { class: 'fi-info'  }, 'Help'    )
     checkValues(3, {"href":'/user/logout'    }, { class: 'fi-power' }, 'Logout'  )
 

@@ -44,7 +44,7 @@ describe 'regression-sprint-1', ->                                              
     jade.page_Home ->
       jade.login_As_QA (html,$)->
 
-        $($('#title-area a').get(0)).attr().href.assert_Is('/user/main.html')
+        $('#team-mentor-navigation a').attr().href.assert_Is('/user/main.html')
         done()
 
   #it 'Issue 119 - /returning-user-login.html is Blank', (done)->
