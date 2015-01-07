@@ -24,9 +24,18 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
-  it 'Main user page has no content on TM Jade (user/main.html)', (done)->
-    page
-    done()
+  it 'Issue 113 - Main user page has no content on TM Jade (user/main.html)', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        done()
+
+  it 'Issue 120 - Recently Viewed Articles not working', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        using $('#recentlyViewedArticles'),->
+          $(@.find('h4')).html().assert_Is('Recently Viewed Articles')
+          $(@.find('a')).length .assert_Is(0)
+          done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
