@@ -53,8 +53,6 @@ class Jade_API
   page_Sign_Up_OK     : (callback) => @page.open '/guest/sign-up-OK.html'            , callback
   page_TermsAndCond   : (callback) => @page.open '/guest/terms-and-conditions.html'  , callback
 
-
-
   page_User_Help     : (callback        ) => @page.open '/help/index.html'    , callback
   page_User_Libraries: (callback        ) => @page.open '/libraries'          , callback
   page_User_Library  : (callback        ) => @page.open '/library/Uno'        , callback
@@ -63,6 +61,10 @@ class Jade_API
   page_User_Queries  : (callback        ) => @page.open '/library/queries'    , callback
   page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
 
+  render_Mixin: (file, mixin, params, callback)->
+    mixinPage = "/render/mixin/#{file}/#{mixin}?#{params}"
+    @.page.open mixinPage, (html, $)->
+      callback($)
 
   session_Cookie  : (callback) =>
                       @page.chrome.cookies (cookies)->

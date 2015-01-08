@@ -1,7 +1,7 @@
-QA_TM_Design = require './API/QA-TM_4_0_Design'
+QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for logged in  users
-describe 'jade-logged-in-users', ->
+describe 'jade | pages-users', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
@@ -28,10 +28,10 @@ describe 'jade-logged-in-users', ->
         @.img_attr .assert_Is img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {"href":'/library/Uno'    }, { class: 'fi-map'   }, 'Navigate')
-    checkValues(1, {"href":'/user/main.html' }, { class: 'fi-home'  }, 'Home'    )
-    checkValues(2, {"href":'/help/index.html'}, { class: 'fi-info'  }, 'Help'    )
-    checkValues(3, {"href":'/user/logout'    }, { class: 'fi-power' }, 'Logout'  )
+    checkValues(0, {"href":'/user/main.html' }, { class: 'fi-magnifying-glass'}, 'Search'    )
+    checkValues(1, {"href":'/library/Uno'    }, { class: 'fi-map'             }, 'Navigate')
+    checkValues(2, {"href":'/help/index.html'}, { class: 'fi-info'            }, 'Help'    )
+    checkValues(3, {"href":'/user/logout'    }, { class: 'fi-power'           }, 'Logout'  )
 
   before (done)->
     jade.login_As_QA  ->
@@ -90,7 +90,8 @@ describe 'jade-logged-in-users', ->
       section_Titles.assert_Is(['Recently Viewed Articles','Popular Search Terms','Top Articles','New Articles'])
       done()
 
-  # need quicker load of TM 3.5 data
+  # need quicker load of TM 3.5 data (and way to run on travis)
+  # this test need to move the page-graph
   xit 'Queries', (done)->
     jade.page_User_Queries (html,$)->
       links_Libraries = $('#links-libraries a')
@@ -106,14 +107,15 @@ describe 'jade-logged-in-users', ->
       values.assert_Contains('.NET 3.5')
       done()
 
-  # need quicker load of TM 3.5 data
+  # need quicker load of TM 3.5 data (and way to run on travis)
+  # this test need to move the page-graph
   xit 'Graph - Logging', (done)->
     jade.page_User_Graph 'Logging', (html,$)->
       all_H3 = ($(h3).html() for h3 in $('h3'))
       all_H4 = ($(h4).html() for h4 in $('h4'))
 
       all_H3.assert_Is([ 'Logging', 'Filters' ])
-      all_H4.assert_Contains('Showing 107 articles')
+      #all_H4.assert_Contains('Showing 107 articles')
       all_H4.assert_Contains('Centralize Logging')
       all_H4.assert_Contains('Logging Is Centralized')
       done();

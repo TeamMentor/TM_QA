@@ -1,7 +1,7 @@
-QA_TM_Design = require './API/QA-TM_4_0_Design'
+QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
-describe 'jade-anonymous-users', ->
+describe 'jade | pages-anonymous', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
@@ -123,7 +123,7 @@ describe 'jade-anonymous-users', ->
                         "HP Fortify SCA UI Integration","Visual Studio Plugin"]
 
       $(  '#help-docs h2').html().assert_Is('TEAM Mentor Documents')
-      $($('#help-docs p' ).get(0)).html().assert_Is('Welcome to the TEAM Mentor Documentation Website where you will find detailed information on \nhow to install TEAM Mentor, how it works and how to customize it.')
+      $($('#help-docs p' ).get(0)).html().assert_Is('Welcome to the TEAM Mentor Documentation Website where you will find detailed information on how to install TEAM Mentor, how it works and how to customize it.')
       $($('#help-docs h4').get(0)).html().assert_Is('TEAM Mentor in action:')
       #todo: add check for links
       $($('#help-docs p' ).get(1)).html().assert_Is('Other places to get information about TeamMentor:')

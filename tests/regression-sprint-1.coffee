@@ -2,20 +2,6 @@ describe 'regression-sprint-1', ->                                              
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-  it 'Issue 88 - navigation page should not be accessible without a login', (done)->
-    check_Login_Request = (next)->
-      page.html (html,$)->
-        $('h3').html().assert_Is('Login')
-        0.wait ->
-          next()
-
-    jade.clear_Session ->
-      jade.page_User_Libraries -> check_Login_Request ->
-        jade.page_User_Library -> check_Login_Request ->
-          jade.page_User_Main -> check_Login_Request ->
-            jade.page_User_Queries -> check_Login_Request ->
-              jade.page_User_Graph 'CORS', -> check_Login_Request ->
-                done()
 
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
@@ -34,14 +20,6 @@ describe 'regression-sprint-1', ->                                              
               url_Direct.assert_Is(url_Link)
               done()
 
-  it 'Issue 100 - Login page should not have hardcoded username', (done)->
-    hardcoded_UserName = 'user'
-    jade.page_Login ->
-      page.field '#new-user-username', (attributes) ->
-        attributes.id   .assert_Is 'new-user-username'
-        attributes.name .assert_Is 'username'
-        assert_Is_Undefined(attributes.value)
-        done()
 
   it 'Issue 102 - Password forgot is not sending requests to mapped TM instance', (done)->
     jade.page_Pwd_Forgot ->
@@ -66,7 +44,7 @@ describe 'regression-sprint-1', ->                                              
     jade.page_Home ->
       jade.login_As_QA (html,$)->
 
-        $($('#title-area a').get(0)).attr().href.assert_Is('/user/main.html')
+        $('#team-mentor-navigation a').attr().href.assert_Is('/user/main.html')
         done()
 
   it 'Issue 105 - New users cannot be created with Weak Passwords', (done)->
@@ -160,4 +138,69 @@ describe 'regression-sprint-1', ->                                              
           page.chrome.url (url)->
             url.assert_Contains('/user/sign-up')
             html.assert_Contains('Signing In : Passwords don\'t match')
+            done()
+
+  #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below
+  #it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
+  #  jade.login_As_User ->
+  #    page.open '/graph/logging', ->
+  #      # this code removes two rows so that only have the right-hand-side nav showing on page
+  #      code = "children = document.documentElement.querySelector('.row').children;
+  #              children[0].remove();
+  #              children[0].remove();"
+  #      page.chrome.eval_Script code, ->
+  #        page.html (html,$)->
+  #          for td in $('td')
+  #            input = $(td).find('input')
+  #            if (input.length)
+  #              value = $(td).text()
+  #              label = $(td).find('label')
+  #              $(input).attr().id.assert_Is(value)
+  #              label.attr().for.assert_Is(value)
+  #          done()
+#
+  it 'Issue 198 - Right-hand-side query selection must have a visual clue and needs to be clickable (to clear filter)',(done)->
+    jade.login_As_User ->
+      page.open '/graph/Logging', (html, $)->
+        linkText = "Centralize Logging"
+        if $('#containers a').html() is null                  # return if link is not there
+          done()
+          return
+        page.click linkText, (html, $)->                      # click on link
+          $('#containers a').html().log().assert_Is(linkText)
+          done()
+
+  it 'Issue 212 - Add page to render jade mixins directly', (done)->
+
+    render = (file, mixin, viewModel, callback)->
+      mixinPage = "/render/mixin/#{file}/#{mixin}?#{viewModel}"
+      page.open mixinPage, (html, $)->
+        callback($)
+
+    no_Params = (next)->
+      render 'user-mixins', 'login-form', "", ($)->
+        $('form').attr().assert_Is({ id: 'login-form', role: 'form', method: 'post', action: '/user/login' })
+        next();
+
+    with_Params = (next)->
+      render 'search-mixins', 'directory-list', "title=AAAA", ($)->
+        $('h3').attr().id.assert_Is('title')
+        next()
+
+    with_Param_ViewModel_1 = (next)->
+      render 'search-mixins', 'directory-list', 'viewModel={"title":"AAAA_123"}', ($)->
+        $('h3').attr().id.assert_Is('title')
+        next()
+
+    with_Param_ViewModel_2 = (next)->
+      viewModel = { breadcrumbs :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
+      data = JSON.stringify(viewModel)
+      render 'articles-mixins', 'breadcrumbs', "viewModel=#{data}", ($)->
+        $('a').attr().href.assert_Is('#')
+        next()
+
+    no_Params ->
+      with_Params ->
+        with_Param_ViewModel_1 ->
+          with_Param_ViewModel_2 ->
             done()

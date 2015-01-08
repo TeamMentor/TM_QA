@@ -29,6 +29,13 @@ describe 'API | Jade-API',->
       result.assert_Is_True()
       done()
 
+  it 'render_Mixin', (done)->
+    params = "title=AAAA_123"
+    jade.render_Mixin 'search-mixins', 'directory-list', params, ($)->
+      $('h3').attr().id.assert_Is('title'   )
+      $('h3').html()   .assert_Is('AAAA_123')
+      done()
+
   it 'sessionCookie', (done)->
     using jade, ->
       @.session_Cookie (cookie)=>
