@@ -55,6 +55,19 @@ describe 'regression-sprint-1', ->                                              
   #        $('h3').html().assert_Is("Login")                                                # confirm that we are on the login page
   #        done();
 
+  it 'Issue 120 - Recently Viewed Articles not working', (done)->
+    jade.login_As_User ->
+      article_Id    = 'aaaaaa_'.add_5_Letters()
+      article_Title = 'bbbbbb_'.add_5_Letters()
+      articleUrl = page.tm_Server + "/article/view/#{article_Id}/#{article_Title}"
+      articleUrl.log()
+      page.chrome.open articleUrl, ()->
+        jade.page_User_Main (html, $)->
+          using $('#recentlyViewedArticles a'),->
+            @.attr().href.assert_Contains(article_Id)
+            @.html().assert_Is(article_Title)
+            done()
+
   it 'Issue 123-Terms and conditions link is available', (done)->
     jade.page_Home (html, $) ->
       footerDiv =  $('#footer').html()
