@@ -2,7 +2,6 @@ describe 'issues-sprint-1', ->                                                  
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-
   it 'Issue 105 - New users can be created with Weak Passwords', (done)->
     assert_Weak_Pwd_Fail = (password, expectFail, next)->
       randomUser  = 'abc_'.add_5_Random_Letters();
@@ -25,21 +24,18 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
-  it 'Issue 151 - Add asserts for new Login page content ', (done)->
-    jade.page_Login (html,$)->
-      $('#loginwall h3').html().assert_Is('Login')
-      $('#loginwall p').html().assert_Is('Returning customer? Please log in to access TEAM Mentor.')
-
-      $('.form-group label').html().assert_Is('Username')
-      $('div.form-group:nth-child(2) > label:nth-child(1)').html().assert_Is('Password')
-      $('#btn-login').html().assert_Is('Login')
-      $('#btn-forgot-pwd').html().assert_Is('Forgot your password?')
-      done()
-  it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
+  it 'Issue 113 - Main user page has no content on TM Jade (user/main.html)', (done)->
     jade.login_As_User ->
-      jade.page_User_Main ->
-      done()
+      jade.page_User_Main (html, $)->
+        done()
 
+  it 'Issue 120 - Recently Viewed Articles not working', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        using $('#recentlyViewedArticles'),->
+          $(@.find('h4')).html().assert_Is('Recently Viewed Articles')
+          $(@.find('a')).length .assert_Is(0)
+          done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
@@ -50,5 +46,4 @@ describe 'issues-sprint-1', ->                                                  
   #       page.open login_Link, ->                                                                          # follow link
   #         page.screenshot 'Issue 96 2. UI after clicking on link', ->                                     # take screenshot
   #           done()                                                                                        # finish test
-
 

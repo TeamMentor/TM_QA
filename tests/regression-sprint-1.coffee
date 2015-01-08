@@ -92,7 +92,7 @@ describe 'regression-sprint-1', ->                                              
         $('h3').html().assert_Is("Forgot your password?")
         done();
 
-    it 'Issue 128 - Opening /Graph/{query} page with bad {query} should result in an "no results" page/view', (done)->
+  it 'Issue 128 - Opening /Graph/{query} page with bad {query} should result in an "no results" page/view', (done)->
     jade.login_As_User ->
       page.open '/graph/aaaaaaa', (html)->
         page.html (html, $)->
