@@ -1,7 +1,8 @@
 class Jade_API
   constructor: (page)->
-    @page     = page
-    @QA_Users = [{ name:'user', pwd: 'a'}]
+    @tm_35_Server = "https://tmdev01-uno.teammentor.net"
+    @page         = page
+    @QA_Users     = [{ name:'user', pwd: 'a'}]
 
   clear_Session: (callback)->
                   @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback

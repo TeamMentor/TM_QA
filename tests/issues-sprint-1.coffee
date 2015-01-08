@@ -29,14 +29,6 @@ describe 'issues-sprint-1', ->                                                  
       jade.page_User_Main (html, $)->
         done()
 
-  it 'Issue 120 - Recently Viewed Articles not working', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        using $('#recentlyViewedArticles'),->
-          $(@.find('h4')).html().assert_Is('Recently Viewed Articles')
-          $(@.find('a')).length .assert_Is(0)
-          done()
-
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
   # page.window_Position 1000,50,800,400, ->                                                                # change window size to make it more 'screenshot friendly'
