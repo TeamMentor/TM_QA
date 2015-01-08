@@ -29,6 +29,12 @@ describe 'API | Jade-API',->
       result.assert_Is_True()
       done()
 
+  it 'render_File', (done)->
+    params = ""
+    jade.render_File 'jade_user_main', params, ($)->
+      $.html().assert_Contains('<a href="/user/main.html">')
+      done()
+
   it 'render_Mixin', (done)->
     params = "title=AAAA_123"
     jade.render_Mixin 'search-mixins', 'directory-list', params, ($)->
