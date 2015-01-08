@@ -61,10 +61,16 @@ class Jade_API
   page_User_Queries  : (callback        ) => @page.open '/library/queries'    , callback
   page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
 
+  render_File: (file, params, callback)->
+    mixinPage = "/render/file/#{file}?#{params}"
+    @.page.open mixinPage, (html, $)->
+      callback($)
+
   render_Mixin: (file, mixin, params, callback)->
     mixinPage = "/render/mixin/#{file}/#{mixin}?#{params}"
     @.page.open mixinPage, (html, $)->
       callback($)
+
 
   session_Cookie  : (callback) =>
                       @page.chrome.cookies (cookies)->
