@@ -60,7 +60,6 @@ describe 'regression-sprint-1', ->                                              
       article_Id    = 'aaaaaa_'.add_5_Letters()
       article_Title = 'bbbbbb_'.add_5_Letters()
       articleUrl = page.tm_Server + "/article/view/#{article_Id}/#{article_Title}"
-      articleUrl.log()
       page.chrome.open articleUrl, ()->
         jade.page_User_Main (html, $)->
           using $('#recentlyViewedArticles a'),->
@@ -136,7 +135,7 @@ describe 'regression-sprint-1', ->                                              
           done()
           return
         page.click linkText, (html, $)->                      # click on link
-          $('#containers a').html().log().assert_Is(linkText)
+          $('#containers a').html().assert_Is(linkText)
           done()
 
   it 'Issue 212 - Add page to render jade mixins directly', (done)->
