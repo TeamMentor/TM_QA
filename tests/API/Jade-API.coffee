@@ -61,9 +61,8 @@ class Jade_API
   page_User_Queries  : (callback        ) => @page.open '/library/queries'    , callback
   page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
 
-  render_Mixin: (file, mixin, viewModel, callback)->
-    data = JSON.stringify(viewModel || {})
-    mixinPage = "/render/mixin/#{file}/#{mixin}?viewModel=#{data}"
+  render_Mixin: (file, mixin, params, callback)->
+    mixinPage = "/render/mixin/#{file}/#{mixin}?#{params}"
     @.page.open mixinPage, (html, $)->
       callback($)
 

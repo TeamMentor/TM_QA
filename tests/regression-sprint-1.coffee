@@ -152,7 +152,7 @@ describe 'regression-sprint-1', ->                                              
       viewModel = { breadcrumbs :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
       data = JSON.stringify(viewModel)
       render 'articles-mixins', 'breadcrumbs', "viewModel=#{data}", ($)->
-        $('a').attr().href.assert_Is('abc')
+        $('a').attr().href.assert_Is('#')
         next()
 
     no_Params ->

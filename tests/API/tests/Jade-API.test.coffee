@@ -30,8 +30,8 @@ describe 'API | Jade-API',->
       done()
 
   it 'render_Mixin', (done)->
-    viewModel = {"title" : "AAAA_123"}
-    jade.render_Mixin 'search-mixins', 'directory-list', viewModel, ($)->
+    params = "title=AAAA_123"
+    jade.render_Mixin 'search-mixins', 'directory-list', params, ($)->
       $('h3').attr().id.assert_Is('title'   )
       $('h3').html()   .assert_Is('AAAA_123')
       done()
