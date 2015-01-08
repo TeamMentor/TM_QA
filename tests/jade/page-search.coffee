@@ -22,9 +22,9 @@ describe 'jade | page-graph',->
   describe 'Currently Viewed Articles', (done)->
 
     it 'check elements',(done)->
-      using $('#recentlyViewedArticles'),->
-        $(@.find('h4')).html().assert_Is('Recently Viewed Articles')
-        $(@.find('a')).length .assert_Is(0)
+      jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
+        $('h4').html().assert_Is('Recently Viewed Articles')
+        $('a' ).length .assert_Is(0)
         done()
 
 
