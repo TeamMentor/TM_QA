@@ -87,7 +87,7 @@ describe 'jade | pages-users', ->
   it 'Main', (done)->
     jade.page_User_Main (html,$)->
       section_Titles = ($(h4).html() for h4 in $('h4'))
-      section_Titles.assert_Is(['Recently Viewed Articles','Popular Search Terms','Top Articles','New Articles'])
+      section_Titles.assert_Is(['Recently Viewed Articles','Popular Search Terms','Top Articles'])
       done()
 
   # need quicker load of TM 3.5 data (and way to run on travis)

@@ -29,6 +29,19 @@ describe 'issues-sprint-1', ->                                                  
       jade.page_User_Main (html, $)->
         done()
 
+  it 'Issue 218 - Small alignment issue with Search button', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        juice   = require('juice')
+        cheerio = require('cheerio')
+        baseUrl = page.tm_Server;
+        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
+          $css = cheerio.load(cssHtml)
+          attributes = $css('.input-group-btn').attr()
+          attributes.assert_Is({ class: 'input-group-btn', style: 'display: table-cell; border-left: none; width: 100px; max-width: 100%; vertical-align: middle;' })
+          attributes.style.assert_Contains('vertical-align: middle;')                          
+          done()
+
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
   # page.window_Position 1000,50,800,400, ->                                                                # change window size to make it more 'screenshot friendly'
