@@ -3,24 +3,17 @@ describe 'issues-sprint-1', ->                                                  
   jade = page.jade_API
 
   it 'Issue 105 - New users can be created with Weak Passwords', (done)->
-    assert_Weak_Pwd_Fail = (password, expectFail, next)->
+    assert_Weak_Pwd_Fail = (password, next)->
       randomUser  = 'abc_'.add_5_Random_Letters();
       randomEmail = "#{randomUser}@teammentor.net"
       jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
-        if expectFail
-          $('h3').html().assert_Is('Sign Up')
-          next()
-        else
-          $('h3').html().assert_Is('Login')
-          jade.login randomUser,password, (html,$)->
-            page.chrome.url (url)->
-              url.assert_Contains('/user/main.html')
-              next()
+        $('h3').html().assert_Is('Sign Up')
+        next()
 
     @timeout(10000)
 
-    assert_Weak_Pwd_Fail "", true, ->
-      assert_Weak_Pwd_Fail  "123", false, ->   # this should fail to create an account
+    assert_Weak_Pwd_Fail "", ->
+      assert_Weak_Pwd_Fail  "123", ->   # this should fail to create an account
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 

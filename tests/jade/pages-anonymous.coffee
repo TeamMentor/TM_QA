@@ -71,24 +71,24 @@ describe 'jade | pages-anonymous', ->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
-      $('#usp a'       ).get(0).attribs.href       .assert_Is('/guest/sign-up.html')
-      $('#usp button'  ).text()                    .assert_Is('Start your free trial today')
-      $('#usp button i').attr()                  .assert_Is({ class: 'fi-key' })
-      $('#reasons h2'  ).html()                    .assert_Is('With TEAM Mentor, you can')
+      $('#usp a'       ).get(0).attribs.href .assert_Is('/guest/sign-up.html')
+      $('#usp button'  ).text()              .assert_Is('Start your free trial today')
+      $('#usp button i').attr()              .assert_Is({ class: 'fi-key' })
+      $('#reasons h2'  ).html()              .assert_Is('With TEAM Mentor, you can')
 
-      $($('#reasons h4 p').get(0)).html()       .assert_Is('FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
-      $($('#reasons h4 p').get(1)).html()       .assert_Is('REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
-      $($('#reasons h4 p').get(2)).html()       .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
+      $($('#reasons h4 p').get(0)).html()    .assert_Is('FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
+      $($('#reasons h4 p').get(1)).html()    .assert_Is('REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
+      $($('#reasons h4 p').get(2)).html()    .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
 
-      $('#clients h2').html()                    .assert_Is('Our clients love us (and we think you will too!)')
+      $('#clients h2').html()                .assert_Is('Our clients love us (and we think you will too!)')
       clientImages = $('#clients img')
 
-      clientImages[0].attribs.src                .assert_Is('/static/assets/clients/elsevier.jpg'  )
-      clientImages[1].attribs.src                .assert_Is('/static/assets/clients/fedex.jpg'     )
-      clientImages[2].attribs.src                .assert_Is('/static/assets/clients/massmutual.jpg')
-      clientImages[3].attribs.src                .assert_Is('/static/assets/clients/microsoft.jpg' )
-      clientImages[4].attribs.src                .assert_Is('/static/assets/clients/symantec.jpg'  )
-      clientImages[5].attribs.src                .assert_Is('/static/assets/clients/ubs.jpg'       )
+      clientImages[0].attribs.src            .assert_Is('/deploy/assets/clients/elsevier.png'  )
+      clientImages[1].attribs.src            .assert_Is('/deploy/assets/clients/fedex.png'     )
+      clientImages[2].attribs.src            .assert_Is('/deploy/assets/clients/massmutual.png')
+      clientImages[3].attribs.src            .assert_Is('/deploy/assets/clients/microsoft.png' )
+      clientImages[4].attribs.src            .assert_Is('/deploy/assets/clients/symantec.png'  )
+      clientImages[5].attribs.src            .assert_Is('/deploy/assets/clients/ubs.png'       )
 
       check_Generic_Footer($)
       check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
@@ -147,7 +147,7 @@ describe 'jade | pages-anonymous', ->
 
   it 'Login Fail', (done)->
     jade.page_Login_Fail (html, $)->
-      $('.alert').html().assert_Is('Login failed, please try again :(')
+      $('.alert').html().assert_Is('Error Logging In : ')
       $('h3').html().assert_Is("Login")
       $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
       # Same as "it 'Login', (done)->" , so we should also check if those fields are here
@@ -198,7 +198,7 @@ describe 'jade | pages-anonymous', ->
 
   it 'Sign Up Fail', (done) ->
     jade.page_Sign_Up_Fail (html,$)->
-      $('.alert').html().assert_Is('Sign Up failed, please try again :(')
+      $('.alert').html().assert_Is('Error Signing In : ')
       $('h3'    ).html().assert_Is("Sign Up")
       done()
 
