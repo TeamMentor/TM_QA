@@ -15,3 +15,4 @@ before_install:
   - "npm test"
   - "npm run dev &"
   - "cd .."
+  - "npm install -g nodewebkit"
