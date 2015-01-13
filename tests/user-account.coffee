@@ -19,7 +19,7 @@ describe 'user-account', ->
 
   it 'Login fail', (done)->
     jade.login 'aaaa'.add_5_Random_Letters(),'bbbb',  (html, $) ->
-      $('.alert').html().assert_Is('Error Logging In : Username does not exist')
+      $('.alert').html().assert_Is('Error: Username does not exist')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
