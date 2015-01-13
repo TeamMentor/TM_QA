@@ -28,6 +28,6 @@
     "wd": "latest"
   },
   "devDependencies": {
-    "supertest": "^0.15.0"
+    "supertest": "latest"
   }
 }

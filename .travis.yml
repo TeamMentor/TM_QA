@@ -1,4 +1,4 @@
-sudo: true
+sudo: false
 language: node_js
 node_js:
   - 0.10
@@ -15,4 +15,3 @@ before_install:
   - "npm test"
   - "npm run dev &"
   - "cd .."
-  - "npm install -g nodewebkit"
