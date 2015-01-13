@@ -40,6 +40,32 @@ describe 'user-account', ->
           $('.alert').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
           done()
 
+  it 'User Sign Up (with short password)',(done)->
+    @timeout(0)
+    username = 'tm_qa_'.add_5_Random_Letters()
+    password = 'tmw'
+    email    = "#{username}@teammentor.net"
+    jade.user_Sign_Up username, password, email, ->
+      page.chrome.url (url)->
+        url.assert_Contains('/user/sign-up')
+        page.html (html,$)->
+          $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Password must be 8 to 256 character long')
+          done()
+
+  it 'User Sign Up (with existing user)',(done)->
+    @timeout(0)
+    username = 'a'
+    password = 'tm!!Fw'.add_5_Random_Letters()
+    email    = "#{username}@teammentor.net"
+    jade.user_Sign_Up username, password, email, ->
+      page.chrome.url (url)->
+        url.assert_Contains('/user/sign-up')
+        page.html (html,$)->
+          $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Username already exist')
+          done()
+
   it 'User Sign Up Fail',(done)->
     @timeout(0)
     assert_User_Sign_Up_Fail = (username, password, email, next)->
