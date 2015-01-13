@@ -29,13 +29,10 @@ describe 'user-account', ->
     email    = "#{username}@teammentor.net"
     jade.user_Sign_Up username, password, email, ->
       page.chrome.url (url)->
-        url.assert_Contains('/guest/sign-up-OK.html')
+        url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('h3').html().assert_Is('Login')
-          jade.login username, password, ->
-            page.chrome.url (url)->
-              url.assert_Contains('user/main.html')
-              done()
+          $('h3').html().assert_Is('Sign Up')
+          done()
 
   it 'User Sign Up Fail',(done)->
     @timeout(0)
@@ -63,15 +60,15 @@ describe 'user-account', ->
     pwd1 = "aaaa"
     pwd2 = "bbbb"
     jade.page_Sign_Up (html, $)=>
-      code = "document.querySelector('#new-user-username').value='#{randomUser}';
-                                  document.querySelector('#new-user-password').value='#{pwd1}';
-                                  document.querySelector('#new-user-confirm-password').value='#{pwd2}';
-                                  document.querySelector('#new-user-email').value='#{randomEmail}';
+      code = "document.querySelector('#username').value='#{randomUser}';
+                                  document.querySelector('#password').value='#{pwd1}';
+                                  document.querySelector('#confirm-password').value='#{pwd2}';
+                                  document.querySelector('#email').value='#{randomEmail}';
                                   document.querySelector('#btn-sign-up').click()"
       page.chrome.eval_Script code, =>
         page.wait_For_Complete (html, $)=>
           page.chrome.url (url)->
-            url.assert_Contains('/guest/sign-up-Fail.html')
+            url.assert_Contains('/user/sign-up')
           done()
 
   #add issue that new users can be created with weak pwds (from jade)

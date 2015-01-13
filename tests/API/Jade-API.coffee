@@ -9,8 +9,8 @@ class Jade_API
 
   login          : (username, password, callback)=>
                     @page_Login =>
-                      code = "document.querySelector('#new-user-username').value='#{username}';
-                              document.querySelector('#new-user-password').value='#{password}';
+                      code = "document.querySelector('#username').value='#{username}';
+                              document.querySelector('#password').value='#{password}';
                               document.querySelector('#btn-login').click()"
                       @page.chrome.eval_Script code, =>
                         @page.wait_For_Complete callback
@@ -83,10 +83,10 @@ class Jade_API
 
   user_Sign_Up    : (username, password, email, callback) =>
                       @page_Sign_Up (html, $)=>
-                        code = "document.querySelector('#new-user-username').value='#{username}';
-                                document.querySelector('#new-user-password').value='#{password}';
-                                document.querySelector('#new-user-confirm-password').value='#{password}';
-                                document.querySelector('#new-user-email').value='#{email}';
+                        code = "document.querySelector('#username').value='#{username}';
+                                document.querySelector('#password').value='#{password}';
+                                document.querySelector('#confirm-password').value='#{password}';
+                                document.querySelector('#email').value='#{email}';
                                 document.querySelector('#btn-sign-up').click()"
                         @page.chrome.eval_Script code, =>
                           @page.wait_For_Complete (html, $)=>

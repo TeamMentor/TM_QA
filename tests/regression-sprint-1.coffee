@@ -28,7 +28,7 @@ describe 'regression-sprint-1', ->                                              
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
             $('h3').html().assert_Is("Login")
-            $('#loginwall .alert' ).html().assert_Is("We&apos;ve sent you an email with instructions for resetting your password :)")
+            $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
   it 'Issue 117 - Getting Started Page is blank', (done)->
@@ -70,7 +70,7 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 123-Terms and conditions link is available', (done)->
     jade.page_Home (html, $) ->
       footerDiv =  $('#footer').html()
-      footerDiv.assert_Not_Contains("Terms &amp; Conditions")
+      footerDiv.assert_Contains("Terms &amp; Conditions")
       done();
 
   it 'Issue 124 - Forgot password page is blank', (done)->
@@ -105,7 +105,7 @@ describe 'regression-sprint-1', ->                                              
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
     jade.page_About (html, $)->
-      $("#footer h6").html().assert_Contains('TEAM Mentor v')
+      $("#footer h5").html().assert_Contains('TEAM Mentor v')
       done()
 
   #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below

@@ -20,8 +20,8 @@ describe 'security | fixed', ->
   it 'Issue 100 - Login page should not have hardcoded username', (done)->
     hardcoded_UserName = 'user'
     jade.page_Login ->
-      page.field '#new-user-username', (attributes) ->
-        attributes.id   .assert_Is 'new-user-username'
+      page.field '#username', (attributes) ->
+        attributes.id   .assert_Is 'username'
         attributes.name .assert_Is 'username'
         assert_Is_Undefined(attributes.value)
         done()
