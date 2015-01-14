@@ -2,6 +2,8 @@ describe 'issues-sprint-1', ->                                                  
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
+  @timeout(10000)
+
   it 'Issue 105 - New users can be created with Weak Passwords', (done)->
     assert_Weak_Pwd_Fail = (password, next)->
       randomUser  = 'abc_'.add_5_Random_Letters();
@@ -9,8 +11,6 @@ describe 'issues-sprint-1', ->                                                  
       jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
         $('h3').html().assert_Is('Sign Up')
         next()
-
-    @timeout(10000)
 
     assert_Weak_Pwd_Fail "", ->
       assert_Weak_Pwd_Fail  "123", ->   # this should fail to create an account
@@ -21,19 +21,6 @@ describe 'issues-sprint-1', ->                                                  
     jade.login_As_User ->
       jade.page_User_Main (html, $)->
         done()
-
-  it 'Issue 218 - Small alignment issue with Search button', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        juice   = require('juice')
-        cheerio = require('cheerio')
-        baseUrl = page.tm_Server;
-        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
-          $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          log attributes
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
-          done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
