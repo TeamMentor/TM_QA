@@ -81,11 +81,11 @@ describe 'user-account', ->
     randomUser  = 'abc_'.add_5_Random_Letters();
     randomEmail = "#{randomUser}@teammentor.net"
 
-    assert_User_Sign_Up_Fail randomUser, 'existing email', 'dcruz@securityinnovation.com', ->
-      assert_User_Sign_Up_Fail 'dinis', 'existing user', randomEmail, ->
-        assert_User_Sign_Up_Fail '', 'no username', randomEmail, ->
-          assert_User_Sign_Up_Fail randomUser, 'no email', '', ->
-            assert_User_Sign_Up_Fail randomUser + 'no pwd', '', randomEmail, ->
+    assert_User_Sign_Up_Fail randomUser, 'existing email', 'dcruz@securityinnovation.com', ->       #existing email
+      assert_User_Sign_Up_Fail 'dinis', 'existing user', randomEmail, ->                            #existing username
+        assert_User_Sign_Up_Fail '', 'no username', randomEmail, ->                                 #missing username
+          assert_User_Sign_Up_Fail randomUser, 'no email', '', ->                                   #missing email address
+            assert_User_Sign_Up_Fail randomUser + 'no pwd', '', randomEmail, ->                     #missing password
               #note that at the moment there is no check for weak passwords
               done()
 
