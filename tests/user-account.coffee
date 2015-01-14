@@ -30,13 +30,14 @@ describe 'user-account', ->
   it 'User Sign Up (with weak password)',(done)->
     @timeout(0)
     username = 'tm_qa_'.add_5_Random_Letters()
-    password = 'aaaaaa'
+    password = 'aaaaaaaaa'
     email    = "#{username}@teammentor.net"
     jade.user_Sign_Up username, password, email, ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
           $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
           done()
 
   it 'User Sign Up (with short password)',(done)->
