@@ -1,7 +1,7 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
-describe 'jade | pages-anonymous', ->
+describe 'jade | pages-anonymous.tests', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
@@ -59,11 +59,8 @@ describe 'jade | pages-anonymous', ->
     juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
       $css = cheerio.load(cssHtml)
       footer_Attr = $css('#footer #si-logo').attr()
-      footer_Attr.assert_Is {  id: 'si-logo'
-                             , style: 'background: url(../assets/logos/logos.jpg) no-repeat; background-position: 0px -50px; height: 50px; width: 250px; margin: 0 auto;' }
-
+      footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(../assets/logos/logos.jpg) no-repeat; background-position: 0px -50px; height: 50px; width: 190px; margin: 0 auto;' }
       items = extract_Style_Data(footer_Attr.style)
-
       items['background'].assert_Is('url(../assets/logos/logos.jpg) no-repeat' )
       next()
 
@@ -139,7 +136,7 @@ describe 'jade | pages-anonymous', ->
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
       $('#btn-login').html().assert_Is('Access TEAM Mentor')
-      $('#btn-forgot-pwd').html().assert_Is('Forgot your password?')
+      $('#btn-forgot-pwd').html().assert_Is('Forgot Your Password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
       $('#btn-forgot-pwd').attr('type').assert_Is('button')
       $('#btn-forgot-pwd').parent().attr('href').assert_Is('/guest/pwd-forgot.html')
@@ -147,7 +144,7 @@ describe 'jade | pages-anonymous', ->
 
   it 'Login Fail', (done)->
     jade.page_Login_Fail (html, $)->
-      $('.alert').html().assert_Is('Error Logging In : ')
+      $('.alert').html().assert_Is('Error: ')
       $('h3').html().assert_Is("Login")
       $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
       # Same as "it 'Login', (done)->" , so we should also check if those fields are here
@@ -168,7 +165,7 @@ describe 'jade | pages-anonymous', ->
       $('.form-group label').html('Email Address')
       $.html('#email').assert_Is('<input type="email" id="email" name="email" placeholder="Email Address">')
       $('#forgot-password').attr('action').assert_Is('/user/pwd_reset')
-      $('button').html().assert_Is('Get password')
+      $('button').html().assert_Is('Get Password')
       done()
 
   it 'Password Sent', (done)->
@@ -198,7 +195,7 @@ describe 'jade | pages-anonymous', ->
 
   it 'Sign Up Fail', (done) ->
     jade.page_Sign_Up_Fail (html,$)->
-      $('.alert').html().assert_Is('Error Signing In : ')
+      $('.alert').html().assert_Is('Error: ')
       $('h3'    ).html().assert_Is("Sign Up")
       done()
 
@@ -212,7 +209,7 @@ describe 'jade | pages-anonymous', ->
 
   it 'Tearms and Conditions', (done)->
     jade.page_TermsAndCond (html,$)->
-      $('h3').html().assert_Is('Security Innovation Software License Agreement')
+      $('h3').html().assert_Is('Terms &amp; Conditions')
       done()
 
 
