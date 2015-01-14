@@ -31,8 +31,8 @@ describe 'issues-sprint-1', ->                                                  
         juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
           $css = cheerio.load(cssHtml)
           attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is({ class: 'input-group-btn', style: 'display: table-cell; border-left: none; width: 100px; max-width: 100%; vertical-align: middle;' })
-          attributes.style.assert_Contains('vertical-align: middle;')                          
+          log attributes
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
           done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
