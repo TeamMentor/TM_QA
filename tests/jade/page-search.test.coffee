@@ -21,6 +21,10 @@ describe 'jade | page-search',->
 
   describe 'Recently Viewed Articles', (done)->
 
+    before (done)->
+      jade.login_As_User ->
+        done()
+
     it 'open article and check list', (done)->
       article_Id    = 'aaaaaa'.add_5_Letters()
       article_Title = 'bbbbbb'.add_5_Letters()

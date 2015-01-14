@@ -2,7 +2,8 @@ describe 'regression-sprint-1', ->                                              
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-
+  @timeout(4000)
+  
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
       login_Link = link.attribs.href for link in $('#links li a') when $(link).html()=='Login'                # extract the url from the link with 'Login' as text
@@ -28,7 +29,7 @@ describe 'regression-sprint-1', ->                                              
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
             $('h3').html().assert_Is("Login")
-            $('#loginwall .alert' ).html().assert_Is("We&apos;ve sent you an email with instructions for resetting your password :)")
+            $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
   it 'Issue 117 - Getting Started Page is blank', (done)->
@@ -95,7 +96,7 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 123-Terms and conditions link is available', (done)->
     jade.page_Home (html, $) ->
       footerDiv =  $('#footer').html()
-      footerDiv.assert_Not_Contains("Terms &amp; Conditions")
+      footerDiv.assert_Contains("Terms &amp; Conditions")
       done();
 
   it 'Issue 124 - Forgot password page is blank', (done)->
@@ -130,7 +131,7 @@ describe 'regression-sprint-1', ->                                              
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
     jade.page_About (html, $)->
-      $("#footer h6").html().assert_Contains('TEAM Mentor v')
+      $("#footer h5").html().assert_Contains('TEAM Mentor v')
       done()
 
   it 'User Sign Up Fail (different passwords)',(done)->
@@ -216,3 +217,15 @@ describe 'regression-sprint-1', ->                                              
         with_Param_ViewModel_1 ->
           with_Param_ViewModel_2 ->
             done()
+
+  it 'Issue 218 - Small alignment issue with Search button', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        juice   = require('juice')
+        cheerio = require('cheerio')
+        baseUrl = page.tm_Server;
+        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
+          $css = cheerio.load(cssHtml)
+          attributes = $css('.input-group-btn').attr()
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
+          done()

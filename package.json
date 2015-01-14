@@ -21,13 +21,13 @@
     "cheerio": "latest",
     "coffee-script": "latest",
     "fluentnode": "latest",
-    "jade": "^1.8.2",
+    "jade": "latest",
     "juice": "latest",
     "mocha": "latest",
     "nwr": "latest",
     "wd": "latest"
   },
   "devDependencies": {
-    "supertest": "^0.15.0"
+    "supertest": "latest"
   }
 }

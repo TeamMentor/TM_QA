@@ -2,25 +2,18 @@ describe 'issues-sprint-1', ->                                                  
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
+  @timeout(10000)
+
   it 'Issue 105 - New users can be created with Weak Passwords', (done)->
-    assert_Weak_Pwd_Fail = (password, expectFail, next)->
+    assert_Weak_Pwd_Fail = (password, next)->
       randomUser  = 'abc_'.add_5_Random_Letters();
       randomEmail = "#{randomUser}@teammentor.net"
       jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
-        if expectFail
-          $('h3').html().assert_Is('Sign Up')
-          next()
-        else
-          $('h3').html().assert_Is('Login')
-          jade.login randomUser,password, (html,$)->
-            page.chrome.url (url)->
-              url.assert_Contains('/user/main.html')
-              next()
+        $('h3').html().assert_Is('Sign Up')
+        next()
 
-    @timeout(10000)
-
-    assert_Weak_Pwd_Fail "", true, ->
-      assert_Weak_Pwd_Fail  "123", true, ->   # this should fail to create an account
+    assert_Weak_Pwd_Fail "", ->
+      assert_Weak_Pwd_Fail  "123", ->   # this should fail to create an account
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
@@ -28,19 +21,6 @@ describe 'issues-sprint-1', ->                                                  
     jade.login_As_User ->
       jade.page_User_Main (html, $)->
         done()
-
-  it 'Issue 218 - Small alignment issue with Search button', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        juice   = require('juice')
-        cheerio = require('cheerio')
-        baseUrl = page.tm_Server;
-        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
-          $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is({ class: 'input-group-btn', style: 'display: table-cell; border-left: none; width: 100px; max-width: 100%; vertical-align: middle;' })
-          attributes.style.assert_Contains('vertical-align: middle;')                          
-          done()
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
@@ -51,4 +31,5 @@ describe 'issues-sprint-1', ->                                                  
   #       page.open login_Link, ->                                                                          # follow link
   #         page.screenshot 'Issue 96 2. UI after clicking on link', ->                                     # take screenshot
   #           done()                                                                                        # finish test
+
 

@@ -44,7 +44,7 @@ describe 'jade | pages-anonymous', ->
     $('#call-to-action button'  ).text()             .assert_Is('See for yourself'                     )
     $('#call-to-action button i').attr()             .assert_Is({ class: 'fi-eye' })
 
-    $('#footer #footer-img h6'        ).html().assert_Contains('TEAM Mentor v')
+    $('#footer h5'              ).html().assert_Contains('TEAM Mentor v')
 
   extract_Style_Data = (styleCss)->
     items = {}
@@ -58,7 +58,7 @@ describe 'jade | pages-anonymous', ->
     cheerio = require('cheerio')
     juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
       $css = cheerio.load(cssHtml)
-      footer_Attr = $css('#footer #footer-img #si-logo').attr()
+      footer_Attr = $css('#footer #si-logo').attr()
       footer_Attr.assert_Is {  id: 'si-logo'
                              , style: 'background: url(../assets/logos/logos.jpg) no-repeat; background-position: 0px -50px; height: 50px; width: 250px; margin: 0 auto;' }
 
@@ -71,24 +71,24 @@ describe 'jade | pages-anonymous', ->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
-      $('#usp a'       ).get(0).attribs.href       .assert_Is('/guest/sign-up.html')
-      $('#usp button'  ).text()                    .assert_Is('Start your free trial today')
-      $('#usp button i').attr()                  .assert_Is({ class: 'fi-key' })
-      $('#reasons h2'  ).html()                    .assert_Is('With TEAM Mentor, you can')
+      $('#usp a'       ).get(0).attribs.href .assert_Is('/guest/sign-up.html')
+      $('#usp button'  ).text()              .assert_Is('Start your free trial today')
+      $('#usp button i').attr()              .assert_Is({ class: 'fi-key' })
+      $('#reasons h2'  ).html()              .assert_Is('With TEAM Mentor, you can...')
 
-      $($('#reasons h4 p').get(0)).html()       .assert_Is('FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
-      $($('#reasons h4 p').get(1)).html()       .assert_Is('REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
-      $($('#reasons h4 p').get(2)).html()       .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
+      $($('#reasons h4 p').get(0)).html()    .assert_Is('FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
+      $($('#reasons h4 p').get(1)).html()    .assert_Is('REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
+      $($('#reasons h4 p').get(2)).html()    .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
 
-      $('#clients h2').html()                    .assert_Is('Our clients love us (and we think you will too!)')
+      $('#clients h2').html()                .assert_Is('Our clients love us (and we think you will too!)')
       clientImages = $('#clients img')
 
-      clientImages[0].attribs.src                .assert_Is('/static/assets/clients/elsevier.jpg'  )
-      clientImages[1].attribs.src                .assert_Is('/static/assets/clients/fedex.jpg'     )
-      clientImages[2].attribs.src                .assert_Is('/static/assets/clients/massmutual.jpg')
-      clientImages[3].attribs.src                .assert_Is('/static/assets/clients/microsoft.jpg' )
-      clientImages[4].attribs.src                .assert_Is('/static/assets/clients/symantec.jpg'  )
-      clientImages[5].attribs.src                .assert_Is('/static/assets/clients/ubs.jpg'       )
+      clientImages[0].attribs.src            .assert_Is('/deploy/assets/clients/elsevier.png'  )
+      clientImages[1].attribs.src            .assert_Is('/deploy/assets/clients/fedex.png'     )
+      clientImages[2].attribs.src            .assert_Is('/deploy/assets/clients/massmutual.png')
+      clientImages[3].attribs.src            .assert_Is('/deploy/assets/clients/microsoft.png' )
+      clientImages[4].attribs.src            .assert_Is('/deploy/assets/clients/symantec.png'  )
+      clientImages[5].attribs.src            .assert_Is('/deploy/assets/clients/ubs.png'       )
 
       check_Generic_Footer($)
       check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
@@ -136,9 +136,9 @@ describe 'jade | pages-anonymous', ->
     jade.page_Login (html,$)->
       $('h3').html().assert_Is("Login")
       $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
-      $.html('#new-user-username').assert_Contains('name="username"')
-      $.html('#new-user-password').assert_Contains('name="password"')
-      $('#btn-login').html().assert_Is('Login')
+      $.html('#username').assert_Contains('name="username"')
+      $.html('#password').assert_Contains('name="password"')
+      $('#btn-login').html().assert_Is('Access TEAM Mentor')
       $('#btn-forgot-pwd').html().assert_Is('Forgot your password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
       $('#btn-forgot-pwd').attr('type').assert_Is('button')
@@ -164,9 +164,9 @@ describe 'jade | pages-anonymous', ->
   it 'Password Forgot', (done)->
     jade.page_Pwd_Forgot (html, $)->
       $('h3').html().assert_Is("Forgot your password?")
-      $('p' ).html().assert_Is("Too easy - just type in your email address and we&apos;ll send you an email with further instructions.")
-      $.html('.form-group label') .assert_Is('<label for="email">Email Address</label>')
-      $.html('#email').assert_Is('<input id="email" type="email" name="email" placeholder="Email Address" class="form-control">')
+      $('p' ).html().assert_Is("Just type in your email address and we&apos;ll send you an email with further instructions.")
+      $('.form-group label').html('Email Address')
+      $.html('#email').assert_Is('<input type="email" id="email" name="email" placeholder="Email Address">')
       $('#forgot-password').attr('action').assert_Is('/user/pwd_reset')
       $('button').html().assert_Is('Get password')
       done()
@@ -174,7 +174,7 @@ describe 'jade | pages-anonymous', ->
   it 'Password Sent', (done)->
     jade.page_Pwd_Sent (html,$)->
       $('h3').html().assert_Is("Login")
-      $('#loginwall .alert' ).html().assert_Is("We&apos;ve sent you an email with instructions for resetting your password :)")
+      $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
       done()
 
   it 'Sign Up', (done) ->
@@ -183,17 +183,17 @@ describe 'jade | pages-anonymous', ->
       $('p'                                   ).html().assert_Is("Create an account and get access to the world&apos;s largest repository of secure software development knowledge.")
 
       $('form'                                ).attr().assert_Is({ id: 'sign-up-form', role: 'form' , method:'POST', action: '/user/sign-up' })
-      $('label[for=new-user-username]'        ).html().assert_Is('Username')
-      $('label[for=new-user-password]'        ).html().assert_Is('Password')
-      $('label[for=new-user-confirm-password]').html().assert_Is('Confirm Password')
-      $('label[for=new-user-email]'           ).html().assert_Is('Email Address')
+      $('label[for=username]'        ).html().assert_Is('Username')
+      $('label[for=password]'        ).html().assert_Is('Password')
+      $('label[for=confirm-password]').html().assert_Is('Confirm Password')
+      $('label[for=email]'           ).html().assert_Is('Email Address')
 
-      $('input[id=new-user-username]'         ).attr().assert_Is({ id: 'new-user-username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'        , class: 'form-control' })
-      $('input[id=new-user-password]'         ).attr().assert_Is({ id: 'new-user-password'        , name: 'password'        , type: 'password', placeholder: 'Password'        , class: 'form-control' })
-      $('input[id=new-user-confirm-password]' ).attr().assert_Is({ id: 'new-user-confirm-password', name: 'password-confirm', type: 'password', placeholder: 'Confirm Password', class: 'form-control' })
-      $('input[id=new-user-email]'            ).attr().assert_Is({ id: 'new-user-email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address'   , class: 'form-control' })
-      $('button#btn-sign-up'                  ).html().assert_Is('Sign Up')
-      $('button#btn-sign-up'                  ).attr().assert_Is({ id:'btn-sign-up', type:'submit'})
+      $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'        })
+      $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'        })
+      $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'})
+      $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address'   })
+      $('button#btn-sign-up'         ).html().assert_Is('Start Fixing Vulnerabilities')
+      $('button#btn-sign-up'         ).attr().assert_Is({ id:'btn-sign-up', type:'submit'})
       done()
 
   it 'Sign Up Fail', (done) ->
@@ -205,7 +205,7 @@ describe 'jade | pages-anonymous', ->
   it  'Sign Up OK', (done) ->
     jade.page_Sign_Up_OK (html,$)->
       $('h3' )      .html().assert_Is('Login'                     )
-      $('#loginwall .alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries :)')
+      $('#loginwall .alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
       $('#loginwall h3').html().assert_Is("Login")
       $('#loginwall p').text().assert_Is('Returning customer? Please log in to access TEAM Mentor.')
       done()
