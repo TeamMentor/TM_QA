@@ -3,7 +3,8 @@ describe 'regression-sprint-1', ->                                              
   jade = page.jade_API
   require '../TM_4_0_Design/node/_extra_fluentnode'
 
-
+  @timeout(4000)
+  
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
       login_Link = link.attribs.href for link in $('#links li a') when $(link).html()=='Login'                # extract the url from the link with 'Login' as text
@@ -173,3 +174,15 @@ describe 'regression-sprint-1', ->                                              
         with_Param_ViewModel_1 ->
           with_Param_ViewModel_2 ->
             done()
+
+  it 'Issue 218 - Small alignment issue with Search button', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        juice   = require('juice')
+        cheerio = require('cheerio')
+        baseUrl = page.tm_Server;
+        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
+          $css = cheerio.load(cssHtml)
+          attributes = $css('.input-group-btn').attr()
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
+          done()
