@@ -4,7 +4,7 @@ describe 'regression-sprint-1', ->                                              
   require '../TM_4_0_Design/node/_extra_fluentnode'
 
   @timeout(4000)
-  
+
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
       login_Link = link.attribs.href for link in $('#links li a') when $(link).html()=='Login'                # extract the url from the link with 'Login' as text
@@ -56,7 +56,7 @@ describe 'regression-sprint-1', ->                                              
       jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
         html= $('.alert').html();
         console.log(html)
-        html.assert_Is("Error Signing In : Password must be 8 to 256 character long");
+        html.assert_Is("Error: Password must be 8 to 256 character long");
         done();
     @timeout(6000)
     assert_Weak_Pwd_Fail "1223", ->
@@ -64,14 +64,14 @@ describe 'regression-sprint-1', ->                                              
 
 
   it 'Issue 303 -Error message should be displayed if username already exist', (done)->
-    assert_User_Already_Exit = (username)->
+    assert_User_Already_Exist = (username)->
       randomEmail = "#{username}@teammentor.net";
       password= '!#$TM'.add_5_Random_Letters();
       jade.user_Sign_Up username, password, randomEmail, (html , $)->
         html= $('.alert').html();
-        html.assert_Is("Error Signing In : Username already exist");
+        html.assert_Is("Error: Username already exist");
         done();
-    assert_User_Already_Exit "tm", ->
+    assert_User_Already_Exist "tm", ->
       done()
 
   #it 'Issue 119 - /returning-user-login.html is Blank', (done)->

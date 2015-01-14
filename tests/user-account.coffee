@@ -28,7 +28,7 @@ describe 'user-account', ->
       done()
   it 'Login fail Password does not match', (done)->
     jade.login 'a','bbbb',  (html, $) ->
-      $('.alert').html().assert_Is('Error Logging In : Wrong Password')
+      $('.alert').html().assert_Is('Error: Wrong Password')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
