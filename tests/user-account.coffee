@@ -19,19 +19,55 @@ describe 'user-account', ->
 
   it 'Login fail', (done)->
     jade.login 'aaaa'.add_5_Random_Letters(),'bbbb',  (html, $) ->
-      $('.alert').html().assert_Is('Error Logging In : Username does not exist')
+      $('.alert').html().assert_Is('Error: Username does not exist')
+      done()
+
+  it 'Login fail (Password do not match)', (done)->
+    jade.login 'a','bbbb',  (html, $) ->
+      $('.alert').html().assert_Is('Error: Wrong Password')
+      done()
+  it 'Login fail Password does not match', (done)->
+    jade.login 'a','bbbb',  (html, $) ->
+      $('.alert').html().assert_Is('Error: Wrong Password')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
     @timeout(0)
     username = 'tm_qa_'.add_5_Random_Letters()
-    password = '**tm**qa**USER'
+    password = 'tmweakpassword'
     email    = "#{username}@teammentor.net"
     jade.user_Sign_Up username, password, email, ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
           $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
+          done()
+
+  it 'User Sign Up (with short password)',(done)->
+    @timeout(0)
+    username = 'tm_qa_'.add_5_Random_Letters()
+    password = 'tmw'
+    email    = "#{username}@teammentor.net"
+    jade.user_Sign_Up username, password, email, ->
+      page.chrome.url (url)->
+        url.assert_Contains('/user/sign-up')
+        page.html (html,$)->
+          $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Password must be 8 to 256 character long')
+          done()
+
+  it 'User Sign Up (with existing user)',(done)->
+    @timeout(0)
+    username = 'a'
+    password = 'tm!!Fw'.add_5_Random_Letters()
+    email    = "#{username}@teammentor.net"
+    jade.user_Sign_Up username, password, email, ->
+      page.chrome.url (url)->
+        url.assert_Contains('/user/sign-up')
+        page.html (html,$)->
+          $('h3').html().assert_Is('Sign Up')
+          $('.alert').html().assert_Is('Error: Username already exist')
           done()
 
   it 'User Sign Up Fail',(done)->
@@ -39,17 +75,17 @@ describe 'user-account', ->
     assert_User_Sign_Up_Fail = (username, password, email, next)->
       jade.user_Sign_Up username, password, email, ->
         page.chrome.url (url)->
-          url.assert_Contains('/user/sign-up')
+          url.assert_Contains('user/sign-up')
           next()
 
     randomUser  = 'abc_'.add_5_Random_Letters();
     randomEmail = "#{randomUser}@teammentor.net"
 
-    assert_User_Sign_Up_Fail randomUser, 'existing email', 'dcruz@securityinnovation.com', ->
-      assert_User_Sign_Up_Fail 'dinis', 'existing user', randomEmail, ->
-        assert_User_Sign_Up_Fail '', 'no username', randomEmail, ->
-          assert_User_Sign_Up_Fail randomUser, 'no email', '', ->
-            assert_User_Sign_Up_Fail randomUser + 'no pwd', '', randomEmail, ->
+    assert_User_Sign_Up_Fail randomUser, 'existing email', 'dcruz@securityinnovation.com', ->       #existing email
+      assert_User_Sign_Up_Fail 'dinis', 'existing user', randomEmail, ->                            #existing username
+        assert_User_Sign_Up_Fail '', 'no username', randomEmail, ->                                 #missing username
+          assert_User_Sign_Up_Fail randomUser, 'no email', '', ->                                   #missing email address
+            assert_User_Sign_Up_Fail randomUser + 'no pwd', '', randomEmail, ->                     #missing password
               #note that at the moment there is no check for weak passwords
               done()
 

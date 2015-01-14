@@ -92,4 +92,5 @@ class Jade_API
                           @page.wait_For_Complete (html, $)=>
                             callback(html, $)
 
+
 module.exports = Jade_API
