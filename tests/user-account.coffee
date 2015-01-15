@@ -117,4 +117,17 @@ describe 'user-account', ->
             url.assert_Contains('/user/sign-up')
           done()
 
+  it 'User Sign Up Success',(done)->
+    @timeout(0)
+    username = 'CxetJ'.add_5_Letters();
+    password = 'tm!34!Fw'.add_5_Random_Letters()
+    email    = username+"@securityinnovation.com"
+
+    jade.user_Sign_Up username, password, email, ->
+      page.chrome.url (url)->
+        url.assert_Contains('/sign-up-OK.html')
+        page.html (html,$)->
+          $('h3').html().assert_Is('Login')
+          $('.alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
+          done()
   #add issue that new users can be created with weak pwds (from jade)
