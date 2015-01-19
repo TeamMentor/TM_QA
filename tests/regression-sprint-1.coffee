@@ -65,7 +65,7 @@ describe 'regression-sprint-1', ->                                              
         jade.page_User_Main (html, $)->
           using $('#recentlyViewedArticles a'),->
             @.attr().href.assert_Contains(article_Id)
-            @.html().assert_Is(article_Title)
+            @.html().assert_Contains(article_Title)
             done()
 
   it 'Issue 123-Terms and conditions link is available', (done)->

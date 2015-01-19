@@ -28,6 +28,7 @@ describe 'jade | page-search',->
     it 'open article and check list', (done)->
       article_Id    = 'aaaaaa'.add_5_Letters()
       article_Title = 'bbbbbb'.add_5_Letters()
+      badge_value   = 12;
       articleUrl = page.tm_Server + "/article/view/#{article_Id}/#{article_Title}"
       page.chrome.open articleUrl, ()->
         jade.page_User_Main (html, $)->
@@ -35,7 +36,7 @@ describe 'jade | page-search',->
             @.length.assert_Bigger_Than(0)
             @.first().attr().assert_Is { href: jade.tm_35_Server + '/' + article_Id
                                        , target: '_blank' }
-            @.first().html().assert_Is(article_Title)
+            @.first().text().assert_Is(article_Title + badge_value)
             done()
 
     it 'open article redirector and confirm tm error', (done)->
@@ -48,7 +49,7 @@ describe 'jade | page-search',->
 
     it 'check elements',(done)->
       jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
-          $('h4').html().assert_Is('Recently Viewed Articles')
+          $('h4').text().assert_Is('Recently Viewed ArticlesPopular Search TermsTop Articles')
           $('a' ).length .assert_Is(0)
           done()
 
