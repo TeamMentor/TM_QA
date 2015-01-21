@@ -28,17 +28,17 @@ describe 'regression-sprint-1', ->                                              
       page.chrome.eval_Script "document.querySelector('#email').value='#{email}';", =>
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
-            $('h3').html().assert_Is("Login")
+            $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
             $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
   it 'Issue 117 - Getting Started Page is blank', (done)->
     jade.page_Home ->
       page.click 'START YOUR FREE TRIAL TODAY', (html, $)->
-        $('h3').html().assert_Is("Sign Up")
+        $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
         jade.page_Home ->
           page.click 'SEE FOR YOURSELF', (html)->
-            $('h3').html().assert_Is("Sign Up")
+            $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
             done()
 
   it 'Issue 118 - Clicking on TM logo while logged in should not bring back the main screen', (done)->
@@ -90,7 +90,7 @@ describe 'regression-sprint-1', ->                                              
   it "Issue 129 - 'Need to login page' missing from current 'guest' pages", (done)->
     jade.keys().assert_Contains('page_Login_Required')
     page.open '/guest/login-required.html', (html,$)->
-      $('h3').html().assert_Is('Login')
+      $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       done()
 
   it 'Issue 151 - Add asserts for new Login page content ', (done)->

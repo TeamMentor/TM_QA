@@ -131,8 +131,7 @@ describe 'jade | pages-anonymous.tests', ->
 
   it 'Login', (done)->
     jade.page_Login (html,$)->
-      $('h3').html().assert_Is("Login")
-      $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
+      $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
       $('#btn-login').html().assert_Is('Access TEAM Mentor')
@@ -145,17 +144,13 @@ describe 'jade | pages-anonymous.tests', ->
   it 'Login Fail', (done)->
     jade.page_Login_Fail (html, $)->
       $('.alert').html().assert_Is('Error: ')
-      $('h3').html().assert_Is("Login")
-      $('p' ).html().assert_Is("Returning customer? Please log in to access TEAM Mentor.")
-      # Same as "it 'Login', (done)->" , so we should also check if those fields are here
+      $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       done()
 
   it "Login Required", (done)->
     jade.page_Login_Required (html,$)->
       page.chrome.url (url)->
         $('#loginwall .alert').html('You need to login to see that page :)')
-        $('#loginwall h3').html().assert_Is("Login")
-        $('#loginwall p').text().assert_Is('Returning customer? Please log in to access TEAM Mentor.')
         done()
 
   it 'Password Forgot', (done)->
@@ -170,16 +165,15 @@ describe 'jade | pages-anonymous.tests', ->
 
   it 'Password Sent', (done)->
     jade.page_Pwd_Sent (html,$)->
-      $('h3').html().assert_Is("Login")
+      $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
       done()
 
   it 'Sign Up', (done) ->
     jade.page_Sign_Up (html,$)->
-      $('h3'                                  ).html().assert_Is("Sign Up")
-      $('p'                                   ).html().assert_Is("Create an account and get access to the world&apos;s largest repository of secure software development knowledge.")
+      $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
 
-      $('form'                                ).attr().assert_Is({ id: 'sign-up-form', role: 'form' , method:'POST', action: '/user/sign-up' })
+      $('form'                       ).attr().assert_Is({ id: 'sign-up-form', role: 'form' , method:'POST', action: '/user/sign-up' })
       $('label[for=username]'        ).html().assert_Is('Username')
       $('label[for=password]'        ).html().assert_Is('Password')
       $('label[for=confirm-password]').html().assert_Is('Confirm Password')
@@ -196,15 +190,12 @@ describe 'jade | pages-anonymous.tests', ->
   it 'Sign Up Fail', (done) ->
     jade.page_Sign_Up_Fail (html,$)->
       $('.alert').html().assert_Is('Error: ')
-      $('h3'    ).html().assert_Is("Sign Up")
+      $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
       done()
 
   it  'Sign Up OK', (done) ->
     jade.page_Sign_Up_OK (html,$)->
-      $('h3' )      .html().assert_Is('Login'                     )
       $('#loginwall .alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
-      $('#loginwall h3').html().assert_Is("Login")
-      $('#loginwall p').text().assert_Is('Returning customer? Please log in to access TEAM Mentor.')
       done()
 
   it 'Tearms and Conditions', (done)->

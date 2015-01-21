@@ -9,7 +9,7 @@ describe 'issues-sprint-1', ->                                                  
       randomUser  = 'abc_'.add_5_Random_Letters();
       randomEmail = "#{randomUser}@teammentor.net"
       jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
-        $('h3').html().assert_Is('Sign Up')
+        $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
         next()
 
     assert_Weak_Pwd_Fail "", ->

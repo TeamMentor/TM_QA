@@ -36,7 +36,7 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('h3').html().assert_Is('Sign Up')
+          $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
           $('.alert').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
           done()
 
@@ -49,7 +49,6 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('h3').html().assert_Is('Sign Up')
           $('.alert').html().assert_Is('Error: Password must be 8 to 256 character long')
           done()
 
@@ -62,7 +61,6 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('h3').html().assert_Is('Sign Up')
           $('.alert').html().assert_Is('Error: Username already exist')
           done()
 
@@ -76,7 +74,6 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('h3').html().assert_Is('Sign Up')
           $('.alert').html().assert_Is('Error: Email already exist')
           done()
 
@@ -127,7 +124,6 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/sign-up-OK.html')
         page.html (html,$)->
-          $('h3').html().assert_Is('Login')
           $('.alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
           #Performs login upon Sign up
           jade.login username,password,  (html, $) ->
