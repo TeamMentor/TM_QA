@@ -36,7 +36,7 @@ describe 'jade | page-search',->
             @.length.assert_Bigger_Than(0)
             @.first().attr().assert_Is { href: jade.tm_35_Server + '/' + article_Id
                                        , target: '_blank' }
-            @.first().text().assert_Is(article_Title + badge_value)
+            @.first().text().assert_Is(article_Title)
             done()
 
     it 'open article redirector and confirm tm error', (done)->
