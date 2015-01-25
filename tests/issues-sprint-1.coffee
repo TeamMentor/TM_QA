@@ -17,11 +17,6 @@ describe 'issues-sprint-1', ->                                                  
         #assert_Weak_Pwd_Fail  "!!123", ->
         done()
 
-  it 'Issue 113 - Main user page has no content on TM Jade (user/main.html)', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        done()
-
 
   #done
 

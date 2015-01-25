@@ -3,7 +3,11 @@ describe 'regression-sprint-1', ->                                              
   jade = page.jade_API
   require '../TM_4_0_Design/node/_extra_fluentnode'
   @timeout(4000)
-  
+
+  before (done)->
+    jade.page_User_Logout ->
+      done()
+
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
       login_Link = link.attribs.href for link in $('#links li a') when $(link).html()=='Login'                # extract the url from the link with 'Login' as text
@@ -68,8 +72,8 @@ describe 'regression-sprint-1', ->                                              
             @.html().assert_Contains(article_Title)
             done()
 
-  it 'Issue 123-Terms and conditions link is available', (done)->
-    jade.page_Home (html, $) ->
+  it 'Issue 123 - Terms and conditions link is available', (done)->
+    jade.page_User_Logout (html,$)->
       footerDiv =  $('#footer').html()
       footerDiv.assert_Contains("Terms &amp; Conditions")
       done();
@@ -105,9 +109,10 @@ describe 'regression-sprint-1', ->                                              
       done()
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
-    jade.page_About (html, $)->
-      $("#footer h5").html().assert_Contains('TEAM Mentor v')
-      done()
+    jade.page_User_Logout ()->
+      jade.page_About (html, $)->
+        $("#footer h5").html().assert_Contains('TEAM Mentor v')
+        done()
 
   #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below
   #it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
@@ -128,12 +133,25 @@ describe 'regression-sprint-1', ->                                              
   #              label.attr().for.assert_Is(value)
   #          done()
 #
+
   it 'Issue 195 - Wire the step down navigation', (done)->
     jade.login_As_User ->
       navigation = 'Technology,Phase,Type'
       page.open "/graph/#{navigation}", (html, $)->
         $('#navigation').html().assert_Contains ['/graph/Technology' , '/graph/Technology,Phase', '/graph/Technology,Phase,Type']
         done()
+
+  it 'Issue 196 - What should happen when an already logged in user returns to TM', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html_user_main, $)->           # get html of user page after login
+        page.open '/', (html_direct)->                    # get html of direct opening up / page (while logged in)
+          html_direct.assert_Is html_user_main            # ensure they are the same
+          jade.page_User_Logout ()->                      # logout user
+            page.open '/', (html_after_logout)->          # get html of direct opening up / page (after logout)
+              html_direct.assert_Is_Not html_after_logout # confirm it is not the same as logged in page
+              page.chrome.url (url)->
+                url.assert_Contains('/index.html')        # confirms redirect to 'index.html'
+                done()
 
   it 'Issue 212 - Add page to render jade mixins directly', (done)->
 
