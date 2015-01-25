@@ -22,19 +22,9 @@ describe 'issues-sprint-1', ->                                                  
       jade.page_User_Main (html, $)->
         done()
 
-  it 'Issue 195 - Wire the step down navigation', (done)->
-    jade.login_As_User ->
-      jade.page_User_Graph 'Technology', (html, $)->
-        done()
-
-
 
   #done
-  it.only 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
-    jade.login_As_User ->
-      jade.page_User_Graph 'Technology', (html, $)->
-        $('#articles a').length.assert_Is 20
-        done()
+
 
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)

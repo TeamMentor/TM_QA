@@ -29,7 +29,7 @@ describe 'jade | pages-users', ->
         @.text     .assert_Is text
 
     checkValues(0, {"href":'/user/main.html' }, { class: 'fi-magnifying-glass'}, 'Search'    )
-    checkValues(1, {"href":'/library/Uno'    }, { class: 'fi-map'             }, 'Navigate')
+    checkValues(1, {"href":'/graph/Guidance'    }, { class: 'fi-map'             }, 'Navigate')
     checkValues(2, {"href":'/help/index.html'}, { class: 'fi-info'            }, 'Help'    )
     checkValues(3, {"href":'/user/logout'    }, { class: 'fi-power'           }, 'Logout'  )
 
@@ -89,48 +89,3 @@ describe 'jade | pages-users', ->
       section_Titles = ($(h4).html() for h4 in $('h4'))
       section_Titles.assert_Is(['Recently Viewed Articles','Popular Search Terms','Top Articles'])
       done()
-
-  # need quicker load of TM 3.5 data (and way to run on travis)
-  # this test need to move the page-graph
-  xit 'Queries', (done)->
-    jade.page_User_Queries (html,$)->
-      links_Libraries = $('#links-libraries a')
-      $(links_Libraries.get(0)).html().assert_Is('Guidance')
-      $(links_Libraries.get(0)).attr().assert_Is({ id: 'link-my-articles', href: '/library/Uno' })
-      $(links_Libraries.get(1)).html().assert_Is('Library Queries')
-      $(links_Libraries.get(1)).attr().assert_Is({ id: 'link-my-articles', href: '/library/queries' })
-
-      values = ($(link).text() for link in $('#links-library a'))
-      values.assert_Contains(' Any')
-      values.assert_Contains('(Web) Encoding')
-      values.assert_Contains('(Web) Session Management')
-      values.assert_Contains('.NET 3.5')
-      done()
-
-  # need quicker load of TM 3.5 data (and way to run on travis)
-  # this test need to move the page-graph
-  xit 'Graph - Logging', (done)->
-    jade.page_User_Graph 'Logging', (html,$)->
-      all_H3 = ($(h3).html() for h3 in $('h3'))
-      all_H4 = ($(h4).html() for h4 in $('h4'))
-
-      all_H3.assert_Is([ 'Logging', 'Filters' ])
-      #all_H4.assert_Contains('Showing 107 articles')
-      all_H4.assert_Contains('Centralize Logging')
-      all_H4.assert_Contains('Logging Is Centralized')
-      done();
-
-  #test below broke in of of the recent pushes
-  #   see https://github.com/TeamMentor/TM_4_0_Design/issues/164#issuecomment-68592996
-  #   for now the ui check is done by the new 'Graph - Logging' test (above)
-  #it.only 'Graph - Data Validation', (done)->
-  #  jade.page_User_Graph 'Data+Validation', (html,$)->
-  #    all_H3 = ($(h3).html() for h3 in $('h3'))
-  #    all_H4 = ($(h4).html() for h4 in $('h4'))
-#
-  #    all_H3.assert_Is([ 'Logging', 'Filters' ])
-  #    all_H4.assert_Contains('Showing 89 articles')
-  #    all_H4.assert_Contains('Constrain, Reject, And Sanitize Input')
-  #    all_H4.assert_Contains('How to Constrain Input For Length Range Format And Type')
-  #    all_H4.assert_Contains('Constrain, Reject, And Sanitize Input')
-  #    done();

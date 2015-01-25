@@ -128,16 +128,12 @@ describe 'regression-sprint-1', ->                                              
   #              label.attr().for.assert_Is(value)
   #          done()
 #
-  it 'Issue 198 - Right-hand-side query selection must have a visual clue and needs to be clickable (to clear filter)',(done)->
+  it 'Issue 195 - Wire the step down navigation', (done)->
     jade.login_As_User ->
-      page.open '/graph/Logging', (html, $)->
-        linkText = "Centralize Logging"
-        if $('#containers a').html() is null                  # return if link is not there
-          done()
-          return
-        page.click linkText, (html, $)->                      # click on link
-          $('#containers a').html().assert_Is(linkText)
-          done()
+      navigation = 'Technology,Phase,Type'
+      page.open "/graph/#{navigation}", (html, $)->
+        $('#navigation').html().assert_Contains ['/graph/Technology' , '/graph/Technology,Phase', '/graph/Technology,Phase,Type']
+        done()
 
   it 'Issue 212 - Add page to render jade mixins directly', (done)->
 
@@ -185,3 +181,9 @@ describe 'regression-sprint-1', ->                                              
           attributes = $css('.input-group-btn').attr()
           attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
           done()
+
+  it 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
+    jade.login_As_User ->
+      jade.page_User_Graph 'Technology', (html, $)->
+        $('#articles a').length.assert_Is 20
+        done()
