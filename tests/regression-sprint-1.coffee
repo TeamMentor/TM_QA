@@ -203,5 +203,5 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
     jade.login_As_User ->
       jade.page_User_Graph 'Technology', (html, $)->
-        $('#articles a').length.assert_Is 20
+        $('#articles a').length.assert_Bigger_Than 20
         done()

@@ -93,3 +93,12 @@ describe 'jade | pages-users', ->
   it 'page_User_Graph_All', (done)->
     jade.page_User_Graph_All (html,$)->
       done()
+
+  it 'page_User_Graph (Technology)', (done)->
+    jade.page_User_Graph 'Technology', (html,$)->
+      all_Articles = $("#articles a").keys().size()
+      first_Filter = $('#filters a').first().attr().href
+      page.open first_Filter, (html, $)->
+        $("#articles a").keys().size()
+                        .assert_Is_Not(all_Articles)
+        done()

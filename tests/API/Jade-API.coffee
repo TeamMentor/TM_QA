@@ -63,6 +63,7 @@ class Jade_API
   page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
   page_User_Graph_All: (callback        ) => @page.open "/graph"              , callback
 
+
   render_File: (file, params, callback)->
     mixinPage = "/render/file/#{file}?#{params}"
     @.page.open mixinPage, (html, $)->
