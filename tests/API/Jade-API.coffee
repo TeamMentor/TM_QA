@@ -61,6 +61,7 @@ class Jade_API
   page_User_Main     : (callback        ) => @page.open '/user/main.html'     , callback
   page_User_Queries  : (callback        ) => @page.open '/library/queries'    , callback
   page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
+  page_User_Graph_All: (callback        ) => @page.open "/graph"              , callback
 
   render_File: (file, params, callback)->
     mixinPage = "/render/file/#{file}?#{params}"

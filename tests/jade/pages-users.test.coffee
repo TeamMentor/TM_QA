@@ -89,3 +89,7 @@ describe 'jade | pages-users', ->
       section_Titles = ($(h4).html() for h4 in $('h4'))
       section_Titles.assert_Is(['Recently Viewed Articles','Popular Search Terms','Top Articles'])
       done()
+
+  it 'page_User_Graph_All', (done)->
+    jade.page_User_Graph_All (html,$)->
+      done()
