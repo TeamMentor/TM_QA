@@ -3,6 +3,7 @@ class Jade_API
     @tm_35_Server = "https://tmdev01-uno.teammentor.net"
     @page         = page
     @QA_Users     = [{ name:'user', pwd: 'a'}]
+    @url_Prefix   = '-'
 
   clear_Session: (callback)->
                   @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
@@ -54,14 +55,14 @@ class Jade_API
   page_Sign_Up_OK     : (callback) => @page.open '/guest/sign-up-OK.html'            , callback
   page_TermsAndCond   : (callback) => @page.open '/guest/terms-and-conditions.html'  , callback
 
-  page_User_Help     : (callback        ) => @page.open '/help/index.html'    , callback
-  page_User_Libraries: (callback        ) => @page.open '/libraries'          , callback
-  page_User_Library  : (callback        ) => @page.open '/library/Uno'        , callback
-  page_User_Logout   : (callback        ) => @page.open '/user/logout'        , callback
-  page_User_Main     : (callback        ) => @page.open '/user/main.html'     , callback
-  page_User_Queries  : (callback        ) => @page.open '/library/queries'    , callback
-  page_User_Graph    : (target, callback) => @page.open "/graph/#{target}"    , callback
-  page_User_Graph_All: (callback        ) => @page.open "/graph"              , callback
+  page_User_Help     : (callback        ) => @page.open '/help/index.html'           , callback
+  page_User_Libraries: (callback        ) => @page.open '/libraries'                 , callback
+  page_User_Library  : (callback        ) => @page.open '/library/Uno'               , callback
+  page_User_Logout   : (callback        ) => @page.open '/user/logout'               , callback
+  page_User_Main     : (callback        ) => @page.open '/user/main.html'            , callback
+  page_User_Queries  : (callback        ) => @page.open '/library/queries'           , callback
+  page_User_Graph    : (target, callback) => @page.open "/#{@url_Prefix}/#{target}"  , callback
+  page_User_Graph_All: (callback        ) => @page.open "/#{@url_Prefix}"            , callback
 
 
   render_File: (file, params, callback)->

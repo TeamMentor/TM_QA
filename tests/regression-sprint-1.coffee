@@ -84,9 +84,9 @@ describe 'regression-sprint-1', ->                                              
         $('h3').html().assert_Is("Forgot your password?")
         done();
 
-  it 'Issue 128 - Opening /Graph/{query} page with bad {query} should result in an "no results" page/view', (done)->
+  it 'Issue 128 - Opening /#{jade.url_Prefix}/{query} page with bad {query} should result in an "no results" page/view', (done)->
     jade.login_As_User ->
-      page.open '/graph/aaaaaaa', (html)->
+      page.open '/#{jade.url_Prefix}/aaaaaaa', (html)->
         page.html (html, $)->
           $('#containers a').length.assert_Is(0)
           done()
@@ -137,8 +137,8 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 195 - Wire the step down navigation', (done)->
     jade.login_As_User ->
       navigation = 'Technology,Phase,Type'
-      page.open "/graph/#{navigation}", (html, $)->
-        $('#navigation').html().assert_Contains ['/graph/Technology' , '/graph/Technology,Phase', '/graph/Technology,Phase,Type']
+      page.open "/#{jade.url_Prefix}/#{navigation}", (html, $)->
+        $('#navigation').html().assert_Contains ["/#{jade.url_Prefix}/Technology" , "/#{jade.url_Prefix}/Technology,Phase", "/#{jade.url_Prefix}/Technology,Phase,Type"]
         done()
 
   it 'Issue 196 - What should happen when an already logged in user returns to TM', (done)->
@@ -176,10 +176,12 @@ describe 'regression-sprint-1', ->                                              
         next()
 
     with_Param_ViewModel_2 = (next)->
-      viewModel = { breadcrumbs :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
+      viewModel = { recentArticles :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
+
       data = JSON.stringify(viewModel)
-      render 'articles-mixins', 'breadcrumbs', "viewModel=#{data}", ($)->
-        $('a').attr().href.assert_Is('#')
+      log
+      render 'user-mixins', 'main-app-view', "viewModel=#{data}", ($)->
+        $('#recentlyViewedArticles a').attr().href.assert_Is(viewModel.recentArticles.first().href)
         next()
 
     no_Params ->

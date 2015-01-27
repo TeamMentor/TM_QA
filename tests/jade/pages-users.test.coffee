@@ -28,10 +28,10 @@ describe 'jade | pages-users', ->
         @.img_attr .assert_Is img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {"href":'/user/main.html' }, { class: 'fi-magnifying-glass'}, 'Search'    )
-    checkValues(1, {"href":'/graph/Guidance'    }, { class: 'fi-map'             }, 'Navigate')
-    checkValues(2, {"href":'/help/index.html'}, { class: 'fi-info'            }, 'Help'    )
-    checkValues(3, {"href":'/user/logout'    }, { class: 'fi-power'           }, 'Logout'  )
+    checkValues(0, {"href":'/user/main.html'              }, { class: 'fi-magnifying-glass'}, 'Search'    )
+    checkValues(1, {"href":"/#{jade.url_Prefix}/Guidance" }, { class: 'fi-map'             }, 'Navigate')
+    checkValues(2, {"href":'/help/index.html'             }, { class: 'fi-info'            }, 'Help'    )
+    checkValues(3, {"href":'/user/logout'                 }, { class: 'fi-power'           }, 'Logout'  )
 
   before (done)->
     jade.login_As_QA  ->
