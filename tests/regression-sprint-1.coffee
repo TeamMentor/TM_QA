@@ -202,7 +202,7 @@ describe 'regression-sprint-1', ->                                              
           attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
           done()
 
-  it 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
+  xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
     jade.login_As_User ->
       jade.page_User_Graph 'Technology', (html, $)->
         $('#articles a').length.assert_Bigger_Than 20

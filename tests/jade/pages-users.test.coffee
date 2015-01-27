@@ -94,7 +94,7 @@ describe 'jade | pages-users', ->
     jade.page_User_Graph_All (html,$)->
       done()
 
-  it 'page_User_Graph (Technology)', (done)->
+  xit 'page_User_Graph (Technology)', (done)->
     @timeout 10000
     jade.page_User_Graph 'Technology', (html,$)->
       all_Articles = $("#articles a").keys().size()
