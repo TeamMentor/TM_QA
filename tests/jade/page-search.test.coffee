@@ -53,3 +53,11 @@ describe 'jade | page-search',->
           $('a' ).length .assert_Is(0)
           done()
 
+    it 'perform search', (done)->
+      searchText = 'xss'
+      jade.page_User_Main (html,$)->
+        code = "document.querySelector('input').value='#{searchText}';
+                document.querySelector('button').click()"
+        page.chrome.eval_Script code, =>
+          page.wait_For_Complete (html, $)=>
+            done()
