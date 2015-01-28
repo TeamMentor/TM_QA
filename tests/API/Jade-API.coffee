@@ -4,6 +4,7 @@ class Jade_API
     @page         = page
     @QA_Users     = [{ name:'user', pwd: 'a'}]
     @url_Prefix   = '-'
+    @poc_Prefix   = '-poc-'
 
   clear_Session: (callback)->
                   @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
@@ -64,6 +65,7 @@ class Jade_API
   page_User_Graph    : (target, callback) => @page.open "/#{@url_Prefix}/#{target}"  , callback
   page_User_Graph_All: (callback        ) => @page.open "/#{@url_Prefix}"            , callback
 
+  page_User_PoC      : (target, callback) => @page.open "/#{@poc_Prefix}/#{target}"  , callback
 
   render_File: (file, params, callback)->
     mixinPage = "/render/file/#{file}?#{params}"
