@@ -86,20 +86,21 @@ class QA_TM_4_0_Design
     @chrome.dom_Find selector, (data)->
       callback(data.$)
 
-  field: (selector, value, callback)=>
-    if value instanceof Function
-      callback = value
-      value = null
-      @chrome.dom_Find "input#{selector}", (data)->
-        attributes = data.$('input').attr()
-        callback(attributes)
-    else
-      "need to set the field".log()
+  field: (selector, callback)=>
+    @chrome.dom_Find "input#{selector}", (data)->
+      attributes = data.$('input').attr()
+      callback(attributes)
+
+  textArea: (id, value, callback)=>
+
+
+    code = "element = document.documentElement.querySelector('textarea##{id}');
+            element.innerHTML = '#{value}'"
+    @chrome.eval_Script code, (err,data)=>
       callback()
 
-
   click: (text, callback)->
-    code = "elements = document.documentElement.querySelectorAll('a');
+    code = "elements = document.documentElement.querySelectorAll('a,button');
             for(var i=0; i< elements.length; i++)
               if(elements[i].innerText == '#{text}')
                 elements[i].click();"

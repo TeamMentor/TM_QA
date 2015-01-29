@@ -22,3 +22,14 @@ describe 'jade | pages-poc', ->
               url.assert_Contains('search-two-column?text=' + searchText)
               $('#articles a').keys().assert_Size_Is_Bigger_Than 10
               done()
+
+  it 'md-render', (done)->
+    #jade.login_As_User  ->
+      page.open '/-poc-/md-render?md_text=this is **bold**, this is normal<script>alert(12)<script><img a=asd onerror=aaaa />', (html,$)->
+        $('title').html().assert_Is('TEAM Mentor 4.0 (Html version)')
+        $('h3').html().assert_Is 'Render Markdown PoC'
+        selector = 'text_md'
+        markdown = "this **is in bold**..."
+        page.textArea 'text_md', markdown,->
+          page.click 'RENDER', ->
+          done()
