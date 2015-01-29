@@ -66,7 +66,7 @@ describe 'jade | pages-anonymous.tests', ->
 
   it '/',(done)->
     jade.page_Home (html,$)->
-      $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
+      $('#usp h2 p').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
       $('#usp a'       ).get(0).attribs.href .assert_Is('/guest/sign-up.html')
       $('#usp button'  ).text()              .assert_Is('Start your free trial today')
