@@ -36,6 +36,12 @@ describe 'regression-sprint-1', ->                                              
             $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
+  it 'Issue 244 - Button type should be submit', (done)->
+    jade.page_Pwd_Forgot (html, $) ->
+      $('#loginwall h3').html().assert_Is('Forgot your password?')
+      $('#btn-get-password').attr('type').assert_Is('submit')
+      done()
+
   it 'Issue 117 - Getting Started Page is blank', (done)->
     jade.page_Home ->
       page.click 'START YOUR FREE TRIAL TODAY', (html, $)->
