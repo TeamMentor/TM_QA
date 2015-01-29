@@ -5,6 +5,11 @@ describe 'jade | pages-poc', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
+  it '-poc-', (done)->
+    jade.login_As_User  ->
+      jade.page_User_PoC '', (html, $)=>
+         done()
+
   it 'search-two-column', (done)->
     jade.login_As_User  ->
       searchText = 'security'
