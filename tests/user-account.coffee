@@ -24,8 +24,17 @@ describe 'user-account', ->
 
   it 'Login fail (Password do not match)', (done)->
     jade.login 'a','bbbbaaa',  (html, $) ->
-      #$('.alert').html().assert_Is('Error: Wrong Password')
+      $('.alert').html().assert_Is('Error: Wrong Password')
+      done()
+
+  it 'Login fail (Account is expired)', (done)->
+    jade.login 'AccountExpired','bbbbaaa',  (html, $) ->
       $('.alert').html().assert_Is('Error: Account Expired')
+      done()
+
+  it 'Login fail (Account is Disabled)', (done)->
+    jade.login 'AccountDisabled','!!Hxzqe394-9',  (html, $) ->
+      $('.alert').html().assert_Is('Error: Account Disabled')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
