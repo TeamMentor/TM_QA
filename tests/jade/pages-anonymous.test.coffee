@@ -9,7 +9,10 @@ describe 'jade | pages-anonymous.tests', ->
   #  testTitle = @.currentTest.fullTitle()
   #  page.screenshot testTitle, done
 
-  before (done)-> jade.clear_Session done                                   # ensure we are anonymous
+  before (done)->
+    jade.page_User_Logout ->                                                # ensure we are anonymous
+      jade.clear_Session ->
+        done()
 
   @timeout(4000)
 

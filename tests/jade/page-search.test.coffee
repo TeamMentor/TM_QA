@@ -1,7 +1,7 @@
 require 'fluentnode'
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
-describe 'jade | page-search',->
+describe 'jade | page-search |',->
   page = QA_TM_Design.create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
@@ -19,7 +19,7 @@ describe 'jade | page-search',->
       $('button').attr().assert_Is({ type: 'submit', class: 'btn-search-bar' })
       done()
 
-  describe 'Recently Viewed Articles', (done)->
+  describe 'Recently Viewed Articles |', (done)->
 
     before (done)->
       jade.login_As_User ->
@@ -53,7 +53,8 @@ describe 'jade | page-search',->
           $('a' ).length .assert_Is(0)
           done()
 
-    it 'perform search', (done)->
+    #this test needs to be done more solidly
+    xit 'perform search', (done)->
       searchText = 'xss'
       jade.page_User_Main (html,$)->
         code = "document.querySelector('input').value='#{searchText}';
