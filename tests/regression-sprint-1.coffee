@@ -1,7 +1,6 @@
 describe 'regression-sprint-1', ->                                                                         # name of this suite of tests (should match the file name)
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
-  require '../TM_4_0_Design/node/_extra_fluentnode'
   @timeout(4000)
 
   before (done)->
