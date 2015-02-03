@@ -39,7 +39,7 @@ class Jade_API
       else
         options = { headers: { 'Cookie':'tm-session='+ cookie.value} }
         url.http_With_Options options, (err, html)->
-          callback html.contains('Logout')
+          callback html and html.contains('Logout')
 
   page_About          : (callback) => @page.open '/guest/about.html'                 , callback
   page_Help           : (callback) => @page.open '/help/index.html'                  , callback

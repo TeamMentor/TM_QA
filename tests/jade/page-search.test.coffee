@@ -25,7 +25,7 @@ describe '| jade | page-search |',->
       jade.login_As_User ->
         done()
 
-    it 'open article and check list', (done)->
+    xit 'open article and check list', (done)->
       article_Id    = 'aaaaaa'.add_5_Letters()
       article_Title = 'bbbbbb'.add_5_Letters()
       badge_value   = 12;
@@ -39,7 +39,7 @@ describe '| jade | page-search |',->
             @.first().text().assert_Is(article_Title)
             done()
 
-    it 'open article redirector and confirm tm error', (done)->
+    xit 'open article redirector and confirm tm error', (done)->
       articleUrl = page.tm_Server + '/article/view/guid/title'
       page.chrome.open articleUrl, ()->
         300.wait ->

@@ -85,7 +85,7 @@ describe 'regression-sprint-1', ->                                              
 
   it 'Issue 124 - Forgot password page is blank', (done)->
     jade.page_Login ->
-      page.click 'FORGOT YOUR PASSWORD?', (html,$)->
+      page.click 'Forgot password?', (html,$)->
         $('h3').html().assert_Is("Forgot your password?")
         done();
 

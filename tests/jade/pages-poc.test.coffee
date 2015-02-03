@@ -1,5 +1,5 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
-
+return
 # this test suite contains all  all pages that we currently need to support for logged in  users
 describe 'jade | pages-poc', ->
   page = QA_TM_Design.create(before, after);
@@ -24,8 +24,8 @@ describe 'jade | pages-poc', ->
               done()
 
   it 'md-render', (done)->
-    #jade.login_As_User  ->
-      page.open '/-poc-/md-render?md_text=this is **bold**, this is normal<script>alert(12)<script><img a=asd onerror=aaaa />', (html,$)->
+    jade.login_As_User  ->
+      page.open '/-poc-/md-it-render', (html,$)->
         $('title').html().assert_Is('TEAM Mentor 4.0 (Html version)')
         $('h3').html().assert_Is 'Render Markdown PoC'
         selector = 'text_md'
@@ -33,3 +33,23 @@ describe 'jade | pages-poc', ->
         page.textArea 'text_md', markdown,->
           page.click 'RENDER', ->
           done()
+
+  it 'md-it-render', (done)->
+    jade.login_As_User  ->
+      page.open '/-poc-/md-it-render', (html,$)->
+        $('h3').html().assert_Is 'Render Markdown PoC'
+        selector = 'text_md'
+        markdown = "this **is in bold**..."
+        page.textArea 'text_md', markdown,->
+          page.click 'RENDER', ->
+          done()
+
+  it 'wiki-render', (done)->
+    jade.login_As_User  ->
+      page.open '/-poc-/wiki-render', (html,$)->
+        selector = 'text_md'
+        markdown = "this **is in bold**..."
+        page.textArea 'text_md', markdown,->
+          #page.click 'RENDER', ->
+          done()
+

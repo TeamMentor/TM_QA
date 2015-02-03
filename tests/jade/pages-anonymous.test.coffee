@@ -138,10 +138,9 @@ describe 'jade | pages-anonymous.tests', ->
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
       $('#btn-login').html().assert_Is('Access TEAM Mentor')
-      $('#btn-forgot-pwd').html().assert_Is('Forgot Your Password?')
+      $('#link-forgot-pwd').html().assert_Is('Forgot password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
-      $('#btn-forgot-pwd').attr('type').assert_Is('button')
-      $('#btn-forgot-pwd').parent().attr('href').assert_Is('/guest/pwd-forgot.html')
+      $('#link-forgot-pwd').attr('href').assert_Is('/guest/pwd-forgot.html')
       done()
 
   it 'Login Fail', (done)->
@@ -159,7 +158,7 @@ describe 'jade | pages-anonymous.tests', ->
   it 'Password Forgot', (done)->
     jade.page_Pwd_Forgot (html, $)->
       $('h3').html().assert_Is("Forgot your password?")
-      $('p' ).html().assert_Is("Just type in your email address and we&apos;ll send you an email with further instructions.")
+      $('p' ).html().assert_Is("Type in your email address and we&apos;ll send you an email with further instructions.")
       $('.form-group label').html('Email Address')
       $.html('#email').assert_Is('<input type="email" id="email" name="email" placeholder="Email Address">')
       $('#forgot-password').attr('action').assert_Is('/user/pwd_reset')
