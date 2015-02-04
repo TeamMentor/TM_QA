@@ -19,13 +19,14 @@ class Jade_API
 
   login_As_QA   : (callback) =>
     user = @QA_Users.first()
-    @login user.name, user.pwd, callback
+    @login user.name, user.pwd, =>
+      @page.html callback
 
 
   login_As_User: (callback) =>
     @is_User_Logged_In (value)=>
       if value
-        callback()
+        @page.html callback
       else
         @login_As_QA callback
 

@@ -18,6 +18,42 @@ describe 'issues-sprint-1', ->                                                  
         done()
 
 
+
+
+  it.only 'Issue 380 - logout appears broken', (done)->
+    jade.login_As_User (html,$)->
+      $('#popular-Search-Terms h4').html().assert_Is 'Popular Search Terms'
+      page.click 'LOGOUT', ->
+        page.chrome.url (url)->
+          url.assert_Contains '/guest/default.html'
+          page.open '/user/main.html',(html,$)->
+            $('#loginwall .alert').html().assert_Is 'You need to login to see that page.'
+            done()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   #done
 
 
