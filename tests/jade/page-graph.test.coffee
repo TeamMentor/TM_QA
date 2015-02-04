@@ -27,12 +27,14 @@ describe '| jade | page-graph |',->
         #  done()
 
   it 'Check Active Filter',(done)->
-    jade.page_User_Graph 'Java', (html,$)->
+    filter_Name = 'Java'
+    jade.page_User_Graph filter_Name, (html,$)->
       activeFilter = $('#activeFilter').text()              # on first load there should be no value in the active filter
       activeFilter.assert_Is ''
       first_Filter = $('#filters a').first()
       link = first_Filter.attr().href
       page.open link, (html, $)->
-        updatedFilter = $('#activeFilter').html()
-        first_Filter.text().assert_Contains updatedFilter  # now active filter should have the contents of the link clicked
+        updatedFilter = $('#activeFilter').text()
+        updatedFilter.assert_Contains filter_Name
+        first_Filter.text().assert_Contains filter_Name        # now active filter should have the contents of the link clicked
         done()
