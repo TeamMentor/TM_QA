@@ -14,8 +14,8 @@ describe 'issues-sprint-1', ->                                                  
 
     assert_Weak_Pwd_Fail "", ->
       assert_Weak_Pwd_Fail  "123", ->   # this should fail to create an account
-        #assert_Weak_Pwd_Fail  "!!123", ->
-        done()
+        assert_Weak_Pwd_Fail  "!!123", ->
+           done()
 
 
 
@@ -27,7 +27,7 @@ describe 'issues-sprint-1', ->                                                  
           page.chrome.url (url)->
             url.assert_Contains '/guest/default.html'
             page.open '/user/main.html',(html,$)->
-              $('#loginwall .alert').html().assert_Is 'You need to login to see that page.'
+              $('#loginwall .alert #message').html().assert_Is 'You need to login to see that page.'
               done()
 
 

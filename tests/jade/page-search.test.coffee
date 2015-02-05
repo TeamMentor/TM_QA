@@ -10,7 +10,7 @@ describe '| jade | page-search |',->
 
   it 'mixin: main-app-view', (done)->
     jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
-      $('#recentlyViewedArticles').html().assert_Is_String()
+      $('#recently-Viewed-Articles').html().assert_Is_String()
       done()
 
   it 'mixin: search-bar-input', (done)->
@@ -49,7 +49,7 @@ describe '| jade | page-search |',->
 
     it 'check elements',(done)->
       jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
-          $('h4').text().assert_Is('Recently Viewed ArticlesPopular Search TermsTop Articles')
+          $('h4').text().assert_Is('Popular Search TermsTop Articles')
           $('a' ).length .assert_Is(0)
           done()
 

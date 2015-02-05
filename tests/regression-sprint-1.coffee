@@ -32,7 +32,7 @@ describe 'regression-sprint-1', ->                                              
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
             $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
-            $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
+            $('#loginwall .alert #message' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
   it 'Issue 244 - Button type should be submit', (done)->
@@ -65,7 +65,7 @@ describe 'regression-sprint-1', ->                                              
   #        $('h3').html().assert_Is("Login")                                                # confirm that we are on the login page
   #        done();
 
-  it 'Issue 120 - Recently Viewed Articles not working', (done)->
+  xit 'Issue 120 - Recently Viewed Articles not working', (done)->
     jade.login_As_User ->
       article_Id    = 'aaaaaa_'.add_5_Letters()
       article_Title = 'bbbbbb_'.add_5_Letters()
@@ -186,7 +186,7 @@ describe 'regression-sprint-1', ->                                              
       data = JSON.stringify(viewModel)
       log
       render 'user-mixins', 'main-app-view', "viewModel=#{data}", ($)->
-        $('#recentlyViewedArticles a').attr().href.assert_Is(viewModel.recentArticles.first().href)
+        $('#recently-Viewed-Articles a').attr().href.assert_Is(viewModel.recentArticles.first().href)
         next()
 
     no_Params ->
