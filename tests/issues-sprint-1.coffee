@@ -2,21 +2,7 @@ describe 'issues-sprint-1', ->                                                  
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-  @timeout(10000)
-
-  it 'Issue 105 - New users can be created with Weak Passwords', (done)->
-    assert_Weak_Pwd_Fail = (password, next)->
-      randomUser  = 'abc_'.add_5_Random_Letters();
-      randomEmail = "#{randomUser}@teammentor.net"
-      jade.user_Sign_Up randomUser, password, randomEmail, (html , $)->
-        $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
-        next()
-
-    assert_Weak_Pwd_Fail "", ->
-      assert_Weak_Pwd_Fail  "123", ->   # this should fail to create an account
-        assert_Weak_Pwd_Fail  "!!123", ->
-           done()
-
+  #@timeout(10000)
 
 
   it 'Issue 380 - logout appears broken', (done)->
@@ -30,7 +16,8 @@ describe 'issues-sprint-1', ->                                                  
               $('#loginwall .alert #message').html().assert_Is 'You need to login to see that page.'
               done()
 
-  it.only 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
+  it 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
+    @timeout 5000
     check_Search_Payload = (payload, next)->
       page.open "/search?text=#{payload}", (html,$)->
         $('form').attr().assert_Is { action: '/search', method: 'GET' }
@@ -46,30 +33,21 @@ describe 'issues-sprint-1', ->                                                  
 
 
 
+  it 'Show 404 page', (done)->
+    check_404 = (payload, next)->
+      page.open payload, (html,$)->
+        $('#404-message').html().assert_Contains 'HTTP 404 error - check the URL and refresh '
+        next()
 
+    check_404 '/aaaaaa' ,->
+      check_404 '/12312341/aaaaaa' ,->
+        check_404 '/!!@@£$/123' ,->
+          done()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  it 'Show unavailable page on unhandled node error', (done)->
+    page.open '/aaaaaa*&%5E(*&*(*%5E&%%5E', (html,$)->
+      $('#an-error-occured').html().assert_Is 'An error occured'
+      done()
 
 
 

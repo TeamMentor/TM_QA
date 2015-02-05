@@ -181,8 +181,8 @@ describe 'jade | pages-anonymous.tests', ->
       $('label[for=confirm-password]').html().assert_Is('Confirm Password')
       $('label[for=email]'           ).html().assert_Is('Email Address')
 
-      $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'     , value:''})
-      $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'     , value:''})
+      $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'     , value:'', required: ''})
+      $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'     , value:'', required: ''})
       $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:''})
       $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:''})
       $('button#btn-sign-up'         ).html().assert_Is('Start Fixing Vulnerabilities')
