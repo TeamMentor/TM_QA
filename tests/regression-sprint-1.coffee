@@ -223,7 +223,7 @@ describe 'regression-sprint-1', ->                                              
         url.assert_Contains('/guest/login.html')
         done()
 
-  it.only 'Issue 359- Login request is too large', (done)->
+  it 'Issue 359- Login request is too large', (done)->
     username = ''.add_Random_Letters(100000)
     password = ''.add_Random_Letters(100000)
     jade.login username,password,  (html, $) ->
