@@ -212,3 +212,20 @@ describe 'regression-sprint-1', ->                                              
       jade.page_User_Graph 'Technology', (html, $)->
         $('#articles a').length.assert_Bigger_Than 20
         done()
+
+  it 'Issue 381-submitting blank login form gives error', (done)->
+    jade.page_Login (html,$)->
+      code = "document.querySelector('#username').value='';
+                              document.querySelector('#password').value='';
+                              document.querySelector('#btn-login').click()"
+      page.chrome.eval_Script code, =>
+       page.chrome.url (url)->
+        url.assert_Contains('/guest/login.html')
+        done()
+
+  it 'Issue 359- Login request is too large', (done)->
+    username = ''.add_Random_Letters(100000)
+    password = ''.add_Random_Letters(100000)
+    jade.login username,password,  (html, $) ->
+      html.assert_Contains('It\'s a HTTP 404 error - check the URL and refresh the browser')
+      done()

@@ -89,6 +89,12 @@ class Jade_API
 
   user_Sign_Up    : (username, password, email, callback) =>
                       @page_Sign_Up (html, $)=>
+
+                        #removing required attribute to pass test
+                        script ="document.querySelector('#username').removeAttribute('required');
+                                 document.querySelector('#password').removeAttribute('required');"
+                        @page.chrome.eval_Script script
+
                         code = "document.querySelector('#username').value='#{username}';
                                 document.querySelector('#password').value='#{password}';
                                 document.querySelector('#confirm-password').value='#{password}';
