@@ -19,13 +19,14 @@ class Jade_API
 
   login_As_QA   : (callback) =>
     user = @QA_Users.first()
-    @login user.name, user.pwd, callback
+    @login user.name, user.pwd, =>
+      @page.html callback
 
 
   login_As_User: (callback) =>
     @is_User_Logged_In (value)=>
       if value
-        callback()
+        @page.html callback
       else
         @login_As_QA callback
 
@@ -39,7 +40,7 @@ class Jade_API
       else
         options = { headers: { 'Cookie':'tm-session='+ cookie.value} }
         url.http_With_Options options, (err, html)->
-          callback html.contains('Logout')
+          callback html and html.contains('Logout')
 
   page_About          : (callback) => @page.open '/guest/about.html'                 , callback
   page_Help           : (callback) => @page.open '/help/index.html'                  , callback

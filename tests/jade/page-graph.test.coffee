@@ -1,27 +1,40 @@
-return
-describe 'jade | page-graph',->
+describe '| jade | page-graph |',->
   page = require('./../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
-  describe 'right-hand-side',->
+  before (done)->
+    jade.login_As_User ->
+        done()
 
-    before (done)->
-      jade.login_As_User ->
-        page.open '/graph/Logging', ->
-          done()
+  it 'Check filters have size ',(done)->
+    jade.page_User_Graph 'Java', (html,$)->
+        #if $('#filters a').html() is null      # return if link is not there
+        #  done()
+        #  return
+        first_Link   = $('#filters a').first()
+        first_Badge = $('#filters a .badge').first()
+        linkText = first_Link.text().remove(first_Badge.text())
+        linkText.assert_Is_String()
+        for badge in $('#filters .badge')        # check that all badges have a value
+          $(badge).html().assert_Is_Not(0)
+        done()
+        #page.click linkText, (html, $)->             # click on link
+          #for badge,index in $('#filters .badge') # check that all badges have a value execpt the first one
+          #  if index
+          #    $(badge).html().assert_Is(0)
+          #  else
+          #    $(badge).html().assert_Is_Not(0)
+        #  done()
 
-    it 'Click on first query ',(done)->
-      page.html (html, $)->
-          linkText = "Centralize Logging"
-          if $('#containers a').html() is null      # return if link is not there
-            done()
-            return
-          for badge in $('#containers .badge')        # check that all badges have a value
-            $(badge).html().assert_Is_Not(0)
-          page.click linkText, (html, $)->             # click on link
-            for badge,index in $('#containers .badge') # check that all badges have a value execpt the first one
-              if index
-                $(badge).html().assert_Is(0)
-              else
-                $(badge).html().assert_Is_Not(0)
-            done()
+  it 'Check Active Filter',(done)->
+    filter_Name = 'Java'
+    jade.page_User_Graph filter_Name, (html,$)->
+      activeFilter = $('#activeFilter').text()              # on first load there should be no value in the active filter
+      activeFilter.assert_Is ''
+      first_Filter = $('#filters a').first()
+      link = first_Filter.attr().href
+      page.open link, (html, $)->
+        updatedFilter = $('#activeFilter').text()
+        updatedFilter.assert_Contains filter_Name
+        first_Filter.text().assert_Contains filter_Name        # now active filter should have the contents of the link clicked
+        done()

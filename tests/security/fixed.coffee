@@ -23,5 +23,5 @@ describe 'security | fixed', ->
       page.field '#username', (attributes) ->
         attributes.id   .assert_Is 'username'
         attributes.name .assert_Is 'username'
-        assert_Is_Undefined(attributes.value)
+        attributes.value.assert_Is ''
         done()

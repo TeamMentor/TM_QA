@@ -9,7 +9,10 @@ describe 'jade | pages-anonymous.tests', ->
   #  testTitle = @.currentTest.fullTitle()
   #  page.screenshot testTitle, done
 
-  before (done)-> jade.clear_Session done                                   # ensure we are anonymous
+  before (done)->
+    jade.page_User_Logout ->                                                # ensure we are anonymous
+      jade.clear_Session ->
+        done()
 
   @timeout(4000)
 
@@ -95,7 +98,7 @@ describe 'jade | pages-anonymous.tests', ->
       $(  '#about h2'   ).html()        .assert_Is('An interactive Application Security library with thousands of code samples and professional guidance when you need it')
       $(  '#about-us h4').html()        .assert_Is('TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.')
       $($('#about-us p' ).get(0)).html().assert_Is('It contains over 4,000 articles with dynamic content across multiple development platforms including .NET, Java, C/C++, PHP, Android and iOS. TEAM Mentor is the In-Practice companion to our TEAM Professor eLearning courses, extending developers&#x2019; knowledge in combination with training.')
-      $($('#about-us p' ).get(1)).html().assert_Is('TeamMentor integrates with static analysis tools, such as Checkmarx and Fortify, helping teams make more sense of scan results and make critical decisions to fix software vulnerabilities.')
+      $($('#about-us p' ).get(1)).html().assert_Is('TEAM Mentor integrates with static analysis tools, such as Checkmarx and Fortify&#x2122;, helping teams make more sense of scan results and make critical decisions to fix software vulnerabilities.')
 
       check_Generic_Footer($);
       done()
@@ -135,15 +138,14 @@ describe 'jade | pages-anonymous.tests', ->
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
       $('#btn-login').html().assert_Is('Access TEAM Mentor')
-      $('#btn-forgot-pwd').html().assert_Is('Forgot Your Password?')
+      $('#link-forgot-pwd').html().assert_Is('Forgot password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
-      $('#btn-forgot-pwd').attr('type').assert_Is('button')
-      $('#btn-forgot-pwd').parent().attr('href').assert_Is('/guest/pwd-forgot.html')
+      $('#link-forgot-pwd').attr('href').assert_Is('/guest/pwd-forgot.html')
       done()
 
   it 'Login Fail', (done)->
     jade.page_Login_Fail (html, $)->
-      $('.alert').html().assert_Is('Error: ')
+      #$('.alert').text().assert_Is('Error: ')
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       done()
 
@@ -156,9 +158,9 @@ describe 'jade | pages-anonymous.tests', ->
   it 'Password Forgot', (done)->
     jade.page_Pwd_Forgot (html, $)->
       $('h3').html().assert_Is("Forgot your password?")
-      $('p' ).html().assert_Is("Just type in your email address and we&apos;ll send you an email with further instructions.")
+      $('p' ).html().assert_Is("Type in your email address and we&apos;ll send you an email with further instructions.")
       $('.form-group label').html('Email Address')
-      $.html('#email').assert_Is('<input type="email" id="email" name="email" placeholder="Email Address">')
+      $.html('#email').assert_Is('<input type="email" id="email" name="email" placeholder="Email Address" value="">')
       $('#forgot-password').attr('action').assert_Is('/user/pwd_reset')
       $('button').html().assert_Is('Get Password')
       done()
@@ -166,7 +168,7 @@ describe 'jade | pages-anonymous.tests', ->
   it 'Password Sent', (done)->
     jade.page_Pwd_Sent (html,$)->
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
-      $('#loginwall .alert' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
+      $('#loginwall .alert #message').html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
       done()
 
   it 'Sign Up', (done) ->
@@ -179,23 +181,23 @@ describe 'jade | pages-anonymous.tests', ->
       $('label[for=confirm-password]').html().assert_Is('Confirm Password')
       $('label[for=email]'           ).html().assert_Is('Email Address')
 
-      $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'        })
-      $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'        })
-      $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'})
-      $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address'   })
+      $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'     , value:'', required: ''})
+      $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'     , value:'', required: ''})
+      $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:''})
+      $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:''})
       $('button#btn-sign-up'         ).html().assert_Is('Start Fixing Vulnerabilities')
       $('button#btn-sign-up'         ).attr().assert_Is({ id:'btn-sign-up', type:'submit'})
       done()
 
   it 'Sign Up Fail', (done) ->
     jade.page_Sign_Up_Fail (html,$)->
-      $('.alert').html().assert_Is('Error: ')
+      #$('.alert').html().assert_Is('Error: ')
       $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
       done()
 
   it  'Sign Up OK', (done) ->
     jade.page_Sign_Up_OK (html,$)->
-      $('#loginwall .alert').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
+      $('#loginwall .alert #message').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
       done()
 
   it 'Tearms and Conditions', (done)->
