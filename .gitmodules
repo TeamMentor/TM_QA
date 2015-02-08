@@ -4,3 +4,4 @@
 [submodule "TM_4_0_Design"]
 	path = TM_4_0_Design
 	url = git://github.com/TeamMentor/TM_4_0_Design.git
+	banch =dev
