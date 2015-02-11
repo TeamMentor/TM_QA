@@ -3,8 +3,8 @@ class Jade_API
     @tm_35_Server = "https://tmdev01-uno.teammentor.net"
     @page         = page
     @QA_Users     = [{ name:'user', pwd: 'a'}]
-    @url_Prefix   = '-'
-    @poc_Prefix   = '-poc-'
+    @url_Prefix   = 'show'
+    @poc_Prefix   = 'poc'
 
   clear_Session: (callback)->
                   @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback

@@ -3,19 +3,19 @@
 echo ‘Starting TM_4_0_Design’ 
 
 cd TM_4_0_Design
-npm install
+#npm install
 npm start &
 
 
 echo ‘Starting TM_4_0_GraphDB’ 
 
 cd ..
-npm install
+#npm install
 cd TM_4_0_GraphDB
 npm run dev &
 
 cd ..
 cd QA
-npm install
+#npm install
 
 wait
