@@ -46,7 +46,7 @@ describe 'user-account', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
+          $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
           $('.alert #message').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
           done()
 
