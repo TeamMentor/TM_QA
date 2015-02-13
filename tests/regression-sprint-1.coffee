@@ -116,7 +116,7 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
     jade.page_User_Logout ()->
       jade.page_About (html, $)->
-        $("#footer h5").html().assert_Contains('TEAM Mentor v')
+        $("#footer h4").html().assert_Contains('TEAM Mentor v')
         done()
 
   #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below
