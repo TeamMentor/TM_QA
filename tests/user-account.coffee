@@ -37,6 +37,11 @@ describe 'user-account', ->
       $('.alert #message').html().assert_Is('Error: Account Disabled')
       done()
 
+  it.only 'Login fail (Max length constraint)', (done)->
+    jade.login_Without_MaxLength 'a'.add_Random_Letters(1025),'b',  (html, $) ->
+      $('#404-message #an-error-occured').html().assert_Is('An error occured')
+      done()
+
   it 'User Sign Up (with weak password)',(done)->
     @timeout(0)
     username = 'tm_qa_'.add_5_Random_Letters()
