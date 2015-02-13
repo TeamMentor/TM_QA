@@ -204,8 +204,7 @@ describe 'regression-sprint-1', ->                                              
         juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
           $css = cheerio.load(cssHtml)
           attributes = $css('.input-group-btn').attr()
-          console.log (attributes)
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
           done()
 
   xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->

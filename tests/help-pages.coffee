@@ -34,7 +34,7 @@ describe 'help pages ', ->
             next()
             return
           article_Title.assert_Is(help_Page.title)                   # confirms title of loaded page matches link title
-          $('#help-docs .lge-container').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
+          $('#help-docs .bg').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
           next()
 
     async.eachSeries help_Pages.take(max), open_Help_Page, done
