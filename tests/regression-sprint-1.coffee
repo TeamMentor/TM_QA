@@ -37,17 +37,17 @@ describe 'regression-sprint-1', ->                                              
 
   it 'Issue 244 - Button type should be submit', (done)->
     jade.page_Pwd_Forgot (html, $) ->
-      $('#loginwall h3').html().assert_Is('Forgot your password?')
+      $('#heading p').html().assert_Is('Type in your email address and we&apos;ll send you an email with further instructions.')
       $('#btn-get-password').attr('type').assert_Is('submit')
       done()
 
   it 'Issue 117 - Getting Started Page is blank', (done)->
     jade.page_Home ->
       page.click 'START YOUR FREE TRIAL TODAY', (html, $)->
-        $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
+        $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
         jade.page_Home ->
           page.click 'SEE FOR YOURSELF', (html)->
-            $('#heading p').html().assert_Is('Gain access to the largest repository of secure software development knowledge.')
+            $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
             done()
 
   it 'Issue 118 - Clicking on TM logo while logged in should not bring back the main screen', (done)->
@@ -86,7 +86,7 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 124 - Forgot password page is blank', (done)->
     jade.page_Login ->
       page.click 'Forgot password?', (html,$)->
-        $('h3').html().assert_Is("Forgot your password?")
+        $('#heading p').text().assert_Is("Type in your email address and we'll send you an email with further instructions.")
         done();
 
   it 'Issue 128 - Opening /#{jade.url_Prefix}/{query} page with bad {query} should result in an "no results" page/view', (done)->
@@ -104,7 +104,7 @@ describe 'regression-sprint-1', ->                                              
 
   it 'Issue 151 - Add asserts for new Login page content ', (done)->
     jade.page_Login (html,$)->
-      $('#summary h1').html().assert_Is("Security Risk. Understood.")
+      $('#summary h2').html().assert_Is("Security Risk. Understood.")
       $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
       $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
       $('#summary h3').html().assert_Is("With TEAM Mentor, you can...")
@@ -116,7 +116,7 @@ describe 'regression-sprint-1', ->                                              
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
     jade.page_User_Logout ()->
       jade.page_About (html, $)->
-        $("#footer h5").html().assert_Contains('TEAM Mentor v')
+        $("#footer h4").html().assert_Contains('TEAM Mentor v')
         done()
 
   #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below
@@ -158,7 +158,7 @@ describe 'regression-sprint-1', ->                                              
                 url.assert_Contains('/index.html')        # confirms redirect to 'index.html'
                 done()
 
-  it 'Issue 212 - Add page to render jade mixins directly', (done)->
+  it.skip 'Issue 212 - Add page to render jade mixins directly', (done)->
 
     render = (file, mixin, viewModel, callback)->
       mixinPage = "/render/mixin/#{file}/#{mixin}?#{viewModel}"
@@ -204,7 +204,7 @@ describe 'regression-sprint-1', ->                                              
         juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
           $css = cheerio.load(cssHtml)
           attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; width: 100px; vertical-align: top;' }
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
           done()
 
   xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->

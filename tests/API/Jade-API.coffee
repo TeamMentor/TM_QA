@@ -17,6 +17,19 @@ class Jade_API
                       @page.chrome.eval_Script code, =>
                         @page.wait_For_Complete callback
 
+  login_Without_MaxLength : (username, password, callback)=>
+                    @page_Login =>
+                      #removing required attribute to pass test
+                      script ="document.querySelector('#username').removeAttribute('required');
+                                 document.querySelector('#password').removeAttribute('required');"
+                      @page.chrome.eval_Script script
+
+                      code = "document.querySelector('#username').value='#{username}';
+                                              document.querySelector('#password').value='#{password}';
+                                              document.querySelector('#btn-login').click()"
+                      @page.chrome.eval_Script code, =>
+                        @page.wait_For_Complete callback
+
   login_As_QA   : (callback) =>
     user = @QA_Users.first()
     @login user.name, user.pwd, =>
@@ -89,6 +102,10 @@ class Jade_API
 
   user_Sign_Up    : (username, password, email, callback) =>
                       @page_Sign_Up (html, $)=>
+                        #removing required attribute to pass test
+                        script ="document.querySelector('#username').removeAttribute('required');
+                                 document.querySelector('#password').removeAttribute('required');"
+                        @page.chrome.eval_Script script
                         code = "document.querySelector('#username').value='#{username}';
                                 document.querySelector('#password').value='#{password}';
                                 document.querySelector('#confirm-password').value='#{password}';
