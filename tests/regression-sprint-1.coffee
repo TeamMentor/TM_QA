@@ -84,6 +84,14 @@ describe 'regression-sprint-1', ->                                              
       footerDiv.assert_Contains("Terms &amp; Conditions")
       done();
 
+  it 'Issue 123 - Terms and conditions Page is displayed', (done)->
+    jade.page_User_Logout (html,$)->
+      footerDiv =  $('#footer').html()
+      footerDiv.assert_Contains("Terms &amp; Conditions")
+      page.click 'Terms & Conditions', (html,$)->
+        $('#security-innovation-software-license-agreement').html().assert_Is("Security Innovation Software License Agreement")
+        done();
+
   it 'Issue 124 - Forgot password page is blank', (done)->
     jade.page_Login ->
       page.click 'Forgot password?', (html,$)->
@@ -212,14 +220,3 @@ describe 'regression-sprint-1', ->                                              
       jade.page_User_Graph 'Technology', (html, $)->
         $('#articles a').length.assert_Bigger_Than 20
         done()
-
-
-  it.only 'Issue 102 - passwordReset (error handling)', (done)->
-    jade.page_Pwd_Forgot ->
-      page.chrome.eval_Script "document.querySelector('#email').removeAttribute('type');", =>
-        page.chrome.eval_Script "document.querySelector('#email').removeAttribute('name');", =>
-          page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
-            page.wait_For_Complete  (html,$)->
-              html.assert_Contains('"statusCode":500')
-              html.assert_Contains ('Invalid web service call, missing value for parameter: \'email\'.')
-              done()
