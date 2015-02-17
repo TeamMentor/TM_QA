@@ -1,5 +1,5 @@
-describe 'regression-sprint-1', ->                                                                         # name of this suite of tests (should match the file name)
-  page = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
+describe 'regression-sprint-1', ->                                                                          # name of this suite of tests (should match the file name)
+  page = require('./API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
   jade = page.jade_API
   @timeout(4000)
 
@@ -7,11 +7,12 @@ describe 'regression-sprint-1', ->                                              
     jade.page_User_Logout ->
       done()
 
-  it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->                   # name of current test
+  it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->              # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
-      login_Link = link.attribs.href for link in $('#links li a') when $(link).html()=='Login'                # extract the url from the link with 'Login' as text
-      login_Link.assert_Is_Not('/deploy/html/getting-started/index.html')                                   # checks that the link is the wrong one
-      login_Link.assert_Is    ('/guest/login.html')                                     # checks that the link is not the 'correct' one
+      login_Link = $('#nav-log-in')
+      href       = login_Link.attr().href
+      href.assert_Is_Not('/deploy/html/getting-started/index.html')                                         # checks that the link is the wrong one
+      href.assert_Is    ('/guest/login.html')                                                               # checks that the link is not the 'correct' one
       done()
 
   it 'Issue 99 - Main Navigation "Sign Up" link is asking the user to login', (done)->
@@ -158,7 +159,7 @@ describe 'regression-sprint-1', ->                                              
                 url.assert_Contains('/index.html')        # confirms redirect to 'index.html'
                 done()
 
-  it.skip 'Issue 212 - Add page to render jade mixins directly', (done)->
+  it 'Issue 212 - Add page to render jade mixins directly', (done)->
 
     render = (file, mixin, viewModel, callback)->
       mixinPage = "/render/mixin/#{file}/#{mixin}?#{viewModel}"
@@ -184,8 +185,7 @@ describe 'regression-sprint-1', ->                                              
       viewModel = { recentArticles :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
 
       data = JSON.stringify(viewModel)
-      log
-      render 'user-mixins', 'main-app-view', "viewModel=#{data}", ($)->
+      render 'search-mixins', 'main-app-view', "viewModel=#{data}", ($)->
         $('#recently-Viewed-Articles a').attr().href.assert_Is(viewModel.recentArticles.first().href)
         next()
 

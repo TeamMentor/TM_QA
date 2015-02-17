@@ -53,30 +53,6 @@ describe 'jade | pages-users', ->
                                  'TEAM Mentor Related Sites' ])
       done()
 
-  it 'Library', (done)->
-    jade.page_User_Library (html,$)->
-      links_Libraries = $('#links-libraries a')
-      $(links_Libraries.get(0)).html().assert_Is('Guidance')
-      $(links_Libraries.get(0)).attr().assert_Is({ id: 'link-my-articles', href: '/library/Uno' })
-      $(links_Libraries.get(1)).html().assert_Is('Library Queries')
-      $(links_Libraries.get(1)).attr().assert_Is({ id: 'link-my-articles', href: '/library/queries' })
-
-      values = ($(link).text() for link in $('#links-library a'))
-      values.assert_Is([ 'Data Validation',
-                         'Logging',
-                         'Separation of Data and Control',
-                         '(Web) Encoding',
-                         '(Web) Session Management',
-                         'Cryptographic Storage',
-                         'System Hardening',
-                         'Authentication',
-                         'Authorization',
-                         'Canonicalization',
-                         'Administrative Controls',
-                         'Communication Security',
-                         'Error Handling' ])
-      done()
-
   it 'Logout', (done)->
     jade.page_User_Logout (html,$)->
       page.chrome.url (url)->

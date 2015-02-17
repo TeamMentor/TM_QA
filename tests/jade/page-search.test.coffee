@@ -9,14 +9,14 @@ describe '| jade | page-search |',->
   #$   = null
 
   it 'mixin: main-app-view', (done)->
-    jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
-      $('#recently-Viewed-Articles').html().assert_Is_String()
+    jade.render_Mixin 'search-mixins','main-app-view', {}, ($)->
+      $('#main-app-view').html().assert_Is_String()
       done()
 
   it 'mixin: search-bar-input', (done)->
     jade.render_Mixin 'search-mixins','search-bar-input', {}, ($)->
-      $('input' ).attr().assert_Is({ type: 'text', placeholder: 'Type keywords here', name: 'text', class: 'form-control' })
-      $('button').attr().assert_Is({ type: 'submit', class: 'btn-search-bar' })
+      $('input' ).attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+      $('button').attr().assert_Is {"id":"search-button","type":"submit"}
       done()
 
   describe 'Recently Viewed Articles |', (done)->
@@ -48,7 +48,7 @@ describe '| jade | page-search |',->
             done()
 
     it 'check elements',(done)->
-      jade.render_Mixin 'user-mixins','main-app-view', {}, ($)->
+      jade.render_Mixin 'search-mixins','main-app-view', { searchTerms: [], topArticles: []}, ($)->
           $('h4').text().assert_Is('Popular Search TermsTop Articles')
           $('a' ).length .assert_Is(0)
           done()

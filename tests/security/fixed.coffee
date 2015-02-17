@@ -10,12 +10,9 @@ describe 'security | fixed', ->
           next()
 
     jade.clear_Session ->
-      jade.page_User_Libraries -> check_Login_Request ->
-        jade.page_User_Library -> check_Login_Request ->
-          jade.page_User_Main -> check_Login_Request ->
-            jade.page_User_Queries -> check_Login_Request ->
-              jade.page_User_Graph 'CORS', -> check_Login_Request ->
-                done()
+      jade.page_User_Main -> check_Login_Request ->
+        jade.page_User_Graph 'CORS', -> check_Login_Request ->
+          done()
 
   it 'Issue 100 - Login page should not have hardcoded username', (done)->
     hardcoded_UserName = 'user'

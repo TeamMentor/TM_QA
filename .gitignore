@@ -4,3 +4,4 @@ npm-debug.log
 .logs
 .tmCache
 .tm.config.json
+.dist
