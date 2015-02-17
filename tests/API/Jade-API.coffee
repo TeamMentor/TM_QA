@@ -71,11 +71,8 @@ class Jade_API
   page_TermsAndCond   : (callback) => @page.open '/guest/terms-and-conditions.html'  , callback
 
   page_User_Help     : (callback        ) => @page.open '/help/index.html'           , callback
-  page_User_Libraries: (callback        ) => @page.open '/libraries'                 , callback
-  page_User_Library  : (callback        ) => @page.open '/library/Uno'               , callback
   page_User_Logout   : (callback        ) => @page.open '/user/logout'               , callback
   page_User_Main     : (callback        ) => @page.open '/user/main.html'            , callback
-  page_User_Queries  : (callback        ) => @page.open '/library/queries'           , callback
   page_User_Graph    : (target, callback) => @page.open "/#{@url_Prefix}/#{target}"  , callback
   page_User_Graph_All: (callback        ) => @page.open "/#{@url_Prefix}"            , callback
 
@@ -87,7 +84,7 @@ class Jade_API
       callback($)
 
   render_Mixin: (file, mixin, params, callback)->
-    mixinPage = "/render/mixin/#{file}/#{mixin}?#{params}"
+    mixinPage = "/render/mixin/#{file}/#{mixin}?viewModel=#{params.json_Str().url_Encode()}"
     @.page.open mixinPage, (html, $)->
       callback($)
 

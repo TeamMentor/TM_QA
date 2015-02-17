@@ -1,4 +1,4 @@
-describe 'user-account', ->
+describe '| user-account |', ->
   page = require('./API/QA-TM_4_0_Design').create(before,after)
   jade = page.jade_API
 

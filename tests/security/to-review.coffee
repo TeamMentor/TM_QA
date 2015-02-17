@@ -3,7 +3,7 @@ require 'fluentnode'
 async     = require 'async'
 supertest = require 'supertest'
 
-TM_Design_Server = require('../../TM_4_0_Design/node/server')
+TM_Design_Server = require('../../TM_4_0_Design/node/tm-server')
 
 describe 'security | to-review',->
 
