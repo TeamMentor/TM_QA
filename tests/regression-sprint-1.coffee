@@ -213,7 +213,21 @@ describe 'regression-sprint-1', ->                                              
         $('#articles a').length.assert_Bigger_Than 20
         done()
 
-  it.only 'Issue 380 - logout appears broken', (done)->
+  it.only 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
+    check_Search_Payload = (payload, next)->
+      page.open "/search?text=#{payload}", (html,$)->
+        $('form').attr().assert_Is { action: '/search', method: 'GET' }
+        next()
+
+    jade.login_As_User ()->
+      check_Search_Payload '%00',->
+        check_Search_Payload "a'b\"cdef'",->
+          check_Search_Payload "a%27b%22c%3Cmarquee%3Edef",->
+            check_Search_Payload '!@£$%^**()_+=-{}[]|":;\'\?><,./' ,->
+              check_Search_Payload 'aaaa',->
+                done()
+
+  it 'Issue 380 - logout appears broken', (done)->
     jade.login_As_User ()->
       page.open '/user/main.html', (html,$)->
         $('#popular-Search-Terms h4').html().assert_Is 'Popular Search Terms'

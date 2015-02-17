@@ -4,21 +4,6 @@ describe 'issues-sprint-1', ->                                                  
 
   #@timeout(10000)
 
- 
-  it 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
-    @timeout 5000
-    check_Search_Payload = (payload, next)->
-      page.open "/search?text=#{payload}", (html,$)->
-        $('form').attr().assert_Is { action: '/search', method: 'GET' }
-        next()
-
-    jade.login_As_User ()->
-      check_Search_Payload '%00',->
-        check_Search_Payload "a'b\"cdef'",->
-          check_Search_Payload "a%27b%22c%3Cmarquee%3Edef",->
-            check_Search_Payload '!@£$%^**()_+=-{}[]|":;\'\?><,./' ,->
-              check_Search_Payload 'aaaa',->
-                done()
 
 
 
