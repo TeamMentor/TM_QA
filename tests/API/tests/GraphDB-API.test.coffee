@@ -16,7 +16,7 @@ describe 'API | GraphDB-API.test',->
   it 'articles', (done)->
     graphDB.articles (data)->
       articles = data.values()
-      articles.assert_Is_Bigger_Than 500
+      articles.assert_Is_Bigger_Than 150
       using articles.first(),->
         @.guid.split('-').assert_Size_Is 5
         @.title          .assert_Is_String()

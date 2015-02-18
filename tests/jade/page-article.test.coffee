@@ -16,7 +16,7 @@ describe '| jade | page-article |',->
 
   it '/articles', (done)->
     jade.page_User_Articles (html,$)->
-      $('#articles a').length.assert_Is 250
+      $('#articles a').length.assert_Is_Bigger_Than 150
       $('#resultsTitle').text().contains 'Showing 250 articles (of '
       $('#articles a').attr().href.assert_Contains 'article/article-'
 
