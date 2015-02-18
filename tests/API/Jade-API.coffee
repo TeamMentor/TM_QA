@@ -70,6 +70,8 @@ class Jade_API
   page_Sign_Up_OK     : (callback) => @page.open '/guest/sign-up-OK.html'            , callback
   page_TermsAndCond   : (callback) => @page.open '/guest/terms-and-conditions.html'  , callback
 
+  page_User_Article  : (target, callback) => @page.open "/article/#{target}"         , callback
+  page_User_Articles : (callback        ) => @page.open '/articles'                  , callback
   page_User_Help     : (callback        ) => @page.open '/help/index.html'           , callback
   page_User_Logout   : (callback        ) => @page.open '/user/logout'               , callback
   page_User_Main     : (callback        ) => @page.open '/user/main.html'            , callback
