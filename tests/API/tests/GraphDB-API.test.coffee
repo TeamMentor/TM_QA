@@ -1,6 +1,6 @@
 GraphDB_API     = require './../GraphDB-API'
 
-describe 'API | GraphDB-API.test',->
+describe '| API | tests | GraphDB-API.test',->
 
   graphDB = null
 

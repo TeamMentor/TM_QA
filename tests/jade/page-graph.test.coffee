@@ -1,4 +1,4 @@
-describe '| jade | page-graph |',->
+describe '| jade | page-graph.test |',->
   page = require('./../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 

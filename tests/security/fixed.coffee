@@ -1,4 +1,4 @@
-describe 'security | fixed', ->
+describe '| security | fixed |', ->
   page = require('./../API/QA-TM_4_0_Design').create(before,after)
   jade = page.jade_API
 

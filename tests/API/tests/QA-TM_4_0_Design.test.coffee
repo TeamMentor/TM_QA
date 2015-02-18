@@ -1,6 +1,6 @@
 QA_TM_Design = require './../QA-TM_4_0_Design'
 
-describe 'API | QA-TM_4_0_Design',->
+describe '| API | tests | QA-TM_4_0_Design',->
 
   @timeout(5000)
 
