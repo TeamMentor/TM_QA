@@ -1,7 +1,7 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
-describe 'jade | pages-anonymous.tests', ->
+describe '| jade | pages-anonymous.tests', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
@@ -23,8 +23,8 @@ describe 'jade | pages-anonymous.tests', ->
       done()
 
   check_Top_Right_Navigation_Bar = ($)->                                    # confirm that all anonymous pages have the same top level menu
-    navBarLinks = $('#links li a')                                            # get all top right links using a css selector
-    navBarLinks.length.assert_Is(5)                                         # there should be 6 links
+    navBarLinks = $('#links li a')                                          # get all top right links using a css selector
+    navBarLinks.length.assert_Is(5)                                         # there should be 5 links
     linksData = for link in navBarLinks                                     # for each link in navBarLinks
       {                                                                     # create a new object
         href : link.attribs.href,                                           # with the href
@@ -205,6 +205,21 @@ describe 'jade | pages-anonymous.tests', ->
       $('h3').html().assert_Is('Terms &amp; Conditions')
       done()
 
+  it 'Show 404 page', (done)->
+    check_404 = (payload, next)->
+      page.open payload, (html,$)->
+        $('#404-message').html().assert_Contains 'HTTP 404 error - check the URL and refresh '
+        next()
+
+    check_404 '/aaaaaa' ,->
+      check_404 '/12312341/aaaaaa' ,->
+        check_404 '/!!@@£$/123' ,->
+          done()
+
+  it 'Show error message on unhandled node error', (done)->
+    page.open '/aaaaaa*&%5E(*&*(*%5E&%%5E', (html,$)->
+      $('#an-error-occured').html().assert_Is 'An error occured'
+      done()
 
 
 

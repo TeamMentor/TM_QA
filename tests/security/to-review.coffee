@@ -3,36 +3,39 @@ require 'fluentnode'
 async     = require 'async'
 supertest = require 'supertest'
 
-TM_Design_Server = require('../../TM_4_0_Design/node/tm-server')
+#TM_Design_Server = null
 
 describe 'security | to-review',->
 
+  before ->
+  #  TM_Design_Server = require('../../TM_4_0_Design/node/tm-server')
+
   describe 'Due to NodeJs Express static mapper, TM Design allows download of static files', ->
 
-    it 'using supertest', (done)->
-      targets = [
-                  { status: 200 ,  path: '/package.json'}
-                  { status: 200 ,  path: '/node_modules/jade/package.json'}
-
-                  { status: 404 ,  path: '/aaaaaaa.json'}
-                  { status: 200 ,  path: '/guest/about.html'}
-
-                  { status: 404 ,  path: '/node_modules/express/package.json'}      # these don't work via supertest
-                  { status: 404 ,  path: '/source/jade/_layouts/head.jade'}         # but work on the
-                  { status: 404 ,  path: '/node/server.coffee'}]                    # browser
-
-
-      server = supertest(TM_Design_Server)
-
-      test_Path= (target, next)->
-        server.get(target.path)
-              .expect(target.status)
-              .end (err,res)->
-                if err
-                  log res.text
-                next()
-
-      async.eachSeries(targets, test_Path, done)
+#    it 'using supertest', (done)->
+#      targets = [
+#                  { status: 200 ,  path: '/package.json'}
+#                  { status: 200 ,  path: '/node_modules/jade/package.json'}
+#
+#                  { status: 404 ,  path: '/aaaaaaa.json'}
+#                  { status: 200 ,  path: '/guest/about.html'}
+#
+#                  { status: 404 ,  path: '/node_modules/express/package.json'}      # these don't work via supertest
+#                  { status: 404 ,  path: '/source/jade/_layouts/head.jade'}         # but work on the
+#                  { status: 404 ,  path: '/node/server.coffee'}]                    # browser
+#
+#
+#      server = supertest(TM_Design_Server)
+#
+#      test_Path= (target, next)->
+#        server.get(target.path)
+#              .expect(target.status)
+#              .end (err,res)->
+#                if err
+#                  log res.text
+#                next()
+#
+#      async.eachSeries(targets, test_Path, done)
 
     it 'using http request', (done)->
       qa_Server  = "http://localhost:1337"

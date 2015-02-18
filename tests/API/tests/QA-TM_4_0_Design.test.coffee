@@ -9,11 +9,11 @@ describe 'API | QA-TM_4_0_Design',->
   it 'constructor',->
     QA_TM_Design.assert_Is_Function()
     using new QA_TM_Design(),->
-      @nodeWebKit.assert_Instance_Of(require('nwr'))
-      @jade_API  .assert_Instance_Of(require('./../Jade-API'))
-      @flare_API .assert_Instance_Of(require('./../Flare-API'))
-      @tm_Server .assert_Is('http://localhost:1337')
-      @open_Delay.assert_Is(0)
+      @nodeWebKit .assert_Instance_Of(require('nwr'))
+      @jade_API   .assert_Instance_Of(require('./../Jade-API'))
+      @flare_API  .assert_Instance_Of(require('./../Flare-API'))
+      @tm_Server  .assert_Is('http://localhost:1337')
+      @open_Delay .assert_Is(0)
       assert_Is_Null(@chrome)
 
   it 'create', (done)->

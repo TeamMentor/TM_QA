@@ -213,7 +213,7 @@ describe 'regression-sprint-1', ->                                              
         $('#articles a').length.assert_Bigger_Than 20
         done()
 
-  it.only 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
+  it 'Issue 332 - When searching for ambiguous characthers ... fail the search gracefully', (done)->
     check_Search_Payload = (payload, next)->
       page.open "/search?text=#{payload}", (html,$)->
         $('form').attr().assert_Is { action: '/search', method: 'GET' }

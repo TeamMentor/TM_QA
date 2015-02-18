@@ -7,23 +7,6 @@ describe 'issues-sprint-1', ->                                                  
 
 
 
-  it 'Show 404 page', (done)->
-    check_404 = (payload, next)->
-      page.open payload, (html,$)->
-        $('#404-message').html().assert_Contains 'HTTP 404 error - check the URL and refresh '
-        next()
-
-    check_404 '/aaaaaa' ,->
-      check_404 '/12312341/aaaaaa' ,->
-        check_404 '/!!@@£$/123' ,->
-          done()
-
-  it 'Show unavailable page on unhandled node error', (done)->
-    page.open '/aaaaaa*&%5E(*&*(*%5E&%%5E', (html,$)->
-      $('#an-error-occured').html().assert_Is 'An error occured'
-      done()
-
-
 
 
   #done
