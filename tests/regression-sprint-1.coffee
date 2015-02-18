@@ -203,17 +203,18 @@ describe ' | regression-sprint-1 |', ->                                         
           with_Param_ViewModel_2 ->
             done()
 
-  it 'Issue 218 - Small alignment issue with Search button', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        juice   = require('juice')
-        cheerio = require('cheerio')
-        baseUrl = page.tm_Server;
-        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
-          $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
-          done()
+# commented due to https://github.com/TeamMentor/TM_4_0_Design/issues/456
+#  it 'Issue 218 - Small alignment issue with Search button', (done)->
+#    jade.login_As_User ->
+#      jade.page_User_Main (html, $)->
+#        juice   = require('juice')
+#        cheerio = require('cheerio')
+#        baseUrl = page.tm_Server;
+#        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
+#          $css = cheerio.load(cssHtml)
+#          attributes = $css('.input-group-btn').attr()
+#          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
+#          done()
 
   xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
     jade.login_As_User ->
