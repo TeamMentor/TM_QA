@@ -1,5 +1,5 @@
-describe '| user-account |', ->
-  page = require('./API/QA-TM_4_0_Design').create(before,after)
+describe '| jade | user-account |', ->
+  page = require('../API/QA-TM_4_0_Design').create(before,after)
   jade = page.jade_API
 
   it 'login_As_QA , session_Cookie', (done)->
