@@ -246,3 +246,16 @@ describe ' | regression-sprint-1 |', ->                                         
             page.open '/user/main.html',(html,$)->
               $('#loginwall .alert #message').html().assert_Is 'You need to login to see that page.'
               done()
+
+
+  it 'Issue 328 - Add asserts for password complexity labels ', (done)->
+    jade.page_Sign_Up (html,$)->
+      $($('label').get(0)).html().assert_Is("Username")
+      $($('.form-group p').get(0)).html().assert_Is("Your username should only contain letters and numbers.")
+      $($('label').get(1)).html().assert_Is("Email Address")
+      $($('.form-group p').get(1)).html().assert_Is("We&apos;ll email you a confirmation.")
+      $($('label').get(2)).html().assert_Is("Password")
+      $($('.form-group p').get(2)).html().assert_Is("Your password should be at least 8 characters long. It should have at least one of each of the following: uppercase and lowercase letters, number and special character.")
+      $($('label').get(3)).html().assert_Is("Confirm Password")
+      $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/guest/terms-and-conditions.html\">Terms and Conditions</a>.")
+      done()
