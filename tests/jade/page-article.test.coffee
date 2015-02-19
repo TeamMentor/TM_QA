@@ -47,11 +47,11 @@ describe '| jade | page-article.test |',->
       check_Article_Contents article.id    , '#title', article.title  , done
 
     it 'by guid', (done)->
-      check_Article_Contents article.guid  , '#article #oops', 'Oops' , done
+      check_Article_Contents article.guid  , '#title', article.title , done
 
     it 'by title', (done)->
-      check_Article_Contents article.title , '#article #oops', 'Oops' , done
+      check_Article_Contents article.title , '#title', article.title , done
 
     it 'by dashed-title', (done)->
       dashed_Title = article.title.replace(/ /g,'-')
-      check_Article_Contents dashed_Title  , '#article #oops', 'Oops' , done
+      check_Article_Contents dashed_Title  , '#title', article.title , done
