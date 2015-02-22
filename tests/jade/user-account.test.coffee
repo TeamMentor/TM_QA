@@ -2,6 +2,8 @@ describe '| jade | user-account.test |', ->
   page = require('../API/QA-TM_4_0_Design').create(before,after)
   jade = page.jade_API
 
+  @timeout 4000
+
   it 'login_As_QA , session_Cookie', (done)->
     jade.clear_Session  (err, data)->
       jade.login_As_QA ->
@@ -39,7 +41,7 @@ describe '| jade | user-account.test |', ->
 
   it 'Login fail (request limit constraint)', (done)->
     jade.login_Without_MaxLength 'a'.add_Random_Letters(1025),'b',  (html, $) ->
-      $('#404-message #an-error-occured').html().assert_Is('An error occured')
+      $('#404-message #an-error-occurred').html().assert_Is('An error occurred')
       done()
 
   it 'User Sign Up (with weak password)',(done)->

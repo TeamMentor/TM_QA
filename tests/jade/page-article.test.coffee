@@ -46,6 +46,10 @@ describe '| jade | page-article.test |',->
     it 'by id', (done)->
       check_Article_Contents article.id    , '#title', article.title  , done
 
+    it 'by partial id', (done)->
+      partial_Id = article.id.remove 'article-'
+      check_Article_Contents partial_Id    , '#title', article.title  , done
+
     it 'by guid', (done)->
       check_Article_Contents article.guid  , '#title', article.title , done
 
@@ -55,3 +59,7 @@ describe '| jade | page-article.test |',->
     it 'by dashed-title', (done)->
       dashed_Title = article.title.replace(/ /g,'-')
       check_Article_Contents dashed_Title  , '#title', article.title , done
+
+    it 'by id and title', (done)->
+      id_and_title = "#{article.id}/#{article.title}"
+      check_Article_Contents id_and_title  , '#title', article.title  , done

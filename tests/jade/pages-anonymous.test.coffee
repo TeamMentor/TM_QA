@@ -221,7 +221,7 @@ describe '| jade | pages-anonymous.test', ->
 
   it 'Show error message on unhandled node error', (done)->
     page.open '/aaaaaa*&%5E(*&*(*%5E&%%5E', (html,$)->
-      $('#an-error-occured').html().assert_Is 'An error occured'
+      $('#an-error-occurred').html().assert_Is 'An error occurred'
       done()
 
 
