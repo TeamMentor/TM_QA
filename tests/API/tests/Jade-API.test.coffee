@@ -19,6 +19,7 @@ describe '| API | tests | Jade-API.test',->
 
 
   it 'login_As_QA', (done)->
+    @timeout 5000
     jade.login_As_QA ->
       jade.session_Cookie (cookie)->
         cookie.name.assert_Is('tm-session')

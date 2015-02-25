@@ -80,21 +80,21 @@ describe ' | regression-sprint-1 |', ->                                         
 
   it 'Issue 123 - Terms and conditions link is available', (done)->
     jade.page_User_Logout (html,$)->
-      footerDiv =  $('#footer').html()
+      footerDiv =  $('#terms-and-conditions').html()
       footerDiv.assert_Contains("Terms &amp; Conditions")
       done();
 
   it 'Issue 123 - Terms and conditions Page is displayed', (done)->
     jade.page_User_Logout (html,$)->
-      footerDiv =  $('#footer').html()
+      footerDiv =  $('#terms-and-conditions').html()
       footerDiv.assert_Contains("Terms &amp; Conditions")
-      page.click 'Terms & Conditions', (html,$)->
-        $('#security-innovation-software-license-agreement').html().assert_Is("Security Innovation Software License Agreement")
+      page.click '#terms-and-conditions', (html,$)->
+        $('#software-product-license-agreement').html().assert_Is("Software Product License Agreement")
         done();
 
   it 'Issue 124 - Forgot password page is blank', (done)->
     jade.page_Login ->
-      page.click 'Forgot password?', (html,$)->
+      page.click '#link-forgot-pwd', (html,$)->
         $('#heading p').text().assert_Is("Type in your email address and we'll send you an email with further instructions.")
         done();
 

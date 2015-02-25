@@ -5,6 +5,8 @@ describe '| jade | pages-users.test', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
+  @timeout 4000
+
   afterEach (done)->
     page.html (html,$)->
       $('title').text().assert_Is('TEAM Mentor 4.0 (Html version)')         # confirm that all pages have the same title
@@ -28,17 +30,17 @@ describe '| jade | pages-users.test', ->
         @.img_attr .assert_Is img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {"href":'/user/main.html'              }, { class: 'fi-magnifying-glass'}, 'Search'    )
-    checkValues(1, {"href":"/#{jade.url_Prefix}/Guidance" }, { class: 'fi-map'             }, 'Navigate')
-    checkValues(2, {"href":'/help/index.html'             }, { class: 'fi-info'            }, 'Help'    )
-    checkValues(3, {"href":'/user/logout'                 }, { class: 'fi-power'           }, 'Logout'  )
+    checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'              }, { class: 'fi-magnifying-glass'}, 'Search'    )
+    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/Guidance" }, { class: 'fi-list-thumbnails' }, 'Index')
+    checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'             }, { class: 'fi-info'            }, 'Help'    )
+    checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                 }, { class: 'fi-power'           }, 'Logout'  )
 
   before (done)->
     jade.login_As_QA  ->
       done()
 
   it 'Help', (done)->
-    jade.page_User_Help (html,$)->
+    jade.page_Help (html,$)->
       section_Titles = ($(h4).html() for h4 in $('h4'))
       section_Titles.assert_Is([ 'About TEAM Mentor',
                                  'Installation',

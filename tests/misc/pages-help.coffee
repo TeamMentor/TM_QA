@@ -17,6 +17,7 @@ describe '| misc | pages-help |', ->
         done()
 
   it 'check nav link (when user is logged in)', (done)->
+    @timeout 4000
     jade.login_As_User ->
       page.open '/help/index.html', (html,$)->
         $('#nav-user-logout').text().assert_Is 'Logout'
@@ -43,6 +44,7 @@ describe '| misc | pages-help |', ->
         done()
 
   it 'open two pages and check that titles match', (done)->
+    @.timeout 5000
     open_Help_Page = (help_Page, next)->
       page.open help_Page.href,(html,$)->
         $('#help-docs h2').html().assert_Is $('#help-title').html()
