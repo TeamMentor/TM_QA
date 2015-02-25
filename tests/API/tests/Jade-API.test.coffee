@@ -29,6 +29,18 @@ describe '| API | tests | Jade-API.test',->
       result.assert_Is_True()
       done()
 
+  it 'open_Article, open_An_Article', (done)->
+    using jade, ->
+      @.login_As_User =>
+        @.page.graphDB_API.articles_Ids (articles_Ids)=>
+          article_Id = articles_Ids.first()
+          @.open_Article article_Id, (html_A)=>
+            @.open_An_Article (html_B)=>
+              @.page.graphDB_API.article_Html article_Id, (html)=>
+                html_A.assert_Is html_B
+                      .assert_Contains html
+                done()
+
   it 'render_File', (done)->
     params = ""
     jade.render_File 'jade_user_main', params, ($)->
@@ -50,3 +62,4 @@ describe '| API | tests | Jade-API.test',->
           @.is_User_Logged_In (result)=>
             result.assert_Is_False()
             done()
+

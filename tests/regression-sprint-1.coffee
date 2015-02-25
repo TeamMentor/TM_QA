@@ -9,7 +9,7 @@ describe ' | regression-sprint-1 |', ->                                         
 
   it 'Issue 96 - Main Navigation "Login" link is not opening up the Login page', (done)->              # name of current test
     jade.page_Home (html,$)->                                                                               # open the index page
-      login_Link = $('#nav-log-in')
+      login_Link = $('#nav-login')
       href       = login_Link.attr().href
       href.assert_Is_Not('/deploy/html/getting-started/index.html')                                         # checks that the link is the wrong one
       href.assert_Is    ('/guest/login.html')                                                               # checks that the link is not the 'correct' one

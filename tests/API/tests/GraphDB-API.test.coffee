@@ -13,6 +13,13 @@ describe '| API | tests | GraphDB-API.test',->
     using new GraphDB_API({server:'aaaa'}), ->
       @.server.assert_Is 'aaaa'
 
+  it 'article_Html', (done)->
+    using graphDB, ->
+      @.articles_Ids (articles_Ids)=>
+        @.article_Html articles_Ids.first(), (html)->
+          html.assert_Contains '<p>'
+          done()
+
   it 'articles', (done)->
     graphDB.articles (data)->
       articles = data.values()
@@ -23,4 +30,11 @@ describe '| API | tests | GraphDB-API.test',->
         @.summary        .assert_Is_String()
         @.is             .assert_Is 'Article'
         @.id             .assert_Contains 'article-'
+        done()
+
+  it 'articles_Ids', (done)->
+    graphDB.articles (articles)->
+      graphDB.articles_Ids (articles_Ids)->
+        articles_Ids.assert_Not_Empty()
+                    .assert_Size_Is  articles.keys().size()
         done()

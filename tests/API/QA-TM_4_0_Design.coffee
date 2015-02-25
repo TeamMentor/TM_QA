@@ -103,10 +103,17 @@ class QA_TM_4_0_Design
       callback()
 
   click: (text, callback)->
-    code = "elements = document.documentElement.querySelectorAll('a,button');
-            for(var i=0; i< elements.length; i++)
-              if(elements[i].innerText == '#{text}')
-                elements[i].click();"
+    code = "if (document.querySelector('#{text}') != null)
+            {
+              document.querySelector('#{text}').click()
+            } else
+            {
+              elements = document.documentElement.querySelectorAll('a,button');
+              for(var i=0; i< elements.length; i++)
+                if(elements[i].innerText == '#{text}')
+                  elements[i].click();
+            }"
+    log code
     @chrome.eval_Script code, (err,data)=>
       @wait_For_Complete =>
         @open_Delay.wait =>
