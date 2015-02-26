@@ -77,8 +77,9 @@ class Jade_API
   page_Sign_Up        : (callback) => @page.open '/guest/sign-up.html'               , callback
   page_Sign_Up_Fail   : (callback) => @page.open '/guest/sign-up-Fail.html'          , callback
   page_Sign_Up_OK     : (callback) => @page.open '/guest/sign-up-OK.html'            , callback
-  page_TermsAndCond   : (callback) => @page.open '/guest/terms-and-conditions.html'  , callback
 
+
+  page_TermsAndCond   : (callback        ) => @page.open '/misc/terms-and-conditions', callback
   page_Help           : (callback        ) => @page.open '/help/index.html'          , callback
   page_Help_Page      : (target,callback ) => @page.open "/help/#{target}"           , callback
 
@@ -113,11 +114,12 @@ class Jade_API
 
   user_Sign_Up: (username, password, email, callback) =>
     @page_Sign_Up (html, $)=>
+
       #removing required attribute to pass test
-      script ="document.querySelector('#username').removeAttribute('required');
-               document.querySelector('#password').removeAttribute('required');"
-      @page.chrome.eval_Script script
-      code = "document.querySelector('#username').value='#{username}';
+      code  ="document.querySelector('#username').removeAttribute('required');
+              document.querySelector('#password').removeAttribute('required');
+
+              document.querySelector('#username').value='#{username}';
               document.querySelector('#password').value='#{password}';
               document.querySelector('#confirm-password').value='#{password}';
               document.querySelector('#email').value='#{email}';

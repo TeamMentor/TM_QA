@@ -113,7 +113,7 @@ class QA_TM_4_0_Design
                 if(elements[i].innerText == '#{text}')
                   elements[i].click();
             }"
-    log code
+
     @chrome.eval_Script code, (err,data)=>
       @wait_For_Complete =>
         @open_Delay.wait =>

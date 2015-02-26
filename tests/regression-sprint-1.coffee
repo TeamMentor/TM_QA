@@ -257,5 +257,5 @@ describe ' | regression-sprint-1 |', ->                                         
       $($('label').get(2)).html().assert_Is("Password")
       $($('.form-group p').get(2)).html().assert_Is("Your password should be at least 8 characters long. It should have at least one of each of the following: uppercase and lowercase letters, number and special character.")
       $($('label').get(3)).html().assert_Is("Confirm Password")
-      $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/guest/terms-and-conditions.html\">Terms and Conditions</a>.")
+      $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/misc/terms-and-conditions\">Terms and Conditions</a>.")
       done()

@@ -141,7 +141,7 @@ describe '| jade | pages-anonymous.test', ->
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
-      $('#btn-login').html().assert_Is('Access TEAM Mentor')
+      $('#btn-login').html().assert_Is('Login')
       $('#link-forgot-pwd').html().assert_Is('Forgot password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
       $('#link-forgot-pwd').attr('href').assert_Is('/guest/pwd-forgot.html')
@@ -188,7 +188,7 @@ describe '| jade | pages-anonymous.test', ->
       $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'     , value:'', required: '', maxlength: "256"})
       $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:'', maxlength: "256"})
       $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:'', maxlength: "256"})
-      $('button#btn-sign-up'         ).html().assert_Is('Start Fixing Vulnerabilities')
+      $('button#btn-sign-up'         ).html().assert_Is('Sign Up')
       $('button#btn-sign-up'         ).attr().assert_Is({ id:'btn-sign-up', type:'submit'})
       done()
 

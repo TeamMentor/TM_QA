@@ -10,7 +10,6 @@ describe '| jade | user-account.test |', ->
         jade.session_Cookie (cookie)->
           cookie.name.assert_Is('tm-session')
           cookie.value.size().assert_Bigger_Than(30)
-          #console.log cookie
           done()
 
   it 'clear_Session , session_Cookie', (done)->
@@ -62,6 +61,7 @@ describe '| jade | user-account.test |', ->
     username = 'tm_qa_'.add_5_Random_Letters()
     password = 'tmw'
     email    = "#{username}@teammentor.net"
+
     jade.user_Sign_Up username, password, email, ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')

@@ -5,14 +5,6 @@ describe '| issues-sprint-2 |', ->                                              
 
   @timeout(5000)
 
-  it 'Issue 461 - Clicking on Terms and Conditions inside a full article view', (done)->
-    jade.login_As_User ->
-      jade.open_An_Article (html, $)=>
-        $("#terms-and-conditions").attr().href.assert_Is '../guest/terms-and-conditions.html'
-        page.click "#terms-and-conditions", (html,$)->
-            $('#nav-login').text().assert_Is 'Login'
-            done()
-
   #done
 
 

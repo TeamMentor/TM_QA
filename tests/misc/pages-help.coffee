@@ -6,8 +6,6 @@ describe '| misc | pages-help |', ->
   jade = page.jade_API
 
   help_Pages = []
-  max             = 1         # number of pages to process
-  takeScreenshots = false
 
   it 'check nav link (when user is logged out)', (done)->
     jade.logout ->
@@ -52,7 +50,7 @@ describe '| misc | pages-help |', ->
         article_Title.assert_Is(help_Page.title)                   # confirms title of loaded page matches link title
         $('#help-docs .bg').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
         next()
-    async.eachSeries help_Pages.take(max), open_Help_Page, done
+    async.eachSeries help_Pages.take(2), open_Help_Page, done
 
   it 'open "empty page" page (aaaaa-bbb)',(done)->
     jade.page_Help_Page 'aaaaa-bbb', (html, $)->
