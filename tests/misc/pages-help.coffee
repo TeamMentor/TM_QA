@@ -45,8 +45,8 @@ describe '| misc | pages-help |', ->
     @.timeout 5000
     open_Help_Page = (help_Page, next)->
       page.open help_Page.href,(html,$)->
-        $('#help-docs h2').html().assert_Is $('#help-title').html()
-        article_Title = $('#help-docs h2').html()
+        $('#help-docs h1').html().assert_Is $('#help-title').html()
+        article_Title = $('#help-docs h1').html()
         article_Title.assert_Is(help_Page.title)                   # confirms title of loaded page matches link title
         $('#help-docs .bg').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
         next()
