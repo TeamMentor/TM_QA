@@ -111,8 +111,10 @@ describe ' | regression-sprint-1 |', ->                                         
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       done()
 
-  it 'Issue 151 - Add asserts for new Login page content ', (done)->
+  it.only 'Issue 151 - Add asserts for new Login page content ', (done)->
     jade.page_Login (html,$)->
+      $('#btn-login').attr('type').assert_Is('submit')
+      $('#btn-login').html().assert_Is('Login')
       $('#summary h2').html().assert_Is("Security Risk. Understood.")
       $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
       $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
