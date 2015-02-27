@@ -7,7 +7,6 @@ describe '| issues-sprint-2 |', ->                                              
 
   #done
 
-
   #it 'Issue 96 - Take Screenshot of affected pages', (done)->                                              # name of current test
   # @timeout(4000)
   # page.window_Position 1000,50,800,400, ->                                                                # change window size to make it more 'screenshot friendly'
