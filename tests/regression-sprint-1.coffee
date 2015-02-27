@@ -111,7 +111,7 @@ describe ' | regression-sprint-1 |', ->                                         
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
       done()
 
-  it.only 'Issue 151 - Add asserts for new Login page content ', (done)->
+  it 'Issue 151 - Add asserts for new Login page content ', (done)->
     jade.page_Login (html,$)->
       $('#btn-login').attr('type').assert_Is('submit')
       $('#btn-login').html().assert_Is('Login')
