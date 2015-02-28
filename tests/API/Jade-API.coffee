@@ -64,6 +64,9 @@ class Jade_API
     @.page.graphDB_API.articles_Ids (articles_Ids)=>
       @open_Article articles_Ids.first(), callback
 
+  page_403            : (callback) => @page.open '/guest/403.html'                   , callback
+  page_404            : (callback) => @page.open '/guest/404.html'                   , callback
+  page_500            : (callback) => @page.open '/guest/500.html'                   , callback
   page_About          : (callback) => @page.open '/guest/about.html'                 , callback
   page_Help           : (callback) => @page.open '/help/index.html'                  , callback
   page_Home           : (callback) => @page.open '/'                                 , callback

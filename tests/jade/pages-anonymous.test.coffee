@@ -208,7 +208,31 @@ describe '| jade | pages-anonymous.test', ->
       $('h3').html().assert_Is('Terms &amp; Conditions')
       done()
 
-  it 'Show 404 page', (done)->
+  it '403 page', (done)->
+    expected_Message = ['Unauthorized',
+                        'It\'s a HTTP 403 error - you need to Login to access this page.',
+                        'If this continues, please contact your TEAM Mentor Support Team.']
+    jade.page_403 (html,$)->
+      $('#403-message').text().assert_Contains expected_Message
+      done()
+
+  it '404 page', (done)->
+    expected_Message = ['An error occurred',
+                        'It\'s a HTTP 404 error - check the URL and refresh the browser.',
+                        'If this continues, please contact your TEAM Mentor Support Team.']
+    jade.page_404 (html,$)->
+      $('#404-message').text().assert_Contains expected_Message
+      done()
+
+  it '500 page', (done)->
+    expected_Message = ['An error occurred',
+                        'If this continues, please contact your TEAM Mentor Support Team.']
+    jade.page_500 (html,$)->
+      $('#500-message').text().assert_Contains expected_Message
+      done()
+
+
+  it 'show 404 page on page not found', (done)->
     check_404 = (payload, next)->
       page.open payload, (html,$)->
         $('#404-message').html().assert_Contains 'HTTP 404 error - check the URL and refresh '
@@ -218,6 +242,8 @@ describe '| jade | pages-anonymous.test', ->
       check_404 '/12312341/aaaaaa' ,->
         check_404 '/!!@@£$/123' ,->
           done()
+
+
 
   it 'Show error message on unhandled node error', (done)->
     page.open '/aaaaaa*&%5E(*&*(*%5E&%%5E', (html,$)->
