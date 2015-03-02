@@ -40,7 +40,7 @@ describe '| jade | user-account.test |', ->
 
   it 'Login fail (request limit constraint)', (done)->
     jade.login_Without_MaxLength 'a'.add_Random_Letters(1025),'b',  (html, $) ->
-      $('#404-message #an-error-occurred').html().assert_Is('An error occurred')
+      $('#500-message #an-error-occurred').html().assert_Is('An error occurred')
       done()
 
   it 'User Sign Up (with weak password)',(done)->
