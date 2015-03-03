@@ -64,7 +64,7 @@ describe '| jade | pages-users.test', ->
 
   it 'Main', (done)->
     jade.page_User_Main (html,$)->
-      section_Titles = ($(h4).html() for h4 in $('h4'))
+      section_Titles = ($(h4).html() for h4 in $('h5'))
       section_Titles.assert_Is(['Popular Search Terms','Top Articles'])
       done()
 
