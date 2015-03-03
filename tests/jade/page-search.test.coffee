@@ -48,7 +48,7 @@ describe '| jade | page-search.test |',->
             done()
 
     it 'check elements',(done)->
-      jade.render_Mixin 'search-mixins','main-app-view', { searchTerms: [], topArticles: []}, ($)->
+      jade.render_Mixin 'search-mixins','main-app-view', { top_Searches: [], top_Articles: []}, ($)->
           $('h4').text().assert_Is('Popular Search TermsTop Articles')
           $('a' ).length .assert_Is(0)
           done()

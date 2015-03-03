@@ -190,11 +190,11 @@ describe '| regression-sprint-1 |', ->                                          
         next()
 
     with_Param_ViewModel_2 = (next)->
-      viewModel = { recentArticles :[ { href:'abc',title:'aaa'}, { href:'abc',title:'bbbb'}] }
+      viewModel = { recent_Articles :[ { id:'abc',title:'aaa'}, { id:'abc',title:'bbbb'}] }
 
       data = JSON.stringify(viewModel)
       render 'search-mixins', 'main-app-view', "viewModel=#{data}", ($)->
-        $('#recently-Viewed-Articles a').attr().href.assert_Is(viewModel.recentArticles.first().href)
+        $('#recently-Viewed-Articles a').attr().href.assert_Contains viewModel.recent_Articles.first().id
         next()
 
     no_Params ->
