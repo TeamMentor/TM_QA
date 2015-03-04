@@ -9,6 +9,7 @@ describe '| jade | page-article.test |',->
   articles = null
 
   before (done)->
+    @timeout 5000
     jade.login_As_User ->
       graphDb.articles (data)->
         articles = data.values()

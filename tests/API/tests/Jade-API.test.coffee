@@ -31,6 +31,7 @@ describe '| API | tests | Jade-API.test',->
       done()
 
   it 'open_Article, open_An_Article', (done)->
+    @timeout 5000
     using jade, ->
       @.login_As_User =>
         @.page.graphDB_API.articles_Ids (articles_Ids)=>
