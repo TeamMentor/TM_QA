@@ -11,7 +11,7 @@ describe '| misc | pages-help |', ->
     jade.logout ->
       page.open '/help/index.html', (html,$)->
         $('#nav-login').text().assert_Is 'Login'
-        $('#nav-help' ).text().assert_Is 'Help'
+        $('#nav-help' ).text().assert_Is 'Docs'
         done()
 
   it 'check nav link (when user is logged in)', (done)->
