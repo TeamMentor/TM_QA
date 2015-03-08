@@ -19,7 +19,7 @@ describe '| misc | pages-help |', ->
     jade.login_As_User ->
       page.open '/help/index.html', (html,$)->
         $('#nav-user-logout').text().assert_Is 'Logout'
-        $('#nav-user-help'  ).text().assert_Is 'Help'
+        $('#nav-user-help'  ).text().assert_Is 'Docs'
         done()
 
   it 'check right navigation links', (done)->
