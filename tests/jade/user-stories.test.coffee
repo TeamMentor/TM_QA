@@ -13,7 +13,7 @@ describe '| jade | user-stories.test', ->
     jade.clear_Session ->
       page.open '/', ->
         page.click 'ABOUT', ->
-          page.click 'HELP', ->
+          page.click 'DOCS', ->
             page.click 'LOGIN', ->
               page.click 'LOGIN',->
                 done()

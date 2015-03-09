@@ -37,7 +37,7 @@ describe '| jade | pages-anonymous.test', ->
 
     checkValues(0,'/guest/about.html'    , 'About'   )   # check expected values of 6 links
     checkValues(1,'/guest/features.html' , 'Features')
-    checkValues(2,'/help/index.html'     , 'Help'    )
+    checkValues(2,'/help/index.html'     , 'Docs'    )
     checkValues(3,'/guest/sign-up.html'  , 'Sign Up' )
     checkValues(4,'/guest/login.html'    , 'Login'   )
 
