@@ -8,8 +8,9 @@ describe '| jade | page-article.test |',->
   graphDb  = page.graphDB_API
   articles = null
 
+  @.timeout 5000
+
   before (done)->
-    @timeout 5000
     jade.login_As_User ->
       graphDb.articles (data)->
         articles = data.values()
