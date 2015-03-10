@@ -5,8 +5,10 @@ describe 'jade | pages-poc', ->
   jade = page.jade_API;
 
   before (done)->
+    @.timeout 5000
     jade.login_As_User  ->
       done()
+
   it '/poc', (done)->
     jade.page_User_PoC '', (html, $)=>
        done()

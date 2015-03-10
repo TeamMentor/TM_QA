@@ -33,13 +33,15 @@ describe '| misc | pages-help |', ->
       help_Pages[50].title.assert_Is("How to Evaluate and What to Expect")
       done()
 
-  it 'check that image redirection to github is working', (done)->
+
+  xit 'check that image redirection to github is working', (done)->
     image   = 'tmcfg12.jpg'
     url     = "#{page.tm_Server}/Image/#{image}"
     message = "Moved Temporarily. Redirecting to https://raw.githubusercontent.com/TMContent/Lib_Docs/master/_Images/#{image}"
     url.GET (html)->
         html.assert_Is message
         done()
+
 
   it 'open two pages and check that titles match', (done)->
     @.timeout 5000
@@ -48,7 +50,7 @@ describe '| misc | pages-help |', ->
         $('#help-docs h1').html().assert_Is $('#help-title').html()
         article_Title = $('#help-docs h1').html()
         article_Title.assert_Is(help_Page.title)                   # confirms title of loaded page matches link title
-        $('#help-docs .bg').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
+        $('#help-docs').text().size().assert_Bigger_Than(100)   # confirms there is some text on the page
         next()
     async.eachSeries help_Pages.take(2), open_Help_Page, done
 
