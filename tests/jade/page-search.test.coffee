@@ -62,6 +62,7 @@ describe '| jade | page-search.test |',->
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
             done()
+
     it "Issue_497 - Url encoding on popular search items", (done)->
       jade.page_User_Main (html,$)->
         #search patterns
@@ -73,11 +74,11 @@ describe '| jade | page-search.test |',->
           page.chrome.open plusSearch, ()->
             page.chrome.open ampersandSearch, ()->
               page.chrome.open ampersandSearch, ()->
-                page.chrome.open mainPageSearch, ()->
-                  searchItems = ($(link).attr('href') for link in $('#popular-Search-Terms a'))
-                  searchItems.assert_Contains("/search?text=C%2B%2B")
-                  searchItems.assert_Contains("/search?text=%26")
-                  done()
+              page.chrome.open mainPageSearch,() ->
+              searchItems = ($(link).attr('href') for link in $('#popular-Search-Terms a'))
+              searchItems.assert_Contains("/search?text=C%2B%2B")
+              searchItems.assert_Contains("/search?text=%26")
+              done()
 
     it "Issue_508 - Dynamic generated links are not URL-encoded", (done)->
       jade.page_User_Main (html,$)->
@@ -86,13 +87,13 @@ describe '| jade | page-search.test |',->
         plusSearch      = page.tm_Server + '/search?text=%2B' # URL encoding for +
         # searching patterns to populate them in the Popular Search Terms
         page.chrome.open ampersandSearch, ()->
-          page.chrome.html (html,$)->
+          page.chrome.html (html,$)=>
             filters = ($(link).attr('href') for link in $('#filters a'))
-            filters.assert_Contains("/search?text=%26&filter=/query-b97ee4fd5453")
-            filters.assert_Contains("/search?text=%26&filter=/query-b97ee4fd5453")
-            page.chrome.open plusSearch, ()->
-              page.chrome.html (html,$)->
-                filters = ($(link).attr('href') for link in $('#filters a'))
-                filters.assert_Contains("/search?text=%2B&filter=/query-b209501ac4b8")
-                filters.assert_Contains("/search?text=%2B&filter=/query-b97ee4fd5453")
+            filters.assert_Contains("/search?text=%26&filter=/query-b1e8f6d15e97")
+            filters.assert_Contains("/search?text=%26&filter=/query-95319bef1d15")
+            page.chrome.open plusSearch, ()=>
+              page.chrome.html (html,$)=>
+                filters = ($(link).attr('href') for link in $('#filters .bg a'))
+                filters.assert_Contains("/search?text=%2B&filter=/query-007a20b69603")
+                filters.assert_Contains("/search?text=%2B&filter=/query-bb600b723a89")
                 done()
