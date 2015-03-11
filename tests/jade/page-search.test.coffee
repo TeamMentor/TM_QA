@@ -62,6 +62,7 @@ describe '| jade | page-search.test |',->
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
             done()
+
     it "Issue_497 - Url encoding on popular search items", (done)->
       jade.page_User_Main (html,$)->
         #search patterns
@@ -73,11 +74,11 @@ describe '| jade | page-search.test |',->
           page.chrome.open plusSearch, ()->
             page.chrome.open ampersandSearch, ()->
               page.chrome.open ampersandSearch, ()->
-                page.chrome.open mainPageSearch, ()->
-                  searchItems = ($(link).attr('href') for link in $('#popular-Search-Terms a'))
-                  searchItems.assert_Contains("/search?text=C%2B%2B")
-                  searchItems.assert_Contains("/search?text=%26")
-                  done()
+              page.chrome.open mainPageSearch, ()->
+              searchItems = ($(link).attr('href') for link in $('#popular-Search-Terms a'))
+              searchItems.assert_Contains("/search?text=C%2B%2B")
+              searchItems.assert_Contains("/search?text=%26")
+              done()
 
     it "Issue_508 - Dynamic generated links are not URL-encoded", (done)->
       jade.page_User_Main (html,$)->
@@ -88,11 +89,11 @@ describe '| jade | page-search.test |',->
         page.chrome.open ampersandSearch, ()->
           page.chrome.html (html,$)->
             filters = ($(link).attr('href') for link in $('#filters a'))
-            filters.assert_Contains("/search?text=%26&filter=/query-b97ee4fd5453")
-            filters.assert_Contains("/search?text=%26&filter=/query-b97ee4fd5453")
+            filters.assert_Contains("/search?text=%26&filter=/query-10445d58e736")
+            filters.assert_Contains("/search?text=%26&filter=/query-ac1d767b0a13")
             page.chrome.open plusSearch, ()->
               page.chrome.html (html,$)->
-                filters = ($(link).attr('href') for link in $('#filters a'))
-                filters.assert_Contains("/search?text=%2B&filter=/query-b209501ac4b8")
-                filters.assert_Contains("/search?text=%2B&filter=/query-b97ee4fd5453")
+                filterItems = ($(link).attr('href') for link in $('#filters a'))
+                filterItems.assert_Contains("/search?text=%2B&filter=/query-10445d58e736")
+                filterItems.assert_Contains("/search?text=%2B&filter=/query-ac1d767b0a13")
                 done()
