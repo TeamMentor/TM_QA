@@ -119,9 +119,9 @@ describe '| regression-sprint-1 |', ->                                          
       $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
       $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
       $('#summary h3').html().assert_Is("With TEAM Mentor, you can...")
-      $($('.row p').get(2)).html().assert_Is("FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.")
-      $($('.row p').get(3)).html().assert_Is("REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.")
-      $($('.row p').get(4)).html().assert_Is("EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.")
+      $($('.row p').get(2)).html().assert_Is("Fix vulnerabilities quicker than ever before.")
+      $($('.row p').get(3)).html().assert_Is("Reduce the number of vulnerabilities over time.")
+      $($('.row p').get(4)).html().assert_Is("Expand the development team&apos;s knowledge and improve process.")
       done()
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->

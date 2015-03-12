@@ -20,14 +20,15 @@ describe '| jade | page-article.test |',->
     jade.page_User_Articles (html,$)->
       $('#articles a').length.assert_Is_Bigger_Than 150
       $('#resultsTitle').text().contains 'Showing 250 articles (of '
-      $('#articles a').attr().href.assert_Contains 'article/article-'
-
       article_Data = articles.first()
+      id =article_Data.id.split('-')[1]
+      $('#articles a').attr().href.assert_Contains "article/#{id}"
+
       article_Html = $('#articles a').first()
 
       article_Html.text()     .assert_Is article_Data.title
       article_Html.attr().id  .assert_Is article_Data.id
-      article_Html.attr().href.assert_Is "/article/#{article_Data.id}"
+      article_Html.attr().href.assert_Is "/article/#{id}/#{article_Data.title.replace(/\ /g,"-")}"
       done()
 
   describe '/article/:key',->

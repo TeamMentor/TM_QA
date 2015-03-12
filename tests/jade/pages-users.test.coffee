@@ -31,7 +31,7 @@ describe '| jade | pages-users.test', ->
         @.text     .assert_Is text
 
     checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'              }, { class: 'fi-magnifying-glass'}, 'Search'    )
-    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/Guidance" }, { class: 'fi-list-thumbnails' }, 'Index')
+    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/" }, { class: 'fi-list-thumbnails' }, 'Index')
     checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'             }, { class: 'fi-info'            }, 'Docs'    )
     checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                 }, { class: 'fi-power'           }, 'Logout'  )
 

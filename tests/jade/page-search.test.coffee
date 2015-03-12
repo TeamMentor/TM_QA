@@ -89,11 +89,11 @@ describe '| jade | page-search.test |',->
         page.chrome.open ampersandSearch, ()->
           page.chrome.html (html,$)->
             filters = ($(link).attr('href') for link in $('#filters a'))
-            filters.assert_Contains("/search?text=%26&filter=/query-10445d58e736")
-            filters.assert_Contains("/search?text=%26&filter=/query-ac1d767b0a13")
+            filters.assert_Contains("/search?text=%26&filter=/query-57dfc03ebcb7")
+            filters.assert_Contains("/search?text=%26&filter=/query-d208c5e1ee54")
             page.chrome.open plusSearch, ()->
               page.chrome.html (html,$)->
                 filterItems = ($(link).attr('href') for link in $('#filters a'))
-                filterItems.assert_Contains("/search?text=%2B&filter=/query-10445d58e736")
-                filterItems.assert_Contains("/search?text=%2B&filter=/query-ac1d767b0a13")
+                filterItems.assert_Contains("/search?text=%2B&filter=/query-57dfc03ebcb7")
+                filterItems.assert_Contains("/search?text=%2B&filter=/query-d208c5e1ee54")
                 done()
