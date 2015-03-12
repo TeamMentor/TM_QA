@@ -62,38 +62,3 @@ describe '| jade | page-search.test |',->
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
             done()
-
-    it "Issue_497 - Url encoding on popular search items", (done)->
-      jade.page_User_Main (html,$)->
-        #search patterns
-        plusSearch      = page.tm_Server + '/search?text=C%2B%2B'
-        ampersandSearch = page.tm_Server + '/search?text=%26'
-        mainPageSearch  = page.tm_Server + '/user/main.html'
-        # searching patterns to populate them in the Popular Search Terms
-        page.chrome.open plusSearch, ()->
-          page.chrome.open plusSearch, ()->
-            page.chrome.open ampersandSearch, ()->
-              page.chrome.open ampersandSearch, ()->
-              page.chrome.open mainPageSearch, ()->
-              searchItems = ($(link).attr('href') for link in $('#popular-Search-Terms a'))
-              searchItems.assert_Contains("/search?text=C%2B%2B")
-              searchItems.assert_Contains("/search?text=%26")
-              done()
-
-    it "Issue_508 - Dynamic generated links are not URL-encoded", (done)->
-      jade.page_User_Main (html,$)->
-        #search patterns
-        ampersandSearch = page.tm_Server + '/search?text=%26' # URL encoding for &
-        plusSearch      = page.tm_Server + '/search?text=%2B' # URL encoding for +
-        # searching patterns to populate them in the Popular Search Terms
-        page.chrome.open ampersandSearch, ()->
-          page.chrome.html (html,$)->
-            filters = ($(link).attr('href') for link in $('#filters a'))
-            filters.assert_Contains("/search?text=%26&filter=/query-57dfc03ebcb7")
-            filters.assert_Contains("/search?text=%26&filter=/query-d208c5e1ee54")
-            page.chrome.open plusSearch, ()->
-              page.chrome.html (html,$)->
-                filterItems = ($(link).attr('href') for link in $('#filters a'))
-                filterItems.assert_Contains("/search?text=%2B&filter=/query-57dfc03ebcb7")
-                filterItems.assert_Contains("/search?text=%2B&filter=/query-d208c5e1ee54")
-                done()
