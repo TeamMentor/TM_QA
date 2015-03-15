@@ -17,7 +17,6 @@ describe '| API | tests | GraphDB-API.test',->
     using graphDB, ->
       @.articles_Ids (articles_Ids)=>
         @.article_Html articles_Ids.first(), (html)->
-          console.log (articles_Ids)
           html.assert_Contains '<p>'
           done()
 
