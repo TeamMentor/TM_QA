@@ -70,7 +70,7 @@ describe '| jade | pages-anonymous.test', ->
 #      items['background'].assert_Is('url(../assets/logos/logos.jpg) no-repeat' )
 #      next()
 
-  it.only '/',(done)->
+  it '/',(done)->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
