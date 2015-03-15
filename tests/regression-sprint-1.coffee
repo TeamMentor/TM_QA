@@ -33,7 +33,7 @@ describe '| regression-sprint-1 |', ->                                          
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
             $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
-            $('#loginwall .alert #message' ).html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
+            $('#loginwall .alert #message' ).html().assert_Is("<span>If you entered a valid address, then a password reset link has been sent to your email address.</span>")
             done()
 
   it 'Issue 244 - Button type should be submit', (done)->
@@ -246,7 +246,7 @@ describe '| regression-sprint-1 |', ->                                          
           page.chrome.url (url)->
             url.assert_Contains '/guest/default.html'
             page.open '/user/main.html',(html,$)->
-              $('#loginwall .alert #message').html().assert_Is 'You need to login to see that page.'
+              $('#message').html().assert_Is '<span>You need to login to see that page.</span>'
               done()
 
 

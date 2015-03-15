@@ -70,7 +70,7 @@ describe '| jade | pages-anonymous.test', ->
 #      items['background'].assert_Is('url(../assets/logos/logos.jpg) no-repeat' )
 #      next()
 
-  it '/',(done)->
+  it.only '/',(done)->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
@@ -84,14 +84,16 @@ describe '| jade | pages-anonymous.test', ->
       $($('#reasons td p').get(2)).html()    .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
 
       $('#clients h3').html()                .assert_Is('Our clients love us (and we think you will too!)')
-      clientImages = $('#clients img')
+      clientImages = $('.client-logo')
+      clientImages.length.assert_Is(5)
+      clientImages[0].attribs.class.assert_Is("client-logo elsevier")
+      clientImages[1].attribs.class.assert_Is("client-logo fedex")
+      clientImages[2].attribs.class.assert_Is("client-logo mass-mutual")
+      clientImages[3].attribs.class.assert_Is("client-logo microsoft")
+      clientImages[4].attribs.class.assert_Is("client-logo ubs")
 
-      clientImages[0].attribs.src            .assert_Is('/deploy/assets/clients/elsevier.png'  )
-      clientImages[1].attribs.src            .assert_Is('/deploy/assets/clients/fedex.png'     )
-      clientImages[2].attribs.src            .assert_Is('/deploy/assets/clients/massmutual.png')
-      clientImages[3].attribs.src            .assert_Is('/deploy/assets/clients/microsoft.png' )
-      clientImages[4].attribs.src            .assert_Is('/deploy/assets/clients/symantec.png'  )
-      clientImages[5].attribs.src            .assert_Is('/deploy/assets/clients/ubs.png'       )
+
+
 
       check_Generic_Footer($)
       #check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
@@ -142,7 +144,7 @@ describe '| jade | pages-anonymous.test', ->
       $.html('#username').assert_Contains('name="username"')
       $.html('#password').assert_Contains('name="password"')
       $('#btn-login').html().assert_Is('Login')
-      $('#link-forgot-pwd').html().assert_Is('Forgot password?')
+      $('#link-forgot-pwd').html().assert_Is('Forgot your password?')
       $('#btn-login'     ).attr('type').assert_Is('submit')
       $('#link-forgot-pwd').attr('href').assert_Is('/guest/pwd-forgot.html')
       done()
@@ -171,7 +173,7 @@ describe '| jade | pages-anonymous.test', ->
   it 'Password Sent', (done)->
     jade.page_Pwd_Sent (html,$)->
       $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
-      $('#loginwall .alert #message').html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
+      $('#loginwall .alert #message').html().assert_Is("<span>If you entered a valid address, then a password reset link has been sent to your email address.</span>")
       done()
 
   it 'Sign Up', (done) ->
@@ -189,7 +191,7 @@ describe '| jade | pages-anonymous.test', ->
       $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:'', maxlength: "256"})
       $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:'', maxlength: "256"})
       $('button#btn-sign-up'         ).html().assert_Is('Sign Up')
-      $('button#btn-sign-up'         ).attr().assert_Is({ id:'btn-sign-up', type:'submit'})
+      $('button#btn-sign-up'         ).attr().assert_Is({class: 'full-width', id:'btn-sign-up', type:'submit'})
       done()
 
   it 'Sign Up Fail', (done) ->
@@ -200,7 +202,7 @@ describe '| jade | pages-anonymous.test', ->
 
   it  'Sign Up OK', (done) ->
     jade.page_Sign_Up_OK (html,$)->
-      $('#loginwall .alert #message').text().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
+      $('#message').text().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
       done()
 
   it 'Terms and Conditions', (done)->

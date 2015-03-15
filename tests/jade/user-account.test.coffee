@@ -141,7 +141,7 @@ describe '| jade | user-account.test |', ->
       page.chrome.url (url)->
         url.assert_Contains('/sign-up-OK.html')
         page.html (html,$)->
-          $('.alert #message').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
+          $('.alert #message').html().assert_Is('<span>Thanks for signing up to TEAM Mentor. Please login to access our libraries.</span>')
           #Performs login upon Sign up
           jade.login username,password,  (html, $) ->
             $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
