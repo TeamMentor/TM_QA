@@ -261,3 +261,41 @@ describe '| regression-sprint-1 |', ->                                          
       $($('label').get(3)).html().assert_Is("Confirm Password")
       $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/misc/terms-and-conditions\">Terms and Conditions</a>.")
       done()
+
+  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 500)', (done) ->
+    jade.login_As_User ()->
+      page.open '/article/%s', (html,$)->
+        $('#an-error-occurred').html().assert_Is("An error occurred")
+        $('p').html().assert_Is('If this continues, please contact your <a href=\"mailto:support@securityinnovation.com\">TEAM Mentor Support Team</a>.')
+        #Logout should be availble
+        $('ul').html().assert_Contains('Logout')
+        jade.page_User_Logout ->
+          done()
+
+  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 400)', (done) ->
+    jade.login_As_User ()->
+      page.open '/articles/abc', (html,$)->
+        $('#an-error-occurred').html().assert_Is("An error occurred")
+        $('p').html().assert_Is('It&apos;s a HTTP 404 error - check the URL and refresh the browser.')
+        #Logout should be availble
+        $('ul').html().assert_Contains('Logout')
+        jade.page_User_Logout ->
+          done()
+
+  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 500 No logged In)', (done) ->
+    page.open '/article/%s', (html,$)=>
+      $('#an-error-occurred').html().assert_Is("An error occurred")
+      $('p').html().assert_Is('If this continues, please contact your <a href=\"mailto:support@securityinnovation.com\">TEAM Mentor Support Team</a>.')
+      #Testing that Sign Up and Login links are displayed
+      $('ul').html().assert_Contains('Sign Up')
+      $('ul').html().assert_Contains('Login')
+      done()
+
+  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 404 No logged In)', (done) ->
+    page.open '/articles/abc', (html,$)=>
+      $('#an-error-occurred').html().assert_Is("An error occurred")
+      $('p').html().assert_Is('It&apos;s a HTTP 404 error - check the URL and refresh the browser.')
+      #Testing that Sign Up and Login links are displayed
+      $('ul').html().assert_Contains('Sign Up')
+      $('ul').html().assert_Contains('Login')
+      done()
