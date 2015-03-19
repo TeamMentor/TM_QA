@@ -1,7 +1,7 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
-describe.only '| jade | pages-anonymous.test', ->
+describe '| jade | pages-anonymous.test', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
