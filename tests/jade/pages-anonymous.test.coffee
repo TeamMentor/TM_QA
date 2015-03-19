@@ -79,9 +79,9 @@ describe '| jade | pages-anonymous.test', ->
       $('#usp button i').attr()              .assert_Is({ class: 'fi-key' })
       $('#reasons h2'  ).html()              .assert_Is('With TEAM Mentor, you can...')
 
-      $($('#reasons td p').get(0)).html()    .assert_Is('FIX vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
-      $($('#reasons td p').get(1)).html()    .assert_Is('REDUCE the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
-      $($('#reasons td p').get(2)).html()    .assert_Is('EXPAND the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
+      $($('#reasons td p').get(0)).html()    .assert_Is('Fix vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
+      $($('#reasons td p').get(1)).html()    .assert_Is('Reduce the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
+      $($('#reasons td p').get(2)).html()    .assert_Is('Expand the development team&apos;s knowledge and improve process with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
 
       $('#clients h3').html()                .assert_Is('Our clients love us (and we think you will too!)')
       clientImages = $('.client-logo')
@@ -103,8 +103,8 @@ describe '| jade | pages-anonymous.test', ->
     jade.page_About (html,$)->
       $(  '#about h3'   ).html()        .assert_Is('An interactive Application Security library with thousands of code samples and professional guidance when you need it')
       $(  '#about-us h5').html()        .assert_Is('TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.')
-      $($('#about-us p' ).get(0)).html().assert_Is('It contains over 4,000 articles with dynamic content across multiple development platforms including .NET, Java, C/C++, PHP, Android and iOS. TEAM Mentor is the In-Practice companion to our TEAM Professor eLearning courses, extending developers&#x2019; knowledge in combination with training.')
-      $($('#about-us p' ).get(1)).html().assert_Is('TEAM Mentor integrates with static analysis tools, such as Checkmarx and Fortify&#x2122;, helping teams make more sense of scan results and make critical decisions to fix software vulnerabilities.')
+      $($('#about-us p' ).get(0)).html().assert_Is('It contains over 4,000 articles with dynamic content across multiple development platforms including .NET, Java, C/C++, PHP, Android and iOS. TEAM Mentor is the In-Practice companion to our <a href="https://www.securityinnovation.com/training/application-security/computer-based/">TEAM Professor eLearning courses</a>, extending developers&#x2019; knowledge in combination with training.')
+      $($('#about-us p' ).get(1)).html().assert_Is('TEAM Mentor integrates with static analysis tools, such as <a href="https://www.checkmarx.com/">Checkmarx</a> and Fortify&#x2122;, helping teams make more sense of scan results and make critical decisions to fix software vulnerabilities.')
 
       check_Generic_Footer($);
       done()
