@@ -311,3 +311,4 @@ describe '| regression-sprint-1 |', ->                                          
           activeLinkText = $('#activeFilter').text().remove(clearFilterLink.text())
           activeLinkText.assert_Is("C++")
           done()
+          
