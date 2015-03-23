@@ -304,11 +304,14 @@ describe '| regression-sprint-1 |', ->                                          
     jade.login_As_User ()->
       jade.page_User_Graph "Index", (html,$)->
         $('#activeFilter').text().assert_Is('')
-        $($('#filters .filter-icon').get(2)).text().assert_Is("C++")
+        $('#filters .filter-icon').each (id,value)->
+          log "#{id}: #{$(value).text()}"
+        text = $($('#filters .filter-icon').get(2)).text()
+        log "text is: #{text}"
         filterLink = $('#filters .nav a').eq(2).attr().href
         page.open filterLink, (html,$)->
           clearFilterLink = $('#activeFilter a')
           activeLinkText = $('#activeFilter').text().remove(clearFilterLink.text())
-          activeLinkText.assert_Is("C++")
+          activeLinkText.assert_Is(text)
           done()
           
