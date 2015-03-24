@@ -299,3 +299,21 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Sign Up')
       $('ul').html().assert_Contains('Login')
       done()
+
+  it 'Issue 599- Article Terms and Conditions link is broken (FIXED)', (done) ->
+    jade.login_As_User ()->
+      page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
+        $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
+        page.click '#terms-and-conditions', (html,$)->
+          $('#software-product-license-agreement').html().assert_Is('Software Product License Agreement')
+          page.chrome.url (url)->
+            url.assert_Contains('misc/terms-and-conditions')
+            done()
+
+  it 'Issue 606-   Multiple Badges feature (Each filter should have their own badge)', (done) ->
+    jade.login_As_User ()->
+      page.open '/search?text=XSS&filters=/query-28dc33dd8cf4,query-c3365b3349bf', (html,$)->
+        badges = $('#activeFilter')
+        badges[0].children[0].data.assert_Is('Java')
+        badges[1].children[0].data.assert_Is('Implementation')
+        done()
