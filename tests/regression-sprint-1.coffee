@@ -299,3 +299,13 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Sign Up')
       $('ul').html().assert_Contains('Login')
       done()
+
+  it 'Issue 599- Article Terms and Conditions link is broken (FIXED)', (done) ->
+    jade.login_As_User ()->
+      page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
+        $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
+        page.click '#terms-and-conditions', (html,$)->
+          $('#software-product-license-agreement').html().assert_Is('Software Product License Agreement')
+          page.chrome.url (url)->
+            url.assert_Contains('misc/terms-and-conditions')
+            done()
