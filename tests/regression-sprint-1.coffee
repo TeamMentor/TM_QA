@@ -309,3 +309,12 @@ describe '| regression-sprint-1 |', ->                                          
           page.chrome.url (url)->
             url.assert_Contains('misc/terms-and-conditions')
             done()
+
+  it 'Issue 606-   Multiple Badges feature (Each filter should have their own badge)', (done) ->
+    jade.login_As_User ()->
+      page.open '/search?text=XSS&filters=/query-7eb234de40d8,query-5935f6bbaa51', (html,$)->
+        badges = $('#activeFilter')
+        badges.length.assert_Is(2)
+        badges[0].children[0].data.assert_Is('Java')
+        badges[1].children[0].data.assert_Is('Implementation')
+        done()
