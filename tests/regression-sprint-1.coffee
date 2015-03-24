@@ -312,7 +312,7 @@ describe '| regression-sprint-1 |', ->                                          
 
   it 'Issue 606-   Multiple Badges feature (Each filter should have their own badge)', (done) ->
     jade.login_As_User ()->
-      page.open '/search?text=XSS&filters=/query-28dc33dd8cf4,query-c3365b3349bf', (html,$)->
+      page.open '/show/query-6204f2d47eb7/query-c0c2b43a4196,query-dda16b79c7a3', (html,$)->
         badges = $('#activeFilter')
         badges[0].children[0].data.assert_Is('Java')
         badges[1].children[0].data.assert_Is('Implementation')
