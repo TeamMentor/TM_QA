@@ -314,6 +314,7 @@ describe '| regression-sprint-1 |', ->                                          
     jade.login_As_User ()->
       page.open '/show/query-6204f2d47eb7/query-c0c2b43a4196,query-dda16b79c7a3', (html,$)->
         badges = $('#activeFilter')
+        log "#{badges}"
         badges[0].children[0].data.assert_Is('Java')
         badges[1].children[0].data.assert_Is('Implementation')
         done()
