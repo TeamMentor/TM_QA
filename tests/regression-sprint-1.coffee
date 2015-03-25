@@ -316,7 +316,7 @@ describe '| regression-sprint-1 |', ->                                          
         badges = $('#activeFilter')
         log "#{badges}"
         console.log($('#title').html())
-        log "library #{$('#title').html()}"
+        log "library loaded #{$('#title').html()}"
         badges[0].children[0].data.assert_Is('Java')
         badges[1].children[0].data.assert_Is('Implementation')
         done()
