@@ -310,11 +310,13 @@ describe '| regression-sprint-1 |', ->                                          
             url.assert_Contains('misc/terms-and-conditions')
             done()
 
-  it 'Issue 606-   Multiple Badges feature (Each filter should have their own badge)', (done) ->
+  it.only 'Issue 606-   Multiple Badges feature (Each filter should have their own badge)', (done) ->
     jade.login_As_User ()->
       page.open '/show/query-6234f2d47eb7/query-49f06360f795,query-06296df8028f', (html,$)->
         badges = $('#activeFilter')
         log "#{badges}"
+        console.log($('#title').html())
+        log "library #{$('#title').html()}"
         badges[0].children[0].data.assert_Is('Java')
         badges[1].children[0].data.assert_Is('Implementation')
         done()
