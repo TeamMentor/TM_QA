@@ -315,8 +315,14 @@ describe '| regression-sprint-1 |', ->                                          
       page.open '/show/', (html,$)->
         log "library loaded #{$('#title').html()}"
         log "Filters        #{$('#filters').html()}"
-        done()
-      #page.open '/show/query-6204f2d47eb7/query-60008105fab6,query-981edf24a636', (html,$)->
+        page.open '/show/query-6204f2d47eb7/query-48d9259d18e8,query-23970f3b21ef', (html, $) ->
+          badges = $('#activeFilter')
+          log "library loaded #{$('#title').html()}"
+          badges[0].children[0].data.assert_Is('Java')
+          badges[1].children[0].data.assert_Is('Implementation')
+          done()
+
+        #page.open '/show/query-6204f2d47eb7/query-60008105fab6,query-981edf24a636', (html,$)->
         #badges = $('#activeFilter')
         #log "library loaded #{$('#title').html()}"
         #badges[0].children[0].data.assert_Is('Java')
