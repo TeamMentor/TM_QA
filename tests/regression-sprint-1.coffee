@@ -306,7 +306,7 @@ describe '| regression-sprint-1 |', ->                                          
       page.open '/user/main.html', (html,$)->
         $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
         code = "document.querySelector('input').value='#{searchText}';
-                      document.querySelector('button').click()"
+                document.querySelector('button').click()"
         page.eval code, ->
           page.wait_For_Complete (html, $)->
             page.chrome.url (url)->
