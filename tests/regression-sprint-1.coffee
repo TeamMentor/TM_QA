@@ -309,3 +309,4 @@ describe '| regression-sprint-1 |', ->                                          
           page.chrome.url (url)->
             url.assert_Contains('misc/terms-and-conditions')
             done()
+
