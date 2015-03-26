@@ -301,19 +301,27 @@ describe '| regression-sprint-1 |', ->                                          
       done()
 
   it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
-    jade.login_As_User ()->
+    searchText = 'xss'
+    validateSearch = (searchText, next)->
       page.open '/user/main.html', (html,$)->
         $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
-        page.open "/search?text=xss", (html,$)->
-          page.chrome.url (url)->
-            url.assert_Contains '/search?text=xss'
-            $('input').attr('value').assert_Is('xss')
-            page.open '/user/main.html', (html,$)->
-              $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
-              values = []
-              for td in $('#popular-Search-Terms .nav td')
-                values.push($(td).text())
-              values.assert_Contains("xss")
-              values.assert_Is_Equal_To(values.unique())
-              done()
-              
+        code = "document.querySelector('input').value='#{searchText}';
+                      document.querySelector('button').click()"
+        page.eval code, ->
+          page.wait_For_Complete (html, $)->
+            page.chrome.url (url)->
+              url.assert_Contains '/search?text='+searchText
+              $('input').attr('value').assert_Is searchText
+              page.open '/user/main.html', (html,$)->
+                $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+                values = []
+                for td in $('#popular-Search-Terms .nav td')
+                  values.push($(td).text())
+                values.assert_Contains searchText
+                values.assert_Is_Equal_To(values.unique())
+                next()
+    jade.login_As_User ()->
+      validateSearch searchText, ->
+        validateSearch searchText, ->
+          validateSearch searchText, ->
+            done()
