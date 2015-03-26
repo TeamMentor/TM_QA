@@ -310,3 +310,16 @@ describe '| regression-sprint-1 |', ->                                          
             url.assert_Contains('misc/terms-and-conditions')
             done()
 
+  it  'Issue 606- Multiple Badges feature', (done) ->
+    jade.login_As_User ()->
+      page.open '/show/', (html,$)->
+        code = "document.querySelectorAll('.nav a span')[1].click();"
+        page.chrome.eval_Script code, =>
+          page.wait_For_Complete (html, $)=>
+            code = "document.querySelectorAll('.nav a span')[1].click();"
+            page.chrome.eval_Script code, =>
+              page.wait_For_Complete (html, $)=>
+                badges = $('#activeFilter')
+                badges[0].children[0].data.assert_Is("PHP")
+                badges[1].children[0].data.assert_Is("Deployment")
+                done()
