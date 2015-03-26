@@ -313,6 +313,7 @@ describe '| regression-sprint-1 |', ->                                          
   it  'Issue 606- Multiple Badges feature', (done) ->
     jade.login_As_User ()->
       page.open '/show/', (html,$)->
+        log "Library: #{$('#title').text()}"
         code = "document.querySelectorAll('.nav a span')[1].click();"
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
