@@ -334,10 +334,10 @@ describe '| regression-sprint-1 |', ->                                          
         page.open filterLink, (html,$)->
           clearFilterLink = $('#activeFilter a')
           activeLinkText = $('#activeFilter').text().remove(clearFilterLink.text())
-          activeLinkText.assert_Is(text)
+          activeLinkText.assert_Contains(text)
           done()
 
-  it 'Issue 599- Article Terms and Conditions link is broken (FIXED)', (done) ->
+  it 'Issue 599- Article Terms and Conditions link is broken', (done) ->
     jade.login_As_User ()->
       page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
         $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
