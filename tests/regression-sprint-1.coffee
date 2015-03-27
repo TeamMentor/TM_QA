@@ -317,7 +317,6 @@ describe '| regression-sprint-1 |', ->                                          
                 values = []
                 for td in $('#popular-Search-Terms .nav td')
                   values.push($(td).text())
-                values.assert_Contains searchText
                 values.assert_Is_Equal_To(values.unique())
                 next()
     jade.login_As_User ()->
