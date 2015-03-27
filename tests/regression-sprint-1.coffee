@@ -299,3 +299,29 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Sign Up')
       $('ul').html().assert_Contains('Login')
       done()
+
+  it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
+    searchText = 'xss'
+    validateSearch = (searchText, next)->
+      page.open '/user/main.html', (html,$)->
+        $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+        code = "document.querySelector('input').value='#{searchText}';
+                document.querySelector('button').click()"
+        page.eval code, ->
+          page.wait_For_Complete (html, $)->
+            page.chrome.url (url)->
+              url.assert_Contains '/search?text='+searchText
+              $('input').attr('value').assert_Is searchText
+              page.open '/user/main.html', (html,$)->
+                $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+                values = []
+                for td in $('#popular-Search-Terms .nav td')
+                  values.push($(td).text())
+                values.assert_Contains searchText
+                values.assert_Is_Equal_To(values.unique())
+                next()
+    jade.login_As_User ()->
+      validateSearch searchText, ->
+        validateSearch searchText, ->
+          validateSearch searchText, ->
+            done()
