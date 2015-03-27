@@ -325,3 +325,28 @@ describe '| regression-sprint-1 |', ->                                          
         validateSearch searchText, ->
           validateSearch searchText, ->
             done()
+
+  it 'Issue 599- Article Terms and Conditions link is broken (FIXED)', (done) ->
+    jade.login_As_User ()->
+      page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
+        $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
+        page.click '#terms-and-conditions', (html,$)->
+          $('#software-product-license-agreement').html().assert_Is('Software Product License Agreement')
+          page.chrome.url (url)->
+            url.assert_Contains('misc/terms-and-conditions')
+            done()
+
+  it  'Issue 606- Multiple Badges feature', (done) ->
+    jade.login_As_User ()->
+      page.open '/show/', (html,$)->
+        log "Library: #{$('#title').text()}"
+        code = "document.querySelectorAll('.nav a span')[1].click();"
+        page.chrome.eval_Script code, =>
+          page.wait_For_Complete (html, $)=>
+            code = "document.querySelectorAll('.nav a span')[1].click();"
+            page.chrome.eval_Script code, =>
+              page.wait_For_Complete (html, $)=>
+                badges = $('#activeFilter')
+                badges[0].children[0].data.assert_Is("PHP")
+                badges[1].children[0].data.assert_Is("Deployment")
+                done()
