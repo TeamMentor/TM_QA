@@ -300,18 +300,64 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Login')
       done()
 
+  it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
+    searchText = 'xss'
+    validateSearch = (searchText, next)->
+      page.open '/user/main.html', (html,$)->
+        $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+        code = "document.querySelector('input').value='#{searchText}';
+                document.querySelector('button').click()"
+        page.eval code, ->
+          page.wait_For_Complete (html, $)->
+            page.chrome.url (url)->
+              url.assert_Contains '/search?text='+searchText
+              $('input').attr('value').assert_Is searchText
+              page.open '/user/main.html', (html,$)->
+                $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+                values = []
+                for td in $('#popular-Search-Terms .nav td')
+                  values.push($(td).text())
+                values.assert_Is_Equal_To(values.unique())
+                next()
+    jade.login_As_User ()->
+      validateSearch searchText, ->
+        validateSearch searchText, ->
+          validateSearch searchText, ->
+            done()
+
   it 'Issue 492 - Validate right-hand side filter is working',(done)->
     jade.login_As_User ()->
-      jade.page_User_Graph "Index", (html,$)->
+      jade.page_User_Graph "", (html,$)->
         $('#activeFilter').text().assert_Is('')
-        $('#filters .filter-icon').each (id,value)->
-          log "#{id}: #{$(value).text()}"
         text = $($('#filters .filter-icon').get(2)).text()
-        log "text is: #{text}"
         filterLink = $('#filters .nav a').eq(2).attr().href
         page.open filterLink, (html,$)->
           clearFilterLink = $('#activeFilter a')
           activeLinkText = $('#activeFilter').text().remove(clearFilterLink.text())
           activeLinkText.assert_Is(text)
           done()
-          
+
+  it 'Issue 599- Article Terms and Conditions link is broken (FIXED)', (done) ->
+    jade.login_As_User ()->
+      page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
+        $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
+        page.click '#terms-and-conditions', (html,$)->
+          $('#software-product-license-agreement').html().assert_Is('Software Product License Agreement')
+          page.chrome.url (url)->
+            url.assert_Contains('misc/terms-and-conditions')
+            done()
+
+  it  'Issue 606- Multiple Badges feature', (done) ->
+    jade.login_As_User ()->
+      page.open '/show/', (html,$)->
+        log "Library: #{$('#title').text()}"
+        code = "document.querySelectorAll('.nav a span')[1].click();"
+        page.chrome.eval_Script code, =>
+          page.wait_For_Complete (html, $)=>
+            code = "document.querySelectorAll('.nav a span')[1].click();"
+            page.chrome.eval_Script code, =>
+              page.wait_For_Complete (html, $)=>
+                badges = $('#activeFilter')
+                badges[0].children[0].data.assert_Is("PHP")
+                badges[1].children[0].data.assert_Is("Deployment")
+                done()
