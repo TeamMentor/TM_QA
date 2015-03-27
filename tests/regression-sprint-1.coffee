@@ -262,7 +262,7 @@ describe '| regression-sprint-1 |', ->                                          
       $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/misc/terms-and-conditions\">Terms and Conditions</a>.")
       done()
 
-  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 500)', (done) ->
+  it 'Issue 454 - Login/Signup options are displayed for logged in users (HTTP 500)', (done) ->
     jade.login_As_User ()->
       page.open '/article/%s', (html,$)->
         $('#an-error-occurred').html().assert_Is("An error occurred")
@@ -272,7 +272,7 @@ describe '| regression-sprint-1 |', ->                                          
         jade.page_User_Logout ->
           done()
 
-  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 400)', (done) ->
+  it 'Issue 454 - Login/Signup options are displayed for logged in users (HTTP 400)', (done) ->
     jade.login_As_User ()->
       page.open '/articles/abc', (html,$)->
         $('#an-error-occurred').html().assert_Is("An error occurred")
@@ -291,7 +291,7 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Login')
       done()
 
-  it 'Issue 454- Login/Signup options are displayed for logged in users (HTTP 404 No logged In)', (done) ->
+  it 'Issue 454 - Login/Signup options are displayed for logged in users (HTTP 404 No logged In)', (done) ->
     page.open '/articles/abc', (html,$)=>
       $('#an-error-occurred').html().assert_Is("An error occurred")
       $('p').html().assert_Is('It&apos;s a HTTP 404 error - check the URL and refresh the browser.')
@@ -337,7 +337,7 @@ describe '| regression-sprint-1 |', ->                                          
           activeLinkText.assert_Contains(text)
           done()
 
-  it 'Issue 599- Article Terms and Conditions link is broken', (done) ->
+  it 'Issue 599 - Article Terms and Conditions link is broken', (done) ->
     jade.login_As_User ()->
       page.open '/article/4c396802c1d8/Missing-Function-Level-Access-Control', (html,$)->
         $('#terms-and-conditions').html().assert_Is("Terms &amp; Conditions")
@@ -347,17 +347,19 @@ describe '| regression-sprint-1 |', ->                                          
             url.assert_Contains('misc/terms-and-conditions')
             done()
 
-  it  'Issue 606- Multiple Badges feature', (done) ->
+  it.only  'Issue 606 - Multiple Badges feature', (done) ->
     jade.login_As_User ()->
       page.open '/show/', (html,$)->
         log "Library: #{$('#title').text()}"
+        selector_1 = $('.nav a span').eq(1).text()
         code = "document.querySelectorAll('.nav a span')[1].click();"
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
             code = "document.querySelectorAll('.nav a span')[1].click();"
+            selector_2 = $('.nav a span').eq(1).text()
             page.chrome.eval_Script code, =>
               page.wait_For_Complete (html, $)=>
                 badges = $('#activeFilter')
-                badges[0].children[0].data.assert_Is("PHP")
-                badges[1].children[0].data.assert_Is("Deployment")
+                badges[0].children[0].data.assert_Is(selector_1)
+                badges[1].children[0].data.assert_Is(selector_2)
                 done()
