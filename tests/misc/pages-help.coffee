@@ -65,7 +65,9 @@ describe '| misc | pages-help |', ->
       $('#help-index h2').text().assert_Is 'TEAM Mentor Documents'
       $('#help-index p' ).text().assert_Contains 'Welcome to the TEAM Mentor Documentation Website'
       done()
+
   it 'open "Managing Users" page (00000000-0000-0000-0000-0000001c8add)',(done)->
+    @timeout 4000
     jade.page_Help_Page '00000000-0000-0000-0000-0000001c8add', (html, $)->
       $('#help-title'  ).text().assert_Is 'Managing Users'
       $('#help-content').text().assert_Contains 'Administrators can manage TEAM Mentor users via the Tbot.'
