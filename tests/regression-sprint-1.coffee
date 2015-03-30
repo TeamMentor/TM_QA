@@ -347,7 +347,7 @@ describe '| regression-sprint-1 |', ->                                          
             url.assert_Contains('misc/terms-and-conditions')
             done()
 
-  it.only  'Issue 606 - Multiple Badges feature', (done) ->
+  it  'Issue 606 - Multiple Badges feature', (done) ->
     jade.login_As_User ()->
       page.open '/show/', (html,$)->
         log "Library: #{$('#title').text()}"
@@ -363,3 +363,4 @@ describe '| regression-sprint-1 |', ->                                          
                 badges[0].children[0].data.assert_Is(selector_1)
                 badges[1].children[0].data.assert_Is(selector_2)
                 done()
+
