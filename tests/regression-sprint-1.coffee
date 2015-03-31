@@ -368,22 +368,22 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 456 - Refactor css inliner with Juice replacement', (done)->
   # Due to bug in latest version of Juice: https://github.com/Automattic/juice/issues/104#issuecomment-83192701
     inliner = require('inline-css')
-      cheerio = require('cheerio')
-      baseUrl = page.tm_Server
-      inlinerOptions = { url: baseUrl }
-      extract_Style_Data = (styleCss)->
-        items = {}
-        for item in styleCss.split(';')
-          if (item)
-            items[item.split(':').first().trim()] =item.split(':').second().trim()
-        return items
-      jade.page_User_Logout ->
-        jade.page_Home (html, $)->
-          inliner html, inlinerOptions, (err, cssHtml)->
-            throw (err) if err
-            $css = cheerio.load(cssHtml)
-            footer_Attr = $css('#footer #si-logo').attr()
-            footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; width: 160px;' }
-            items = extract_Style_Data(footer_Attr.style)
-            items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
-            done()
+    cheerio = require('cheerio')
+    baseUrl = page.tm_Server
+    inlinerOptions = { url: baseUrl }
+    extract_Style_Data = (styleCss)->
+      items = {}
+      for item in styleCss.split(';')
+        if (item)
+          items[item.split(':').first().trim()] =item.split(':').second().trim()
+      return items
+    jade.page_User_Logout ->
+      jade.page_Home (html, $)->
+        inliner html, inlinerOptions, (err, cssHtml)->
+          throw (err) if err
+          $css = cheerio.load(cssHtml)
+          footer_Attr = $css('#footer #si-logo').attr()
+          footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; width: 160px;' }
+          items = extract_Style_Data(footer_Attr.style)
+          items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
+          done()
