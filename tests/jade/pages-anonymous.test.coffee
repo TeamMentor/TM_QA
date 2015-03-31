@@ -49,26 +49,25 @@ describe '| jade | pages-anonymous.test', ->
 
     $('#footer h4'              ).html().assert_Contains('TEAM Mentor v')
 
-#  commented due to: https://github.com/Automattic/juice/issues/104
-#
-#  extract_Style_Data = (styleCss)->
-#    items = {}
-#    for item in styleCss.split(';')
-#      if (item)
-#        items[item.split(':').first().trim()] =item.split(':').second().trim()
-#    return items
-#
-#  check_Generic_Footer_Css = (html, baseUrl, next)->
-#    juice   = require('juice')
-#
-#    cheerio = require('cheerio')
-#    juice.juiceResources html, { url: baseUrl}, (err, cssHtml)->
-#      $css = cheerio.load(cssHtml)
-#      footer_Attr = $css('#footer #si-logo').attr()
-#      footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(../assets/logos/logos.png) no-repeat; background-position: 0px -43px; height: 50px; width: 160px; margin: 0 auto;' }
-#      items = extract_Style_Data(footer_Attr.style)
-#      items['background'].assert_Is('url(../assets/logos/logos.jpg) no-repeat' )
-#      next()
+  extract_Style_Data = (styleCss)->
+    items = {}
+    for item in styleCss.split(';')
+      if (item)
+        items[item.split(':').first().trim()] =item.split(':').second().trim()
+    return items
+
+  check_Generic_Footer_Css = (html, baseUrl, next)->
+    inliner = require('inline-css')
+    cheerio = require('cheerio')
+    inlinerOptions = { url: baseUrl }
+    inliner html, inlinerOptions, (err, cssHtml)->
+      throw (err) if err
+      $css = cheerio.load(cssHtml)
+      footer_Attr = $css('#footer #si-logo').attr()
+      footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; width: 160px;' }
+      items = extract_Style_Data(footer_Attr.style)
+      items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
+      next()
 
   it '/',(done)->
     jade.page_Home (html,$)->
@@ -92,12 +91,8 @@ describe '| jade | pages-anonymous.test', ->
       clientImages[3].attribs.class.assert_Is("client-logo microsoft")
       clientImages[4].attribs.class.assert_Is("client-logo ubs")
 
-
-
-
       check_Generic_Footer($)
-      #check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
-      done()
+      check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
 
   it 'About',(done)->
     jade.page_About (html,$)->

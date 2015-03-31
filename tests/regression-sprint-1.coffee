@@ -205,18 +205,19 @@ describe '| regression-sprint-1 |', ->                                          
           with_Param_ViewModel_2 ->
             done()
 
-# commented due to https://github.com/TeamMentor/TM_4_0_Design/issues/456
-#  it 'Issue 218 - Small alignment issue with Search button', (done)->
-#    jade.login_As_User ->
-#      jade.page_User_Main (html, $)->
-#        juice   = require('juice')
-#        cheerio = require('cheerio')
-#        baseUrl = page.tm_Server;
-#        juice.juiceContent html, { url: baseUrl}, (err, cssHtml)->
-#          $css = cheerio.load(cssHtml)
-#          attributes = $css('.input-group-btn').attr()
-#          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
-#          done()
+  it 'Issue 218 - Small alignment issue with Search button', (done)->
+    jade.login_As_User ->
+      jade.page_User_Main (html, $)->
+        inliner = require('inline-css')
+        cheerio = require('cheerio')
+        baseUrl = page.tm_Server
+        inlinerOptions = { url: baseUrl }
+        inliner html, inlinerOptions, (err, cssHtml)->
+          throw (err) if err
+          $css = cheerio.load(cssHtml)
+          attributes = $css('.input-group-btn').attr()
+          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
+          done()
 
   xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
     jade.login_As_User ->
@@ -364,41 +365,25 @@ describe '| regression-sprint-1 |', ->                                          
                 badges[1].children[0].data.assert_Is(selector_2)
                 done()
 
-  it 'Issue 218 - Small alignment issue with Search button', (done)->
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        juice   = require('juice')
-        cheerio = require('cheerio')
-        baseUrl = page.tm_Server;
-        juice.juiceResources html, { url: baseUrl}, (err, cssHtml)->
-          $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
-          done()
-
-  it.only 'Issue 456 - Refactor css-check code', (done)->
-    check_Generic_Footer_Css = (html, baseUrl, next)->
-      juice    = require('juice')
+  it 'Issue 456 - Refactor css inliner with Juice replacement', (done)->
+  # Due to bug in latest version of Juice: https://github.com/Automattic/juice/issues/104#issuecomment-83192701
+    inliner = require('inline-css')
       cheerio = require('cheerio')
-      juice.juiceResources html, { url: baseUrl}, (err, cssHtml)->
-          $css = cheerio.load(cssHtml)
-          footer_Attr = $css('#footer #si-logo').attr()
-          footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(../assets/logos/logos.png) no-repeat; background-position: 0px -43px; height: 50px; width: 160px; margin: 0 auto;' }
-          items = extract_Style_Data(footer_Attr.style)
-          console.log items['background']
-          items['background'].assert_Is('url(../assets/logos/logos.jpg) no-repeat' )
-          next()
-    jade.login_As_User ->
-      jade.page_User_Main (html, $)->
-        juice = require('juice')
-        cheerio = require('cheerio')
-        baseUrl = page.tm_Server;
-        log "page.tm_Server is: " + baseUrl
-        juice.juiceResources html, {url: baseUrl}, (err, cssHtml)->
-          throw (err) if err
-          $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
-        check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
-        done()
-
+      baseUrl = page.tm_Server
+      inlinerOptions = { url: baseUrl }
+      extract_Style_Data = (styleCss)->
+        items = {}
+        for item in styleCss.split(';')
+          if (item)
+            items[item.split(':').first().trim()] =item.split(':').second().trim()
+        return items
+      jade.page_User_Logout ->
+        jade.page_Home (html, $)->
+          inliner html, inlinerOptions, (err, cssHtml)->
+            throw (err) if err
+            $css = cheerio.load(cssHtml)
+            footer_Attr = $css('#footer #si-logo').attr()
+            footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; width: 160px;' }
+            items = extract_Style_Data(footer_Attr.style)
+            items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
+            done()
