@@ -301,6 +301,7 @@ describe '| regression-sprint-1 |', ->                                          
       done()
 
   it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
+    @.timeout(12500)
     searchText = 'xss'
     validateSearch = (searchText, next)->
       page.open '/user/main.html', (html,$)->
