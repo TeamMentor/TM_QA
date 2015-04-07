@@ -384,7 +384,7 @@ describe '| regression-sprint-1 |', ->                                          
           throw (err) if err
           $css = cheerio.load(cssHtml)
           footer_Attr = $css('#footer #si-logo').attr()
-          footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; width: 160px;' }
+          footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; margin-bottom: 20px; width: 160px;' }
           items = extract_Style_Data(footer_Attr.style)
           items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
           done()
