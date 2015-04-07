@@ -388,3 +388,23 @@ describe '| regression-sprint-1 |', ->                                          
           items = extract_Style_Data(footer_Attr.style)
           items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
           done()
+
+  it 'Issue 500 - TM Logo missing from search results page', (done)->
+    inliner = require('inline-css')
+    cheerio = require('cheerio')
+    searchText = 'xss'
+    jade.login_As_User ()->
+      page.open '/user/main.html', (html,$)->
+        $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
+        code = "document.querySelector('input').value='#{searchText}';
+                  document.querySelector('button').click()"
+        page.eval code, ->
+          page.wait_For_Complete (html, $)->
+            page.chrome.url (url)->
+              url.assert_Contains '/search?text='+searchText
+              $('input').attr('value').assert_Is searchText
+              inliner html, { url: url }, (err, css)->
+                throw (err) if err
+                $ = cheerio.load(css)
+                $('#team-mentor-navigation #tm-logo').attr().assert_Is { id: 'tm-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: top center; height: 40px; margin: 0 auto; margin-bottom: 10px;' }
+                done()
