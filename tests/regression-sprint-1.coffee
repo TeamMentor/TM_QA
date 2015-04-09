@@ -365,3 +365,37 @@ describe '| regression-sprint-1 |', ->                                          
                 badges[1].children[0].data.assert_Is(selector_2)
                 done()
 
+  it 'Issue 644 - Validate icon for each Technology or Type', (done)->
+    jade.login_As_User ()->
+      page.open '/show/', (html,$)->
+        if $('#filters td').eq(0).text().assert_Contains "Web Application"
+          $('#filters .nav a div').eq(0).attr().assert_Is {"title":"Web Application","class":"technology-icon web-app"}
+        if $('#filters td').eq(1).text().assert_Contains "All"
+          $('#filters .nav a i').eq(0).attr().assert_Is {"title":"Any Technology","class":"fi-flag"}
+        if $('#filters td').eq(2).text().assert_Contains "C++"
+          $('#filters .nav a div').eq(1).attr().assert_Is {"title":"C++","class":"technology-icon c-plus-plus"}
+        if $('#filters td').eq(3).text().assert_Contains "iOS"
+          $('#filters .nav a div').eq(2).attr().assert_Is {"title":"iOS","class":"technology-icon ios"}
+        if $('#filters td').eq(4).text().assert_Contains "Android"
+          $('#filters .nav a div').eq(3).attr().assert_Is {"title":"Android","class":"technology-icon android"}
+        if $('#filters td').eq(5).text().assert_Contains ".NET 3.5"
+          $('#filters .nav a div').eq(4).attr().assert_Is {"title":"ASP.Net","class":"technology-icon asp"}
+        if $('#filters td').eq(6).text().assert_Contains "Java"
+          $('#filters .nav a div').eq(5).attr().assert_Is {"title":"Java","class":"technology-icon java"}
+        if $('#filters td').eq(7).text().assert_Contains ".NET"
+          $('#filters .nav a div').eq(6).attr().assert_Is {"title":"ASP.Net","class":"technology-icon asp"}
+        if $('#filters td').eq(8).text().assert_Contains "Scala Play"
+          $('#filters .nav a div').eq(7).attr().assert_Is {"title":"Scala","class":"technology-icon scala"}
+        if $('#filters td').eq(9).text().assert_Contains "PHP"
+          $('#filters .nav a div').eq(8).attr().assert_Is {"title":"PHP","class":"technology-icon php"}
+        if $('#filters td').eq(10).text().assert_Contains "HTML5"
+          $('#filters .nav a i').eq(1).attr().assert_Is {"title":"HTML5","class":"fi-html5"}
+        if $('#filters td').eq(15).text().assert_Contains "Guideline"
+          $('#filters .nav a i').eq(2).attr().assert_Is {"title":"Guideline","class":"fi-book"}
+        if $('#filters td').eq(16).text().assert_Contains "Checklist Item"
+          $('#filters .nav a i').eq(3).attr().assert_Is {"title":"Checklist","class":"fi-checkbox"}
+        if $('#filters td').eq(17).text().assert_Contains "How To"
+          $('#filters .nav a i').eq(4).attr().assert_Is {"title":"How To","class":"fi-list-bullet"}
+        if $('#filters td').eq(18).text().assert_Contains "Code Example"
+          $('#filters .nav a i').eq(5).attr().assert_Is {"title":"Code Sample","class":"fi-puzzle"}
+        done()
