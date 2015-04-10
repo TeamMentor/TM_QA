@@ -89,10 +89,12 @@ class Jade_API
   page_User_Article   : (target, callback) => @page.open "/article/#{target}"         , callback
   page_User_Articles  : (callback        ) => @page.open '/articles'                  , callback
 
+  page_User_Index     : (callback        ) => @page.open "/#{@url_Prefix}"            , callback
   page_User_Logout    : (callback        ) => @page.open '/user/logout'               , callback
   page_User_Main      : (callback        ) => @page.open '/user/main.html'            , callback
   page_User_Graph     : (target, callback) => @page.open "/#{@url_Prefix}/#{target}"  , callback
   page_User_Graph_All : (callback        ) => @page.open "/#{@url_Prefix}"            , callback
+
 
   page_User_PoC       : (target, callback) => @page.open "/#{@poc_Prefix}/#{target}"  , callback
 
