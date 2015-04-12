@@ -1,6 +1,6 @@
 QA_TM_Design = require '../API/QA-TM_4_0_Design'
 
-describe '| jade | user-stories.test', ->
+describe '| jade | user-stories |', ->
   page = QA_TM_Design.create(before, after)
   jade = page.jade_API
 

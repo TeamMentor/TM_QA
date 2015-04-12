@@ -1,7 +1,7 @@
 require 'fluentnode'
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
-describe '| jade | page-search.test |',->
+describe '| jade | page-search |',->
   page = QA_TM_Design.create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
