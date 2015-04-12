@@ -383,6 +383,10 @@ describe '| regression-sprint-1 |', ->                                          
       "How To"          : { title : "How To"          , class : "fi-list-bullet"              }
       "Code Example"    : { title : "Code Sample"     , class : "fi-puzzle"                   }
 
+      " Any"            : { title : "Any Technology"  , class : "fi-flag"                     }   # only in Lib_Vulnerabilities
+      "ASP.NET 4.0"     : { title : "ASP.Net"         , class : "technology-icon asp"         }
+      "Vulnerability"   : { }
+
     jade.login_As_User ()->
       jade.page_User_Index (html,$)->
 
@@ -392,7 +396,6 @@ describe '| regression-sprint-1 |', ->                                          
 
         # Technology
         $(technology.find('h4')).html().assert_Is 'Technology'        # checking Technology values and icons
-
         technology.find('td').each (index, td)->
           using $(td),->
             text = $(@.find('span').eq(1)).html()
@@ -411,7 +414,9 @@ describe '| regression-sprint-1 |', ->                                          
         type.find('td').each (index, td)->
           using $(td),->
             text = $(@.find('span').eq(1)).html()
-            mappings[text].assert_Is_Object()
-            $(@.find('i')).attr().assert_Is mappings[text]
+            if text                                                 # on Lib_Vulnerabilities there is no icon
+              log "[#{text}]"
+              mappings[text].assert_Is_Object()
+              $(@.find('i')).attr().assert_Is mappings[text]
 
         done()
