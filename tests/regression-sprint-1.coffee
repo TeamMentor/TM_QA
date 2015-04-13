@@ -408,3 +408,59 @@ describe '| regression-sprint-1 |', ->                                          
                 $ = cheerio.load(css)
                 $('#team-mentor-navigation #tm-logo').attr().assert_Is { id: 'tm-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: top center; height: 40px; margin: 0 auto; margin-bottom: 10px;' }
                 done()
+
+  it 'Issue 644 - Validate icon for each Technology or Type', (done)->
+    mappings =
+      "Web Application" : { title : "Web Application" , class : "technology-icon web-app"     }
+      "All"             : { title : "Any Technology"  , class : "fi-flag"                     }
+      "C++"             : { title : "C++"             , class : "technology-icon c-plus-plus" }
+      "iOS"             : { title : "iOS"             , class : "technology-icon ios"         }
+      "Android"         : { title : "Android"         , class : "technology-icon android"     }
+      ".NET 3.5"        : { title : "ASP.Net"         , class : "technology-icon asp"         }
+      "Java"            : { title : "Java"            , class : "technology-icon java"        }
+      ".NET"            : { title : "ASP.Net"         , class : "technology-icon asp"         }
+      "Scala Play"      : { title : "Scala"           , class : "technology-icon scala"       }
+      "PHP"             : { title : "PHP"             , class : "technology-icon php"         }
+      "HTML5"           : { title : "HTML5"           , class : "fi-html5"                    }
+      "Guideline"       : { title : "Guideline"       , class : "fi-book"                     }
+      "Checklist Item"  : { title : "Checklist"       , class : "fi-checkbox"                 }
+      "How To"          : { title : "How To"          , class : "fi-list-bullet"              }
+      "Code Example"    : { title : "Code Sample"     , class : "fi-puzzle"                   }
+
+      " Any"            : { title : "Any Technology"  , class : "fi-flag"                     }   # only in Lib_Vulnerabilities
+      "ASP.NET 4.0"     : { title : "ASP.Net"         , class : "technology-icon asp"         }
+      "Vulnerability"   : { }
+
+    jade.login_As_User ()->
+      jade.page_User_Index (html,$)->
+
+        technology = $('#filter-Technology')
+        phase      = $('#filter-Phase')
+        type       = $('#filter-Type')
+
+        # Technology
+        $(technology.find('h4')).html().assert_Is 'Technology'        # checking Technology values and icons
+        technology.find('td').each (index, td)->
+          using $(td),->
+            text = $(@.find('span').eq(1)).html()
+            mappings[text].assert_Is_Object()
+            if mappings[text].class.starts_With('fi')
+              $(@.find('i')).attr().assert_Is mappings[text]
+            else
+              $(@.find('div')).attr().assert_Is mappings[text]
+
+        # Phase
+        $(phase.find('h4')).html().assert_Is 'Phase'                # checking Phase value (no icons for phase)
+
+        # Type
+        $(type.find('h4')).html().assert_Is 'Type'                  # checking Type values and icons
+
+        type.find('td').each (index, td)->
+          using $(td),->
+            text = $(@.find('span').eq(1)).html()
+            if text                                                 # on Lib_Vulnerabilities there is no icon
+              log "[#{text}]"
+              mappings[text].assert_Is_Object()
+              $(@.find('i')).attr().assert_Is mappings[text]
+
+        done()
