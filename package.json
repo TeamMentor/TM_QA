@@ -21,8 +21,8 @@
     "cheerio": "latest",
     "coffee-script": "latest",
     "fluentnode": "latest",
+    "inline-css": "^1.0.4",
     "jade": "latest",
-    "juice": "latest",
     "mocha": "latest",
     "nwr": "latest",
     "wd": "latest"
