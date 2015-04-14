@@ -81,13 +81,13 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 123 - Terms and conditions link is available', (done)->
     jade.page_User_Logout (html,$)->
       footerDiv =  $('#terms-and-conditions').html()
-      footerDiv.assert_Contains("Terms &amp; Conditions")
+      footerDiv.assert_Is('<i class="fi-paperclip"></i>')
       done();
 
   it 'Issue 123 - Terms and conditions Page is displayed', (done)->
     jade.page_User_Logout (html,$)->
       footerDiv =  $('#terms-and-conditions').html()
-      footerDiv.assert_Contains("Terms &amp; Conditions")
+      footerDiv.assert_Is('<i class="fi-paperclip"></i>')
       page.click '#terms-and-conditions', (html,$)->
         $('#software-product-license-agreement').html().assert_Is("Software Product License Agreement")
         done();
@@ -127,7 +127,7 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
     jade.page_User_Logout ()->
       jade.page_About (html, $)->
-        $("#footer h4").html().assert_Contains('TEAM Mentor v')
+        $("#footer .label").html().assert_Is('TEAM Mentor 4.0')
         done()
 
   #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below

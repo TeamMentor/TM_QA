@@ -1,7 +1,7 @@
 inliner = require('inline-css')
 cheerio = require('cheerio')
 
-describe.only '| regression-css |', ->                                                                          # name of this suite of tests (should match the file name)
+describe '| regression-css |', ->                                                                          # name of this suite of tests (should match the file name)
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
   jade = page.jade_API
   @timeout(7500)
@@ -14,29 +14,32 @@ describe.only '| regression-css |', ->                                          
         inliner html, inlinerOptions, (err, cssHtml)->
           throw (err) if err
           $css = cheerio.load(cssHtml)
-          attributes = $css('.input-group-btn').attr()
-          attributes.assert_Is { class: 'input-group-btn', style: 'display: table-cell; vertical-align: bottom;' }
+          attributes = $css('.input-group').attr()
+          attributes.assert_Is {"class":"input-group","style":"background: #fafafa; border: 1px solid #dbdbdb; border-radius: 3px; display: table; height: 3em; margin-top: 5px; padding-left: 10px; width: 98.5%;"}
           done()
 
-  it 'Issue 456 - Refactor css inliner with Juice replacement', (done)->
-    baseUrl = page.tm_Server
-    inlinerOptions = { url: baseUrl }
-    extract_Style_Data = (styleCss)->
-      items = {}
-      for item in styleCss.split(';')
-        if (item)
-          items[item.split(':').first().trim()] =item.split(':').second().trim()
-      return items
-    jade.page_User_Logout ->
-      jade.page_Home (html, $)->
-        inliner html, inlinerOptions, (err, cssHtml)->
-          throw (err) if err
-          $css = cheerio.load(cssHtml)
-          footer_Attr = $css('#footer #si-logo').attr()
-          footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; margin-bottom: 20px; width: 160px;' }
-          items = extract_Style_Data(footer_Attr.style)
-          items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
-          done()
+  # removing test below since footer img is not done with css anymore
+  # leaving it here since it is a good example of testing css
+
+  #it 'Issue 456 - Refactor css inliner with Juice replacement', (done)->
+  #  baseUrl = page.tm_Server
+  #  inlinerOptions = { url: baseUrl }
+  #  extract_Style_Data = (styleCss)->
+  #    items = {}
+  #    for item in styleCss.split(';')
+  #      if (item)
+  #        items[item.split(':').first().trim()] =item.split(':').second().trim()
+  #    return items
+  #  jade.page_User_Logout ->
+  #    jade.page_Home (html, $)->
+  #      inliner html, inlinerOptions, (err, cssHtml)->
+  #        throw (err) if err
+  #        $css = cheerio.load(cssHtml)
+  #        footer_Attr = $css('#footer #si-logo').attr()
+  #        footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; margin-bottom: 20px; width: 160px;' }
+  #        items = extract_Style_Data(footer_Attr.style)
+  #        items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
+  #        done()
 
   it 'Issue 500 - TM Logo missing from search results page', (done)->
     searchText = 'xss'
