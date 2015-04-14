@@ -27,6 +27,7 @@ describe '| jade | page-graph |',->
         #  done()
 
   it 'Check Active Filter',(done)->
+    @.timeout 4000
     filter_Name = 'Java'
     jade.page_User_Graph filter_Name, (html,$)->
       activeFilter = $('#activeFilter').text()              # on first load there should be no value in the active filter
