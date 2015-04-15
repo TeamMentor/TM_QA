@@ -31,7 +31,7 @@ describe '| jade | page-article |',->
       article_Html.attr().href.assert_Is "/article/#{id}/#{article_Data.title.replace(/\ /g,"-")}"
       done()
 
-  describe.only '/article/:key',->
+  describe '/article/:key',->
 
     article = null
 
@@ -60,9 +60,7 @@ describe '| jade | page-article |',->
       check_Article_Contents article.title , '#title', article.title , done
 
     it 'by dashed-title', (done)->
-      log "\n" + article.title
       dashed_Title = article.title.replace(/\s/g,'-')
-      log "\n" + dashed_Title
       check_Article_Contents dashed_Title  , '#title', article.title , done
 
     it 'by id and title', (done)->
