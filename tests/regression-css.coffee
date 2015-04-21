@@ -15,7 +15,8 @@ describe '| regression-css |', ->                                               
           throw (err) if err
           $css = cheerio.load(cssHtml)
           attributes = $css('.input-group').attr()
-          attributes.assert_Is {"class":"input-group","style":"background: #fafafa; border: 1px solid #dbdbdb; border-radius: 3px; display: table; height: 3em; margin-top: 5px; padding-left: 10px; width: 98.5%;"}
+          attributes.assert_Is {"class":"input-group","style":"background: #fafafa; border: 1px solid #dbdbdb; border-radius: 3px; display: table; height: 3em; margin: 10px 0 0 0; width: 98.5%;"}
+
           done()
 
   # removing test below since footer img is not done with css anymore
