@@ -1,5 +1,5 @@
 # Test against this version of Node.js
-os: unstable
+#os: unstable
 environment:
   nodejs_version: "0.12"
 
@@ -23,6 +23,7 @@ install:
   - npm install
   - npm test
   - cd ..
+
   # install modules
   - npm install
 
