@@ -7,6 +7,22 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+
+  - cd TM_4_0_Design
+  - npm install
+  - npm test
+  - npm start &
+  - cd ..
+
+  - cd TM_4_0_GraphDB
+  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+  - ps: $fileContent += $env:priv_key.Replace(' ', "`n")
+  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+  - ps: Set-Content c:\users\appveyor\.ssh\id_rsa $fileContent
+  - bin\setup.cmd
+  - npm install
+  - npm test
+  - cd ..
   # install modules
   - npm install
 
