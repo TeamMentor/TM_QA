@@ -1,7 +1,7 @@
 inliner = require('inline-css')
 cheerio = require('cheerio')
 
-describe.only '| regression-css |', ->                                                                          # name of this suite of tests (should match the file name)
+describe '| regression-css |', ->                                                                          # name of this suite of tests (should match the file name)
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
   jade = page.jade_API
   @timeout(7500)
