@@ -1,4 +1,5 @@
 # Test against this version of Node.js
+os: unstable
 environment:
   nodejs_version: "0.12"
 
