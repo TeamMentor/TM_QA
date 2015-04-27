@@ -15,7 +15,6 @@ cd TM_4_0_GraphDB
 npm run dev &
 
 cd ..
-cd QA
 #npm install
 
 wait
