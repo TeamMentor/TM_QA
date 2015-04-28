@@ -1,4 +1,4 @@
-describe '| jade | page-graph |',->
+describe.only '| jade | page-graph |',->
   page = require('./../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
@@ -6,6 +6,8 @@ describe '| jade | page-graph |',->
     jade.login_As_User ->
         done()
 
+  @.timeout 4000
+  
   it 'Check filters have size ',(done)->
     jade.page_User_Graph 'Java', (html,$)->
         #if $('#filters a').html() is null      # return if link is not there
@@ -27,7 +29,6 @@ describe '| jade | page-graph |',->
         #  done()
 
   it 'Check Active Filter',(done)->
-    @.timeout 4000
     filter_Name = 'Java'
     jade.page_User_Graph filter_Name, (html,$)->
       activeFilter = $('#activeFilter').text()              # on first load there should be no value in the active filter
