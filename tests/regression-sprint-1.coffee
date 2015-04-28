@@ -354,17 +354,17 @@ describe '| regression-sprint-1 |', ->                                          
 
   it 'Issue 644 - Validate icon for each Technology or Type', (done)->
     mappings =
-      "Web Application"       : { title : "Web Application" , class : "technology-icon web-app"     }
-      "Technology Independent": { title : "Any Technology"          , class : "fi-flag"             }
-      "C++"                   : { title : "C++"             , class : "technology-icon c-plus-plus" }
-      "iOS"                   : { title : "iOS"             , class : "technology-icon ios"         }
-      "Android"               : { title : "Android"         , class : "technology-icon android"     }
-      ".NET 3.5"              : { title : "ASP.Net"         , class : "technology-icon asp"         }
-      "Java"                  : { title : "Java"            , class : "technology-icon java"        }
-      ".NET"                  : { title : "ASP.Net"         , class : "technology-icon asp"         }
-      "Scala Play"            : { title : "Scala"           , class : "technology-icon scala"       }
-      "PHP"                   : { title : "PHP"             , class : "technology-icon php"         }
-      "WCF 3.5"               : { title : "WCF"             , class : "technology-icon wcf"         }
+      "Web Application"       : { title : "Web Application" , class : "web-app"     }
+      "Technology Independent": { title : "Any Technology"  , class : "fi-flag"                     }
+      "C++"                   : { title : "C++"             , class : "c-plus-plus" }
+      "iOS"                   : { title : "iOS"             , class : "ios"         }
+      "Android"               : { title : "Android"         , class : "android"     }
+      ".NET 3.5"              : { title : "ASP.Net"         , class : "asp"         }
+      "Java"                  : { title : "Java"            , class : "java"        }
+      ".NET"                  : { title : "ASP.Net"         , class : "asp"         }
+      "Scala Play"            : { title : "Scala"           , class : "scala"       }
+      "PHP"                   : { title : "PHP"             , class : "php"         }
+      "WCF 3.5"               : { title : "WCF"             , class : "wcf"         }
 
       "HTML5"                 : { title : "HTML5"           , class : "fi-html5"                    }
       "Guideline"             : { title : "Guideline"       , class : "fi-book"                     }
@@ -373,7 +373,7 @@ describe '| regression-sprint-1 |', ->                                          
       "Code Example"          : { title : "Code Sample"     , class : "fi-puzzle"                   }
 
       " Any"                  : { title : "Any Technology"  , class : "fi-flag"                     }   # only in Lib_Vulnerabilities
-      "ASP.NET 4.0"           : { title : "ASP.Net"         , class : "technology-icon asp"         }
+      "ASP.NET 4.0"           : { title : "ASP.Net"         , class : "asp"         }
       "Vulnerability"         : { title : "Vulnerability"   , class : "fi-shield"                   }
 
     jade.login_As_User ()->
