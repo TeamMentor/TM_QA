@@ -1,4 +1,4 @@
-describe.only '| jade | page-graph |',->
+describe '| jade | page-graph |',->
   page = require('./../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade = page.jade_API
 
@@ -7,7 +7,7 @@ describe.only '| jade | page-graph |',->
         done()
 
   @.timeout 4000
-  
+
   it 'Check filters have size ',(done)->
     jade.page_User_Graph 'Java', (html,$)->
         #if $('#filters a').html() is null      # return if link is not there
