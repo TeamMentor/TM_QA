@@ -14,7 +14,7 @@ before_install:
 - cd ..
 - cd TM_4_0_GraphDB
 - mkdir ./.tmCache
-- git clone https://tm-build:$git_pwd@github.com/TMContent/Lib_UNO-json.git ./.tmCache/Lib_UNO-json
+- git clone https://$git_pwd@github.com/TMContent/Lib_UNO-json.git ./.tmCache/Lib_UNO-json
 - npm install
 - npm test
 - npm run dev &
