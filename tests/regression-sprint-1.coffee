@@ -352,29 +352,32 @@ describe '| regression-sprint-1 |', ->                                          
                 badges[1].children[0].data.assert_Is(selector_2)
                 done()
 
-  it 'Issue 644 - Validate icon for each Technology or Type', (done)->
+  it.only 'Issue 644 - Validate icon for each Technology or Type', (done)->
     mappings =
-      "Web Application"       : { title : "Web Application" , class : "web-app"     }
-      "Technology Independent": { title : "Any Technology"  , class : "fi-flag"                     }
-      "C++"                   : { title : "C++"             , class : "c-plus-plus" }
-      "iOS"                   : { title : "iOS"             , class : "ios"         }
-      "Android"               : { title : "Android"         , class : "android"     }
-      ".NET 3.5"              : { title : "ASP.Net"         , class : "asp"         }
-      "Java"                  : { title : "Java"            , class : "java"        }
-      ".NET"                  : { title : "ASP.Net"         , class : "asp"         }
-      "Scala Play"            : { title : "Scala"           , class : "scala"       }
-      "PHP"                   : { title : "PHP"             , class : "php"         }
-      "WCF 3.5"               : { title : "WCF"             , class : "wcf"         }
 
-      "HTML5"                 : { title : "HTML5"           , class : "fi-html5"                    }
-      "Guideline"             : { title : "Guideline"       , class : "fi-book"                     }
-      "Checklist Item"        : { title : "Checklist"       , class : "fi-checkbox"                 }
-      "How To"                : { title : "How To"          , class : "fi-list-bullet"              }
-      "Code Example"          : { title : "Code Sample"     , class : "fi-puzzle"                   }
+      "Android"               : { title : "Android"                 , class : "icon-Android"       }
+      "C++"                   : { title : "C++"                     , class : "icon-C"             }
+      "iOS"                   : { title : "iOS"                     , class : "icon-iOS"           }
+      "HTML5"                 : { title : "HTML5"                   , class : "icon-HTML5"         }
+      "Java"                  : { title : "Java"                    , class : "icon-Java"          }
+      ".Net"                  : { title : ".Net"                    , class : "icon-Net"           }
+      "PHP"                   : { title : "PHP"                     , class : "icon-PHP"           }
+      "Scala"                 : { title : "Scala"                   , class : "icon-Scala"         }
+      "Technology Independant": { title : "Technology Independant"  , class : "icon-All"           }
+      "WCF"                   : { title : "WCF"                     , class : "icon-WCF"           }
+      "Web Application"       : { title : "Web Application"         , class : "icon-Web-App"       }
 
-      " Any"                  : { title : "Any Technology"  , class : "fi-flag"                     }   # only in Lib_Vulnerabilities
-      "ASP.NET 4.0"           : { title : "ASP.Net"         , class : "asp"         }
-      "Vulnerability"         : { title : "Vulnerability"   , class : "fi-shield"                   }
+      "Deployment"            : { title : "Deployment"              , class : "icon-Deploy"        }
+      "Design"                : { title : "Design"                  , class : "icon-Design"        }
+      "Implementation"        : { title : "Implementation"          , class : "icon-Implementation"}
+      "Test"                  : { title : "Test"                    , class : "icon-Test"          }
+
+      "Checklist"             : { title : "Checklist"               , class : "icon-Checklist"     }
+      "Code Example"          : { title : "Code Example"            , class : "icon-CodeExample"   }
+      "Guideline"             : { title : "Guideline"               , class : "icon-Guideline"     }
+      "Principle"             : { title : "Principle"               , class : "icon-Principle"     }
+      "How To"                : { title : "How To"                  , class : "icon-HowTo"   }
+      "Vulnerabilities"       : { title : "Vulnerabilities"         , class : "icon-Vulnerabilities" }
 
     jade.login_As_User ()->
       jade.page_User_Index (html,$)->
@@ -383,28 +386,12 @@ describe '| regression-sprint-1 |', ->                                          
         phase      = $('#filter-Phase')
         type       = $('#filter-Type')
 
-        # Technology
-        $(technology.find('h4')).html().assert_Is 'Technology'        # checking Technology values and icons
-        technology.find('td').each (index, td)->
+        $('#filter-Technology h4').html().assert_Is 'Technology'
+        $('#filter-Phase h4'     ).html().assert_Is 'Phase'
+        $('#filter-Type h4'      ).html().assert_Is 'Type'
+
+        $('#filters #filter-icon').each (index, td)->
           using $(td),->
-            text = $(@.find('span').eq(1)).html()
-            mappings[text].assert_Is_Object()
-            if mappings[text].class.starts_With('fi')
-              $(@.find('i')).attr().assert_Is mappings[text]
-            else
-              $(@.find('div')).attr().assert_Is mappings[text]
-
-        # Phase
-        $(phase.find('h4')).html().assert_Is 'Phase'                # checking Phase value (no icons for phase)
-
-        # Type
-        $(type.find('h4')).html().assert_Is 'Type'                  # checking Type values and icons
-
-        type.find('td').each (index, td)->
-          using $(td),->
-            text = $(@.find('span').eq(1)).html()
-            if text                                                 # on Lib_Vulnerabilities there is no icon
-              mappings[text].assert_Is_Object()
-              $(@.find('i')).attr().assert_Is mappings[text]
-
+            attr = $(@.find('span')).attr()
+            attr.assert_Is mappings[attr.title].assert_Is_Object()
         done()
