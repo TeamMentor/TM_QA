@@ -1,4 +1,4 @@
-describe '| regression-sprint-1 |', ->                                                                          # name of this suite of tests (should match the file name)
+describe.only '| regression-sprint-1 |', ->                                                                          # name of this suite of tests (should match the file name)
   page = require('./API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
   jade = page.jade_API
   @timeout(7500)
@@ -265,7 +265,7 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Login')
       done()
 
-  it.only 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
+  it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
     @.timeout(12500)
     searchText = 'xss'
     validateSearch = (searchText, next)->
