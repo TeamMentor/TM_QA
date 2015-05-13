@@ -60,7 +60,7 @@ describe '| jade | page-article |',->
       check_Article_Contents article.title , '#title', article.title , done
 
     it 'by dashed-title', (done)->
-      dashed_Title = article.title.replace(/ /g,'-')
+      dashed_Title = article.title.replace(/\s/g,'-')
       check_Article_Contents dashed_Title  , '#title', article.title , done
 
     it 'by id and title', (done)->
