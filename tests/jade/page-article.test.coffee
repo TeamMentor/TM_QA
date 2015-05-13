@@ -56,12 +56,12 @@ describe '| jade | page-article |',->
     it 'by guid', (done)->
       check_Article_Contents article.guid  , '#title', article.title , done
 
-    it 'by title', (done)->
-      check_Article_Contents article.title , '#title', article.title , done
+    it 'by title ', (done)->
+      check_Article_Contents article.title , '#title', ''  , done
 
-    it 'by dashed-title', (done)->
+    it 'by dashed-title (should not work)', (done)->
       dashed_Title = article.title.replace(/\s/g,'-')
-      check_Article_Contents dashed_Title  , '#title', article.title , done
+      check_Article_Contents dashed_Title  , '#title','' , done
 
     it 'by id and title', (done)->
       id_and_title = "#{article.id}/#{article.title}"
