@@ -32,23 +32,23 @@ describe '| regression-sprint-1 |', ->                                          
       page.chrome.eval_Script "document.querySelector('#email').value='#{email}';", =>
         page.chrome.eval_Script "document.querySelector('#btn-get-password').click();", =>
           page.wait_For_Complete  (html,$)->
-            $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
-            $('#loginwall .alert #message' ).html().assert_Is("<span>If you entered a valid address, then a password reset link has been sent to your email address.</span>")
+            $('#loginwall h4').html().assert_Is('Login')
+            $('.alert #message .alert-text').html().assert_Is("If you entered a valid address, then a password reset link has been sent to your email address.")
             done()
 
   it 'Issue 244 - Button type should be submit', (done)->
     jade.page_Pwd_Forgot (html, $) ->
-      $('#heading p').html().assert_Is('Type in your email address and we&apos;ll send you an email with further instructions.')
+      $('#loginwall h4').html().assert_Is('Retrieve your password')
       $('#btn-get-password').attr('type').assert_Is('submit')
       done()
 
   it 'Issue 117 - Getting Started Page is blank', (done)->
     jade.page_Home ->
       page.click 'START YOUR FREE TRIAL TODAY', (html, $)->
-        $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
+        $('#loginwall h4').html().assert_Is('Sign Up')
         jade.page_Home ->
           page.click 'SEE FOR YOURSELF', (html)->
-            $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
+            $('#loginwall h4').html().assert_Is('Sign Up')
             done()
 
   it 'Issue 118 - Clicking on TM logo while logged in should not bring back the main screen', (done)->
@@ -81,13 +81,13 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 123 - Terms and conditions link is available', (done)->
     jade.page_User_Logout (html,$)->
       footerDiv =  $('#terms-and-conditions').html()
-      footerDiv.assert_Is('<i class="fi-paperclip"></i>')
+      footerDiv.assert_Is('<span title=\"Terms &amp; Conditions\" class=\"icon-Paperclip\"></span>')
       done();
 
   it 'Issue 123 - Terms and conditions Page is displayed', (done)->
     jade.page_User_Logout (html,$)->
       footerDiv =  $('#terms-and-conditions').html()
-      footerDiv.assert_Is('<i class="fi-paperclip"></i>')
+      footerDiv.assert_Is('<span title=\"Terms &amp; Conditions\" class=\"icon-Paperclip\"></span>')
       page.click '#terms-and-conditions', (html,$)->
         $('#software-product-license-agreement').html().assert_Is("Software Product License Agreement")
         done();
@@ -95,7 +95,7 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 124 - Forgot password page is blank', (done)->
     jade.page_Login ->
       page.click '#link-forgot-pwd', (html,$)->
-        $('#heading p').text().assert_Is("Type in your email address and we'll send you an email with further instructions.")
+        $('#loginwall h4').html().assert_Is('Retrieve your password')
         done();
 
   it 'Issue 128 - Opening /#{jade.url_Prefix}/{query} page with bad {query} should result in an "no results" page/view', (done)->
@@ -108,7 +108,7 @@ describe '| regression-sprint-1 |', ->                                          
   it "Issue 129 - 'Need to login page' missing from current 'guest' pages", (done)->
     jade.keys().assert_Contains('page_Login_Required')
     page.open '/guest/login-required.html', (html,$)->
-      $('#heading p').html().assert_Is('Please log in to access TEAM Mentor.')
+      $('#loginwall h4').html().assert_Is('Login')
       done()
 
   it 'Issue 151 - Add asserts for new Login page content ', (done)->
@@ -119,9 +119,9 @@ describe '| regression-sprint-1 |', ->                                          
       $('#summary h4').html().assert_Is("Instant resources that bridge the gap between developer questions and technical solutions.")
       $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
       $('#summary h3').html().assert_Is("With TEAM Mentor, you can...")
-      $($('.row p').get(2)).html().assert_Is("Fix vulnerabilities quicker than ever before.")
-      $($('.row p').get(3)).html().assert_Is("Reduce the number of vulnerabilities over time.")
-      $($('.row p').get(4)).html().assert_Is("Expand the development team&apos;s knowledge and improve process.")
+      $($('.row p').get(1)).html().assert_Is("Fix vulnerabilities quicker than ever before.")
+      $($('.row p').get(2)).html().assert_Is("Reduce the number of vulnerabilities over time.")
+      $($('.row p').get(3)).html().assert_Is("Expand the development team&apos;s knowledge and improve process.")
       done()
 
   it 'Issue 173 - Add TM release version number to a specific location',(done)->
@@ -129,26 +129,6 @@ describe '| regression-sprint-1 |', ->                                          
       jade.page_About (html, $)->
         $("#footer .label").html().assert_Is('TEAM Mentor 4.0')
         done()
-
-  #removed because the fix for https://github.com/TeamMentor/TM_4_0_Design/issues/164 removed the label value used below
-  #it 'Issue 192 - When clicking on the TEXT of any filter, the top filter is selected',(done)->
-  #  jade.login_As_User ->
-  #    page.open '/graph/logging', ->
-  #      # this code removes two rows so that only have the right-hand-side nav showing on page
-  #      code = "children = document.documentElement.querySelector('.row').children;
-  #              children[0].remove();
-  #              children[0].remove();"
-  #      page.chrome.eval_Script code, ->
-  #        page.html (html,$)->
-  #          for td in $('td')
-  #            input = $(td).find('input')
-  #            if (input.length)
-  #              value = $(td).text()
-  #              label = $(td).find('label')
-  #              $(input).attr().id.assert_Is(value)
-  #              label.attr().for.assert_Is(value)
-  #          done()
-#
 
   it 'Issue 195 - Wire the step down navigation', (done)->
     jade.login_As_User ->
@@ -205,7 +185,7 @@ describe '| regression-sprint-1 |', ->                                          
           with_Param_ViewModel_2 ->
             done()
 
-  xit 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
+  it 'Issue 298 - Search and Navigate page should only show top n articles',(done)->
     jade.login_As_User ->
       jade.page_User_Graph 'Technology', (html, $)->
         $('#articles a').length.assert_Bigger_Than 20
@@ -233,7 +213,7 @@ describe '| regression-sprint-1 |', ->                                          
           page.chrome.url (url)->
             url.assert_Contains '/guest/default.html'
             page.open '/user/main.html',(html,$)->
-              $('#message').html().assert_Is '<span>You need to login to see that page.</span>'
+              $('#message .alert-text').html().assert_Is 'You need to login to see that page.'
               done()
 
 
@@ -246,7 +226,7 @@ describe '| regression-sprint-1 |', ->                                          
       $($('label').get(2)).html().assert_Is("Password")
       $($('.form-group p').get(2)).html().assert_Is("Your password should be at least 8 characters long. It should have at least one of each of the following: uppercase and lowercase letters, number and special character.")
       $($('label').get(3)).html().assert_Is("Confirm Password")
-      $($('p').get(4)).html().assert_Is("By signing up, you agree to our <a href=\"/misc/terms-and-conditions\">Terms and Conditions</a>.")
+      $($('p').get(4)).html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
       done()
 
   it 'Issue 454 - Login/Signup options are displayed for logged in users (HTTP 500)', (done) ->
@@ -264,8 +244,7 @@ describe '| regression-sprint-1 |', ->                                          
       page.open '/articles/abc', (html,$)->
         $('#an-error-occurred').html().assert_Is("An error occurred")
         $('p').html().assert_Is('It&apos;s a HTTP 404 error - check the URL and refresh the browser.')
-        #Logout should be availble
-        $('ul').html().assert_Contains('Logout')
+        $('ul').html().assert_Contains('Logout')            #Logout should be availble
         jade.page_User_Logout ->
           done()
 
@@ -273,8 +252,7 @@ describe '| regression-sprint-1 |', ->                                          
     page.open '/article/%s', (html,$)=>
       $('#an-error-occurred').html().assert_Is("An error occurred")
       $('p').html().assert_Is('If this continues, please contact your <a href=\"mailto:support@securityinnovation.com\">TEAM Mentor Support Team</a>.')
-      #Testing that Sign Up and Login links are displayed
-      $('ul').html().assert_Contains('Sign Up')
+      $('ul').html().assert_Contains('Sign Up')             #Testing that Sign Up and Login links are displayed
       $('ul').html().assert_Contains('Login')
       done()
 
@@ -304,7 +282,7 @@ describe '| regression-sprint-1 |', ->                                          
                 $('input').attr().assert_Is {"type":"text","id":"search-input","name":"text","class":"form-control"}
                 values = []
                 for td in $('#popular-Search-Terms .nav td')
-                  values.push($(td).text())
+                  values.add($(td).text())
                 values.assert_Is_Equal_To(values.unique())
                 next()
     jade.login_As_User ()->
@@ -338,21 +316,22 @@ describe '| regression-sprint-1 |', ->                                          
   it  'Issue 606 - Multiple Badges feature', (done) ->
     jade.login_As_User ()->
       page.open '/show/', (html,$)->
-        log "Library: #{$('#title').text()}"
-        selector_1 = $('.nav a span').eq(1).text()
+        selector_1 = $('#filters .nav a').eq(0).text()
         code = "document.querySelectorAll('.nav a span')[1].click();"
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
             code = "document.querySelectorAll('.nav a span')[1].click();"
-            selector_2 = $('.nav a span').eq(1).text()
+            selector_2 = $('#filters .nav a').eq(0).text()
             page.chrome.eval_Script code, =>
               page.wait_For_Complete (html, $)=>
                 badges = $('#activeFilter')
-                badges[0].children[0].data.assert_Is(selector_1)
-                badges[1].children[0].data.assert_Is(selector_2)
+                selector_1.assert_Contains '.NET'
+                $(badges[0]).text().assert_Is '.NETx'
+                selector_2.assert_Contains 'Deployment'
+                $(badges[1]).text().assert_Is 'Deploymentx'
                 done()
 
-  it.only 'Issue 644 - Validate icon for each Technology or Type', (done)->
+  it 'Issue 644 - Validate icon for each Technology or Type', (done)->
     mappings =
 
       "Android"               : { title : "Android"                 , class : "icon-Android"       }
