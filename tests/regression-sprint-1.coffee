@@ -265,7 +265,7 @@ describe '| regression-sprint-1 |', ->                                          
       $('ul').html().assert_Contains('Login')
       done()
 
-  it 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
+  it.only 'Issue 440 - Check for no duplicates in Popular Search Terms', (done) ->
     @.timeout(12500)
     searchText = 'xss'
     validateSearch = (searchText, next)->
