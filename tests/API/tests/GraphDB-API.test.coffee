@@ -14,6 +14,7 @@ describe '| API | tests | GraphDB-API.test',->
       @.server.assert_Is 'aaaa'
 
   it 'article_Html', (done)->
+    @timeout 20000                        # first test that will trigger the DB load
     using graphDB, ->
       article_Id = 'article-ba3c65a62479' # How to Test for Cross-Site Request Forgery (CSRF) Vulnerabilities
       @.article_Html article_Id, (html)->
