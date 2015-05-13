@@ -131,6 +131,7 @@ describe.only '| regression-sprint-1 |', ->                                     
         done()
 
   it 'Issue 195 - Wire the step down navigation', (done)->
+    @.timeout 10000
     jade.login_As_User ->
       navigation = 'Technology,Phase,Type'
       page.open "/#{jade.url_Prefix}/#{navigation}", (html, $)->
