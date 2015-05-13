@@ -9,14 +9,14 @@ before_install:
 - mkdir ./.tmCache
 - git clone https://github.com/TMContent/Lib_Docs-json ./.tmCache/Lib_Docs-json
 - npm install
-- npm test
+#- npm test
 - npm start &
 - cd ..
 - cd TM_4_0_GraphDB
 - mkdir ./.tmCache
 - git clone https://tm-build:$git_pwd@github.com/TMContent/Lib_UNO-json.git ./.tmCache/Lib_UNO-json
 - npm install
-- npm test
+#- npm test
 - npm run dev &
 - cd ..
 notifications:
