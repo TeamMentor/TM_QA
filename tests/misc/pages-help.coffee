@@ -15,7 +15,7 @@ describe '| misc | pages-help |', ->
         done()
 
   it 'check nav link (when user is logged in)', (done)->
-    @timeout 4000
+    @timeout 10000
     jade.login_As_User ->
       page.open '/help/index.html', (html,$)->
         $('#nav-user-logout').text().assert_Is 'Logout'
@@ -77,5 +77,5 @@ describe '| misc | pages-help |', ->
   it 'open "Support" page (323dae88-b74b-465c-a949-d48c33f4ac85)',(done)->
     jade.page_Help_Page '323dae88-b74b-465c-a949-d48c33f4ac85', (html, $)->
       $('#help-title'  ).text().assert_Is 'Support'
-      $('#help-content').text().assert_Is 'To contact Security Innovation TEAM Mentor support please email support@securityinnovation.com or leave your message at 1.978.694.1008 (option 2) and we will get back to you.'
+      $('#help-content').text().assert_Is 'To contact Security Innovation TEAM Mentor support please email support@securityinnovation.com or leave your message at 1.978.694.1008 (option 2) and we will get back to you.\n \n'
       done()
