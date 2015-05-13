@@ -15,10 +15,10 @@ describe '| API | tests | GraphDB-API.test',->
 
   it 'article_Html', (done)->
     using graphDB, ->
-      @.articles_Ids (articles_Ids)=>
-        @.article_Html articles_Ids.first(), (html)->
-          html.assert_Contains '<p>'
-          done()
+      article_Id = 'article-ba3c65a62479' # How to Test for Cross-Site Request Forgery (CSRF) Vulnerabilities
+      @.article_Html article_Id, (html)->
+        html.assert_Contains ['<p>', 'CSRF']
+        done()
 
   it 'articles', (done)->
     graphDB.articles (data)->
