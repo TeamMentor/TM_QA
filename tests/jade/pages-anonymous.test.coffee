@@ -1,7 +1,7 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
-describe.only '| jade | pages-anonymous |', ->
+describe '| jade | pages-anonymous |', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
 
@@ -67,7 +67,7 @@ describe.only '| jade | pages-anonymous |', ->
   #    items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
   #    next()
 
-  it.only '/',(done)->
+  it '/',(done)->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
