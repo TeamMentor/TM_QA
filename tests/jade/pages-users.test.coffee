@@ -20,20 +20,21 @@ describe '| jade | pages-users', ->
     linksData = for link in navBarLinks                                     # for each link in navBarLinks
       {                                                                     # create a new object
         link_attr : $(link).attr(),                                         # with the link attributes
-        img_attr  : $($(link).find('i')).attr()                             # the img attributes
-        text: $(link).text()                                               # and the value (which is the innerText)
+        img_attr  : $(link).find('span').attr()                             # the img attributes
+        text      : $(link).text()                                          # and the value (which is the innerText)
       }
 
     checkValues = (index, link_attr,img_attr, text ) ->                 # create a helper function to check for expected values
       using linksData[index],->
         @.link_attr.assert_Is link_attr
-        @.img_attr .assert_Is img_attr
+        @.img_attr .assert_Is img_attr  if @.img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'              }, { class: 'fi-magnifying-glass'}, 'Search'    )
-    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/" }, { class: 'fi-list-thumbnails' }, 'Index')
-    checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'             }, { class: 'fi-info'            }, 'Docs'    )
-    checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                 }, { class: 'fi-power'           }, 'Logout'  )
+    checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'                        }, { title: 'Search', class: 'icon-Search' }, 'Search'    )
+    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/"                   }, { title: 'Index' , class: 'icon-Index'  }, 'Index')
+    checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'                       }, { title: 'Info'  , class: 'icon-Info'   }, 'Docs'    )
+    checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                           }, { title: 'Logout', class: 'icon-Logout' }, 'Logout'  )
+    checkValues(4, {id: 'tm-support-email' , href: 'mailto:support@securityinnovation.com'  }, undefined , 'an email'  )
 
   before (done)->
     jade.login_As_QA  ->
@@ -72,12 +73,12 @@ describe '| jade | pages-users', ->
     jade.page_User_Graph_All (html,$)->
       done()
 
-  xit 'page_User_Graph (Technology)', (done)->
+  it 'page_User_Graph (Technology)', (done)->
     @timeout 10000
     jade.page_User_Graph 'Technology', (html,$)->
       all_Articles = $("#articles a").keys().size()
-      first_Filter = $('#filters a').first().attr().href
-      page.open first_Filter, (html, $)->
+      second_Filter = $($('#filters a')[1]).attr().href  # currently android
+      page.open second_Filter, (html, $)->
         $("#articles a").keys().size()
                         .assert_Is_Not(all_Articles)
         done()
