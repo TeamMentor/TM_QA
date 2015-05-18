@@ -43,17 +43,13 @@ describe '| jade | pages-users', ->
   it 'Help', (done)->
     jade.page_Help (html,$)->
       section_Titles = ($(h4).html() for h4 in $('h4'))
-      section_Titles.assert_Is([ 'About TEAM Mentor',
-                                 'Installation',
-                                 'Administration',
-                                 'UI Elements',
-                                 'Reading Content',
-                                 'Editing Content',
-                                 'Eclipse for Fortify plugin',
-                                 'HP Fortify SCA UI Integration',
-                                 'Visual Studio Plugin',
-                                 'TEAM Mentor in action:',
-                                 'TEAM Mentor Related Sites' ])
+      section_Titles.assert_Is([ 'About TEAM Mentor'
+                                 'Accessing and Reading Content'
+                                 'Installation'
+                                 'Administration'
+                                 'Editing Content'
+                                 'Eclipse for Fortify plugin'
+                                 'HP Fortify SCA UI Integration' ])
       done()
 
   it 'Logout', (done)->

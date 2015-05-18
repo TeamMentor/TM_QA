@@ -67,6 +67,7 @@ describe '| jade | pages-anonymous |', ->
   #    items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
   #    next()
 
+
   it '/',(done)->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
@@ -118,18 +119,16 @@ describe '| jade | pages-anonymous |', ->
   it 'Help',(done)->
     jade.page_Help (html,$)->
       titles = ($(h4).text() for h4 in $('#help-nav h4'))
-      titles.assert_Is ["About TEAM Mentor", "Installation", "Administration", "UI Elements",
-                        "Reading Content","Editing Content","Eclipse for Fortify plugin",
-                        "HP Fortify SCA UI Integration","Visual Studio Plugin"]
+      titles.assert_Is [  "About TEAM Mentor"
+                          "Accessing and Reading Content"
+                          "Installation"
+                          "Administration"
+                          "Editing Content"
+                          "Eclipse for Fortify plugin"
+                          "HP Fortify SCA UI Integration"]
 
-      $(  '#help-index h2').html().assert_Is('TEAM Mentor Documents')
-      $($('#help-index p' ).get(0)).html().assert_Is('Welcome to the TEAM Mentor Documentation Website where you will find detailed information on how to install TEAM Mentor, how it works and how to customize it.')
-      $($('#help-index h4').get(0)).html().assert_Is('TEAM Mentor in action:')
-      #todo: add check for links
-      $($('#help-index p' ).get(1)).html().assert_Is('Other places to get information about TeamMentor:')
-      $($('#help-index h4').get(1)).html().assert_Is('TEAM Mentor Related Sites')
-      #todo: add check for links
-
+      $(  '#help-title'         ).html().assert_Is('Introduction to TEAM Mentor')
+      $('#help-content p strong').html().assert_Is('Welcome to TEAM Mentor.')
       done()
 
   it 'Login', (done)->
