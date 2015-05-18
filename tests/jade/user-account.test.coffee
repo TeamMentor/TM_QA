@@ -20,22 +20,22 @@ describe '| jade | user-account |', ->
 
   it 'Login fail', (done)->
     jade.login 'aaaa'.add_5_Random_Letters(),'bbbb',  (html, $) ->
-      $('.alert #message').html().assert_Is('Error: Username does not exist')
+      $('.alert #message .alert-text').html().assert_Is('Error: Username does not exist')
       done()
 
   it 'Login fail (Password do not match)', (done)->
     jade.login 'a','bbbbaaa',  (html, $) ->
-      $('.alert #message').html().assert_Is('Error: Wrong Password')
+      $('.alert #message .alert-text').html().assert_Is('Error: Wrong Password')
       done()
 
   it 'Login fail (Account is expired)', (done)->
     jade.login 'AccountExpired','bbbbaaa',  (html, $) ->
-      $('.alert #message').html().assert_Is('Error: Account Expired')
+      $('.alert #message .alert-text').html().assert_Is('Error: Account Expired')
       done()
 
   it 'Login fail (Account is Disabled)', (done)->
     jade.login 'AccountDisabled','!!Hxzqe394-9',  (html, $) ->
-      $('.alert #message').html().assert_Is('Error: Account Disabled')
+      $('.alert #message .alert-text').html().assert_Is('Error: Account Disabled')
       done()
 
   it 'Login fail (request limit constraint)', (done)->
@@ -52,8 +52,8 @@ describe '| jade | user-account |', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('#heading p').text().assert_Is('Gain access to the largest repository of secure software development knowledge.')
-          $('.alert #message').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
+          $('#loginwall h4').html().assert_Is('Sign Up')
+          $('.alert #message .alert-text').html().assert_Is('Error: Password must contain a non-letter and a non-number character')
           done()
 
   it 'User Sign Up (with short password)',(done)->
@@ -66,7 +66,7 @@ describe '| jade | user-account |', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('.alert #message').html().assert_Is('Error: Password must be 8 to 256 character long')
+          $('.alert #message .alert-text').html().assert_Is('Error: Password must be 8 to 256 character long')
           done()
 
   it 'User Sign Up (with existing user)',(done)->
@@ -78,7 +78,7 @@ describe '| jade | user-account |', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('.alert #message').html().assert_Is('Error: Username already exist')
+          $('.alert #message .alert-text').html().assert_Is('Error: Username already exist')
           done()
 
   it 'User Sign Up (with existing email address)',(done)->
@@ -91,7 +91,7 @@ describe '| jade | user-account |', ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')
         page.html (html,$)->
-          $('.alert #message').html().assert_Is('Error: Email already exist')
+          $('.alert #message .alert-text').html().assert_Is('Error: Email already exist')
           done()
 
   it 'User Sign Up Fail',(done)->
@@ -141,7 +141,7 @@ describe '| jade | user-account |', ->
       page.chrome.url (url)->
         url.assert_Contains('/sign-up-OK.html')
         page.html (html,$)->
-          $('.alert #message').html().assert_Is('<span>Thanks for signing up to TEAM Mentor. Please login to access our libraries.</span>')
+          $('.alert #message .alert-text').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
           #Performs login upon Sign up
           jade.login username,password,  (html, $) ->
             $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
