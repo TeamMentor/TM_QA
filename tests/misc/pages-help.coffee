@@ -42,14 +42,14 @@ describe '| misc | pages-help |', ->
         done()
 
   #TO FIX
-  xit 'open two pages and check that titles match', (done)->
+  it 'open two pages and check that titles match', (done)->
     @.timeout 5000
     open_Help_Page = (help_Page, next)->
       page.open help_Page.href,(html,$)->
-        $('#help-docs h1').html().assert_Is $('#help-title').html()
-        article_Title = $('#help-docs h1').html()
+        $('#help-title').html().assert_Is help_Page.title
+        article_Title = $('#help-title').html()
         article_Title.assert_Is(help_Page.title)                 # confirms title of loaded page matches link title
-        $('#help-docs').text().size().assert_Bigger_Than(100)    # confirms there is some text on the page
+        $('#help-content').text().size().assert_Bigger_Than(100) # confirms there is some text on the page
         next()
     async.eachSeries help_Pages.take(2), open_Help_Page, done
 
