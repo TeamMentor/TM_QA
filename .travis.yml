@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-- 0.12
+ - 0.12
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
@@ -14,7 +14,7 @@ before_install:
 - cd ..
 - cd TM_4_0_GraphDB
 - mkdir ./.tmCache
-- git clone https://$secretKey@github.com/TMContent/Lib_UNO-json.git ./.tmCache/Lib_UNO-json
+- git clone https://tm-build:$git_pwd@github.com/TMContent/Lib_UNO-json.git ./.tmCache/Lib_UNO-json
 - npm install
 - npm test
 - npm run dev &
@@ -22,6 +22,3 @@ before_install:
 notifications:
   slack:
     secure: d9spkOFp62ic85Oovs/vuHOAAMCNXdmkvMSFeJGqpD70NxixNm3EJNAg9u34dq1OvyPkItbjHZZU6B/CEUwSTPcIsyJOsSO1g95hYT95LXOtvVdqXnLQL92ADZ/zT8bI5yYWu/E+JIeEyr8sbEMXBU5KVkxHfWSHo7xugNdhL/A=
-env:
-  global:
-  - secure: GXpA1VzND0ltD//+5m9QFzKa8Pjho0t+KMi6XFUgYcvxspyA7xuUMFiSOYWkH20MZc0k3xJybSJ9I05W+fOHJzsyxy1JMa8rcqm4QxrPfkkA9tVmmG4d5LeoStTQfmQdznJgTrftTuH9C8htuXdP4b54Ty8c4LvZ9Lxy/GKBSamGRjgCrE1JWBbeI/Za4aprW9Thuoctk/+c61xvqXkrMz/htdJR60AIpGX+uFdY9vqsF6nUnySGhesZtphAt6k51zFg3JKV33BzgDOS2qRCNhXkWA3kFx2O0MNflBDoFsJzdAgYJ9gjzaVQUqba/V8KoMoZwe7kuZoZ73k2ZKw+sqRXCkOiJBi96axnlABX3r+CSzLacrKjZMw7zA0hXiq5zAdQuhOo7C/2gRsuLkMWO2OwJ3cOcT09AcyqpDvCpH+KysZLQL2mQBmAXwxqh8CuEVzknLkUrulVIqVt4yQD0Z9I2WciD9SNh5TZq9MNONBiCp1V4TxGTC6ygiUjdxAJ+wpzBixoOLLPdEo60pkgjV7eRIOB8e2iVbowDFf9h5bBJ3h8PVKtNEkm4znf/eo2k4ziFms6Wf6uBe4M4pIergLIapu9LK5Rd9w6WucAUg3jRXHi3zUUeGy3ShrbYUAD/ZHoGKyxQP6/0SgOtglwnUud/zCeFHySJ52blmFSIIY=
