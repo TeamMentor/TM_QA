@@ -1,7 +1,8 @@
 class GraphDB_API
   constructor: (options)->
     @.options = options || {}
-    @.server = @.options.server || 'http://localhost:1332'
+    @.port       = global.config?.tm_graph?.port || 1332
+    @.server = @.options.server || "http://localhost:#{@.port}"
 
   article_Html: (article_Key, callback)->
     url = "#{@.server}/data/article_Html/#{article_Key}"

@@ -8,13 +8,15 @@ GraphDB_API        = require './GraphDB-API'
 class QA_TM_4_0_Design
 
   constructor: ()->
-    @nodeWebKit  = new NodeWebKit_Service(57777)
-    @jade_API    = new Jade_API(@)
-    @flare_API   = new Flare_API(@)
-    @graphDB_API = new GraphDB_API({server: 'http://localhost:1332'})
-    @tm_Server   = 'http://localhost:1337'
-    @chrome      = null
-    @open_Delay  = 0
+    @.nodeWebKit   = new NodeWebKit_Service(57777)
+    @.jade_API     = new Jade_API(@)
+    @.flare_API    = new Flare_API(@)
+    @.port_Design  = global.config?.tm_design?.port || 1337
+    @.port_Graph   = global.config?.tm_graph?.port  || 1332
+    @.graphDB_API  = new GraphDB_API {server: "http://localhost:#{@.port_Graph}"}
+    @.tm_Server    = "http://localhost:#{@.port_Design}"
+    @.chrome       = null
+    @.open_Delay   = 0
 
   before: (done)=>
     if not (@chrome is null)

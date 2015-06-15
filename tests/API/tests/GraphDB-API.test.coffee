@@ -3,13 +3,15 @@ GraphDB_API     = require './../GraphDB-API'
 describe '| API | tests | GraphDB-API.test',->
 
   graphDB = null
+  port    = null
 
   before ->
     graphDB = new GraphDB_API()
+    port    = global.config?.tm_graph?.port || 1332
 
   it 'constructor',->
     graphDB.options.assert_Is {}
-    graphDB.server.assert_Is 'http://localhost:1332'
+    graphDB.server.assert_Is "http://localhost:#{port}"
     using new GraphDB_API({server:'aaaa'}), ->
       @.server.assert_Is 'aaaa'
 
