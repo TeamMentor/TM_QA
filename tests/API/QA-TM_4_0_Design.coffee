@@ -1,4 +1,5 @@
 require 'fluentnode'
+require '../set-globals'
 
 NodeWebKit_Service = require 'nwr'
 Jade_API           = require './Jade-API'
@@ -40,8 +41,8 @@ class QA_TM_4_0_Design
     done()
 
   html: (callback)=>
-      @chrome.html (html,$) =>
-        callback(html,@add_Cheerio_Helpers($))
+    @.chrome.html (html,$) =>
+      callback(html,@.add_Cheerio_Helpers($))
 
   open: (url, callback)=>
     @chrome.open @tm_Server + url, =>
@@ -52,7 +53,7 @@ class QA_TM_4_0_Design
 
   wait_For_Complete: (callback)=>
     @chrome.page_Events.on 'loadEventFired', ()=>
-      @html callback
+      @.html callback
 
   add_Cheerio_Helpers: ($)=>
     $.body = $('body').html()

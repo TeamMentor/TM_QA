@@ -32,15 +32,6 @@ describe '| misc | pages-help |', ->
       help_Pages[40].title.assert_Is('Installation'                       )
       done()
 
-
-  xit 'check that image redirection to github is working', (done)->
-    image   = 'tmcfg12.jpg'
-    url     = "#{page.tm_Server}/Image/#{image}"
-    message = "Moved Temporarily. Redirecting to https://raw.githubusercontent.com/TMContent/Lib_Docs/master/_Images/#{image}"
-    url.GET (html)->
-        html.assert_Is message
-        done()
-
   it 'open two pages and check that titles match', (done)->
     @.timeout 5000
     open_Help_Page = (help_Page, next)->

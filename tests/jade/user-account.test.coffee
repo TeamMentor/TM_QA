@@ -2,7 +2,7 @@ describe '| jade | user-account |', ->
   page = require('../API/QA-TM_4_0_Design').create(before,after)
   jade = page.jade_API
 
-  @timeout 4000
+  @timeout 5000
 
   it 'login_As_QA , session_Cookie', (done)->
     jade.clear_Session  (err, data)->
@@ -95,7 +95,7 @@ describe '| jade | user-account |', ->
           done()
 
   it 'User Sign Up Fail',(done)->
-    @timeout(0)
+    @.timeout(0)
     assert_User_Sign_Up_Fail = (username, password, email, next)->
       jade.user_Sign_Up username, password, email, ->
         page.chrome.url (url)->
@@ -136,15 +136,14 @@ describe '| jade | user-account |', ->
     username = 'CxetJ'.add_5_Letters();
     password = 'tm!34!Fw'.add_5_Random_Letters()
     email    = username+"@securityinnovation.com"
-    
-    jade.user_Sign_Up username, password, email, ->
-      page.chrome.url (url)->
-        url.assert_Contains('/sign-up-OK.html')
-        page.html (html,$)->
-          $('.alert #message .alert-text').html().assert_Is('Thanks for signing up to TEAM Mentor. Please login to access our libraries.')
-          #Performs login upon Sign up
-          jade.login username,password,  (html, $) ->
-            $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
-            page.chrome.url (url)->
-              url.assert_Contains('/user/main.html')
-            done()
+    jade.logout ->
+      jade.user_Sign_Up username, password, email, ->
+        page.chrome.url (url)->
+          url.assert_Contains('/user/main.html')
+          jade.logout ->
+            #Performs login upon Sign up
+            jade.login username,password,  (html, $) ->
+              $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
+              page.chrome.url (url)->
+                url.assert_Contains('/user/main.html')
+              done()

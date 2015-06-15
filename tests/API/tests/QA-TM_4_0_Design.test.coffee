@@ -13,7 +13,7 @@ describe '| API | tests | QA-TM_4_0_Design',->
       @jade_API   .assert_Instance_Of(require('./../Jade-API'))
       @flare_API  .assert_Instance_Of(require('./../Flare-API'))
       @graphDB_API.assert_Instance_Of(require('./../GraphDB-API'))
-      @tm_Server  .assert_Is('http://localhost:1337')
+      @tm_Server  .assert_Is("http://localhost:#{@.port_Design}")
       @open_Delay .assert_Is(0)
       assert_Is_Null(@chrome)
 

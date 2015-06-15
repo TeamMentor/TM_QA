@@ -25,27 +25,26 @@ describe '| jade | page-search |',->
       jade.login_As_User ->
         done()
 
-    xit 'open article and check list', (done)->
-      article_Id    = 'aaaaaa'.add_5_Letters()
-      article_Title = 'bbbbbb'.add_5_Letters()
+    it 'open article and check list', (done)->
+      article_Id    = '4c396802c1d8' #'aaaaaa'.add_5_Letters()
+      article_Title = 'Missing-Function-Level-Access-Control' #.add_5_Letters()
       badge_value   = 12;
-      articleUrl = page.tm_Server + "/article/view/#{article_Id}/#{article_Title}"
+      articleUrl = page.tm_Server + "/article/#{article_Id}/#{article_Title}"
       page.chrome.open articleUrl, ()->
         jade.page_User_Main (html, $)->
-          using $('#recentlyViewedArticles a'),->
+          using $('#recently-Viewed-Articles a'),->
             @.length.assert_Bigger_Than(0)
-            @.first().attr().assert_Is { href: jade.tm_35_Server + '/' + article_Id
-                                       , target: '_blank' }
-            @.first().text().assert_Is(article_Title)
+            @.first().attr().assert_Is { href: "/article/#{article_Id}/#{article_Title}",id: "article-#{article_Id}" }
+            @.first().text().assert_Is article_Title.replace /-/g , ' '
             done()
 
-    xit 'open article redirector and confirm tm error', (done)->
-      articleUrl = page.tm_Server + '/article/view/guid/title'
-      page.chrome.open articleUrl, ()->
-        300.wait ->
-          page.chrome.url (url)->
-            url.assert_Contains(['https://','teammentor.net/error'])
-            done()
+    #it 'open article redirector and confirm tm error', (done)->
+    #  articleUrl = page.tm_Server + '/article/view/guid/title'
+    #  page.chrome.open articleUrl, ()->
+    #    300.wait ->
+    #      page.chrome.url (url)->
+    #        url.assert_Contains(['https://','teammentor.net/error'])
+    #        done()
 
     it 'check elements',(done)->
       jade.render_Mixin 'search-mixins','main-app-view', { top_Searches: [], top_Articles: []}, ($)->
@@ -54,12 +53,19 @@ describe '| jade | page-search |',->
           done()
 
     #this test needs to be done more solidly
-    xit 'perform search', (done)->
+    it 'perform search', (done)->
       searchText = 'xss'
+      search_Input =
+        type: 'text',
+        name: 'text',
+        value: searchText,
+        class: 'form-control'
+
       jade.page_User_Main (html,$)->
         code = "document.querySelector('input').value='#{searchText}';
                 document.querySelector('button').click()"
         page.chrome.eval_Script code, =>
           page.wait_For_Complete (html, $)=>
+            $('#search-input input').attr().assert_Is search_Input
             done()
 

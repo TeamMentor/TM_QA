@@ -46,7 +46,7 @@ describe '| API | tests | Jade-API.test',->
 
   it 'render_File', (done)->
     params = ""
-    jade.render_File 'jade_user_main', params, ($)->
+    jade.render_File 'user_main', params, ($)->
       $.html().assert_Contains('<a href="/user/main.html">')
       done()
 

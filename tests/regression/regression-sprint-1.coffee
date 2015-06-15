@@ -1,5 +1,5 @@
 describe '| regression-sprint-1 |', ->                                                                          # name of this suite of tests (should match the file name)
-  page = require('./API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
+  page = require('./../API/QA-TM_4_0_Design').create(before,after)                                             # required import and get page object
   jade = page.jade_API
   @timeout(7500)
 
@@ -57,26 +57,6 @@ describe '| regression-sprint-1 |', ->                                          
 
         $('#team-mentor-navigation a').attr().href.assert_Is('/user/main.html')
         done()
-
-  #it 'Issue 119 - /returning-user-login.html is Blank', (done)->
-  #  jade.page_Sign_Up_OK (html, $)->                                                       # open sign-up ok page
-  #    $('p a').attr('href').assert_Is('/guest/login.html')                                 # confirm link is now ok
-  #    page.chrome.eval_Script "document.documentElement.querySelector('p a').click()", ->  # click on link
-  #      page.wait_For_Complete (html, $)->                                                 # wait for page to load
-  #        $('h3').html().assert_Is("Login")                                                # confirm that we are on the login page
-  #        done();
-
-  xit 'Issue 120 - Recently Viewed Articles not working', (done)->
-    jade.login_As_User ->
-      article_Id    = 'aaaaaa_'.add_5_Letters()
-      article_Title = 'bbbbbb_'.add_5_Letters()
-      articleUrl = page.tm_Server + "/article/view/#{article_Id}/#{article_Title}"
-      page.chrome.open articleUrl, ()->
-        jade.page_User_Main (html, $)->
-          using $('#recentlyViewedArticles a'),->
-            @.attr().href.assert_Contains(article_Id)
-            @.html().assert_Contains(article_Title)
-            done()
 
   it 'Issue 123 - Terms and conditions link is available', (done)->
     jade.page_User_Logout (html,$)->

@@ -1,5 +1,5 @@
 describe '| issues-sprint-2 |', ->                                                                         # name of this suite of tests (should match the file name)
-  page  = require('./API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
+  page  = require('./../API/QA-TM_4_0_Design').create(before,after)                                       # required import and get page object
   jade  = page.jade_API
   graph = page.graphDB_API
 
@@ -8,9 +8,10 @@ describe '| issues-sprint-2 |', ->                                              
   #done
 
   it 'Issue 682 - Extra long article link crashes the DB', (done)->
-    link = 'http://localhost:1337/article/blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah'
+    port = page.port_Design.assert_Is_Number()
+    link = "http://localhost:#{port}/article/blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah"
     long_Title = 'blah'.repeat(62)
-    link = 'http://localhost:1337/article/' + long_Title
+    link = "http://localhost:#{port}/article/" + long_Title
     #page.open link, (html, $)->
     jade.page_User_Article long_Title, (html, $)->
       #log link.size()
