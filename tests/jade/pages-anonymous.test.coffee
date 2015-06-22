@@ -1,6 +1,7 @@
 QA_TM_Design = require './../API/QA-TM_4_0_Design'
 
 # this test suite contains all  all pages that we currently need to support for anonymous users (i.e. non logged in users)
+
 describe '| jade | pages-anonymous |', ->
   page = QA_TM_Design.create(before, after);
   jade = page.jade_API;
@@ -54,34 +55,20 @@ describe '| jade | pages-anonymous |', ->
         items[item.split(':').first().trim()] =item.split(':').second().trim()
     return items
 
-  #check_Generic_Footer_Css = (html, baseUrl, next)->
-  #  inliner = require('inline-css')
-  #  cheerio = require('cheerio')
-  #  inlinerOptions = { url: baseUrl }
-  #  inliner html, inlinerOptions, (err, cssHtml)->
-  #    throw (err) if err
-  #    $css = cheerio.load(cssHtml)
-  #    footer_Attr = $css('#footer #si-logo').attr()
-  #    footer_Attr.assert_Is { id: 'si-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: 0px -43px; height: 30px; margin: 0 auto; margin-bottom: 20px; width: 160px;' }
-  #    items = extract_Style_Data(footer_Attr.style)
-  #    items['background'].assert_Is "url('../assets/logos/logos.png') no-repeat"
-  #    next()
-
-
   it '/',(done)->
     jade.page_Home (html,$)->
       $('#usp h2').html().assert_Is('Instant resources that bridge the gap between developer questions and technical solutions')
 
-      $('#usp a'          ).get(0).attribs.href .assert_Is('/guest/sign-up.html')
-      $('#usp button span').text()              .assert_Is('Start your free trial today')
+      $('#usp a'         ).get(0).attribs.href.assert_Is('/guest/sign-up.html')
+      $('#usp a button  ').text()             .assert_Is('Start your free trial today')
 
-      #$('#reasons h2'  ).html()              .assert_Is('With TEAM Mentor, you can...')
+      $('#reasons h2'    ).html()             .assert_Is('With TEAM Mentor, you can...')
 
-      $($('#reasons td p').get(0)).html()    .assert_Is('Fix vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
-      $($('#reasons td p').get(1)).html()    .assert_Is('Reduce the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
-      $($('#reasons td p').get(2)).html()    .assert_Is('Expand the development team&apos;s knowledge and improve processes with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
+      $($('#reasons td p').get(0)).html()     .assert_Is('Fix vulnerabilities quicker than ever before with TEAM Mentor&apos;s seamless integration into a developer&apos;s IDE and daily workflow.')
+      $($('#reasons td p').get(1)).html()     .assert_Is('Reduce the number of vulnerabilities over time as developers learn about each vulnerability at the time it is identified.')
+      $($('#reasons td p').get(2)).html()     .assert_Is('Expand the development team&apos;s knowledge and improve processes with access to thousands of specific remediation tactics, including the host organization&apos;s security policies and coding best practices.')
 
-      $('#clients h3').html()                .assert_Is('Our clients love us (and we think you will too!)')
+      $('#clients h3').html()                 .assert_Is('Our clients love us (and we think you will too!)')
       clientImages = $('#client-logo')
       clientImages.length.assert_Is(5)
       clientImages[0].attribs.class.assert_Is("elsevier")
@@ -92,7 +79,6 @@ describe '| jade | pages-anonymous |', ->
 
       check_Generic_Footer($)
       done()
-      #check_Generic_Footer_Css($.html(), 'http://localhost:1337/', done)
 
   it 'About',(done)->
     jade.page_About (html,$)->
