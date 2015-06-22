@@ -10,11 +10,11 @@ describe '| flare | pages-anonymous.test |', ->
 
   @timeout(4000)
 
-  afterEach (done)->
-    page.html (html,$)->
-      $('title').text().assert_Is('TEAM Mentor 4.0 (Html version)')         # confirm that all pages have the same title
-#      check_Top_Right_Navigation_Bar($)
-      done()
+  #afterEach (done)->
+  #  page.html (html,$)->
+  #    $('title').text().assert_Is('TEAM Mentor 4.0 (Html version)')         # confirm that all pages have the same title
+  #    check_Top_Right_Navigation_Bar($)
+  #    done()
 
   it '(open all Flare pages)', (done)->
     @.timeout 15000
@@ -25,18 +25,27 @@ describe '| flare | pages-anonymous.test |', ->
 
     async.eachSeries Flare_API.page_Mappings, open_Page, done
 
-  it.only 'check top level navigation',(done)->
+  it 'check top level navigation',(done)->
     flare.page_Index (html, $)->
       links = for link in $('.links a')
                 $(link).attr()
       links.assert_Is [
-        { href: 'about', class: 'action' },
-        { href: 'features', class: 'action' },
-        { href: 'index', class: 'action' },
+        { href: 'about'      , class: 'action' },
+        { href: 'features'   , class: 'action' },
+        { href: 'help-index' , class: 'action' },
         { href: 'get-started', class: 'button btn-nav' } ]
       done()
 
   it 'login',(done)->
+    login  =  (username, password, callback)=>
+      flare.page_Get_Started (html, $)->
+        code = "document.querySelector('#username').value='#{username}';
+                            document.querySelector('#password').value='#{password}';
+                            document.querySelector('#btn-login').click()"
+        page.chrome.eval_Script code, =>
+          page.wait_For_Complete callback
+    login 'user','a',->
+      done()
 
   return
   it '/help',(done)->

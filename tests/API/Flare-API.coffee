@@ -1,10 +1,11 @@
 class Flare_API
 
   @.page_Mappings = [
-    { name: 'About'    , url: 'about'    }
-    { name: 'Features' , url: 'features' }
-    { name: 'Index'    , url: 'index'    }
-    { name: 'Features' , url: 'features' }
+    { name: 'About'       , url: 'about'       }
+    { name: 'Features'    , url: 'features'    }
+    { name: 'Features'    , url: 'features'    }
+    { name: 'Get_Started' , url: 'get-started' }
+    { name: 'Index'       , url: 'index'       }
 
     { name: 'alert-application'             , url: 'alert-application'    }
     { name: 'app-keyword-search'            , url: 'app-keyword-search' }
@@ -13,7 +14,6 @@ class Flare_API
     { name: 'curated-content'               , url: 'curated-content' }
     { name: 'error-page'                    , url: 'error-page' }
     { name: 'forgot-password'               , url: 'forgot-password' }
-    { name: 'get-started'                   , url: 'get-started' }
     { name: 'help-docs'                     , url: 'help-docs' }
     { name: 'help-index'                    , url: 'help-index' }
     { name: 'help-sub-navigation'           , url: 'help-sub-navigation' }
