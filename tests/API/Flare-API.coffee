@@ -1,7 +1,33 @@
 class Flare_API
 
-  @.page_Mappings = [ { name: 'About'    , url: 'about'    },
-                      { name: 'Features' , url: 'features' } ]
+  @.page_Mappings = [
+    { name: 'About'    , url: 'about'    }
+    { name: 'Features' , url: 'features' }
+    { name: 'Index'    , url: 'index'    }
+    { name: 'Features' , url: 'features' }
+
+    { name: 'alert-application'             , url: 'alert-application'    }
+    { name: 'app-keyword-search'            , url: 'app-keyword-search' }
+    { name: 'article-new-window-view'       , url: 'article-new-window-view' }
+    { name: 'article-new-window-view-alert' , url: 'article-new-window-view-alert' }
+    { name: 'curated-content'               , url: 'curated-content' }
+    { name: 'error-page'                    , url: 'error-page' }
+    { name: 'forgot-password'               , url: 'forgot-password' }
+    { name: 'get-started'                   , url: 'get-started' }
+    { name: 'help-docs'                     , url: 'help-docs' }
+    { name: 'help-index'                    , url: 'help-index' }
+    { name: 'help-sub-navigation'           , url: 'help-sub-navigation' }
+    { name: 'index-validation'              , url: 'index-validation' }
+    { name: 'main-app-view'                 , url: 'main-app-view' }
+    { name: 'my-articles'                   , url: 'my-articles' }
+    { name: 'my-search-results'             , url: 'my-search-results' }
+    { name: 'navigate'                      , url: 'navigate' }
+    { name: 'new-user-onboard'              , url: 'new-user-onboard' }
+    { name: 'pwd-reset'                     , url: 'pwd-reset' }
+    { name: 'terms-and-conditions'          , url: 'terms-and-conditions' }
+    { name: 'user'                          , url: 'user' }
+
+  ]
 
 
   constructor: (page)->
@@ -11,13 +37,12 @@ class Flare_API
   clear_Session: (callback)->
     @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
 
-  page_Home           : (callback) => @page.open '/'                                       , callback
+  page_Home           : (callback) => @page.open '/flare'                                       , callback
 
   map_Pages : ()=>
     for mapping  in Flare_API.page_Mappings
 
       mapping_Function = (url)->
-        log url
         return  (callback)->@page.open '/flare/' + url , callback
 
       @["page_#{mapping.name}"] = mapping_Function mapping.url

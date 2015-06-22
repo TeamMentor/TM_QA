@@ -1,6 +1,8 @@
-QA_TM_Design = require '../API/QA-TM_4_0_Design'
+QA_TM_Design   = require '../API/QA-TM_4_0_Design'
+Flare_API      = require '../API/Flare-API'
+async          = require 'async'
 
-describe.only '| flare | pages-anonymous.test |', ->
+describe '| flare | pages-anonymous.test |', ->
   page  = QA_TM_Design.create(before, after);
   flare = page.flare_API;
 
@@ -14,11 +16,27 @@ describe.only '| flare | pages-anonymous.test |', ->
 #      check_Top_Right_Navigation_Bar($)
       done()
 
-  it '/about',(done)->
-    flare.page_Features (html, $)->
-      1000.wait ->
-        flare.page_About (html, $)->
-          done()
+  it '(open all Flare pages)', (done)->
+    @.timeout 15000
+    open_Page = (mapping, next)->
+      name = mapping.name
+      flare["page_#{name}"] (html, $)->
+        next()
+
+    async.eachSeries Flare_API.page_Mappings, open_Page, done
+
+  it.only 'check top level navigation',(done)->
+    flare.page_Index (html, $)->
+      links = for link in $('.links a')
+                $(link).attr()
+      links.assert_Is [
+        { href: 'about', class: 'action' },
+        { href: 'features', class: 'action' },
+        { href: 'index', class: 'action' },
+        { href: 'get-started', class: 'button btn-nav' } ]
+      done()
+
+  it 'login',(done)->
 
   return
   it '/help',(done)->
