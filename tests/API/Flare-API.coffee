@@ -40,11 +40,9 @@ class Flare_API
 
   map_Pages : ()=>
     for mapping  in Flare_API.page_Mappings
-
-      mapping_Function = (url)->
-        return  (callback)->@page.open '/flare/' + url , callback
-
-      @["page_#{mapping.name}"] = mapping_Function mapping.url
+      @["page_#{mapping.name}"] = do (url = mapping.url)->
+        (callback)->
+          @.page.open "/flare/#{url}", callback
 
 
 
