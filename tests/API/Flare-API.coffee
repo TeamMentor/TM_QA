@@ -3,9 +3,9 @@ class Flare_API
   @.page_Mappings = [
     { name: 'About'       , url: 'about'       }
     { name: 'Features'    , url: 'features'    }
-    { name: 'Features'    , url: 'features'    }
     { name: 'Get_Started' , url: 'get-started' }
     { name: 'Index'       , url: 'index'       }
+    { name: 'Navigate'    , url: 'navigate'    }
 
     { name: 'alert-application'             , url: 'alert-application'    }
     { name: 'app-keyword-search'            , url: 'app-keyword-search' }
@@ -21,7 +21,6 @@ class Flare_API
     { name: 'main-app-view'                 , url: 'main-app-view' }
     { name: 'my-articles'                   , url: 'my-articles' }
     { name: 'my-search-results'             , url: 'my-search-results' }
-    { name: 'navigate'                      , url: 'navigate' }
     { name: 'new-user-onboard'              , url: 'new-user-onboard' }
     { name: 'pwd-reset'                     , url: 'pwd-reset' }
     { name: 'terms-and-conditions'          , url: 'terms-and-conditions' }

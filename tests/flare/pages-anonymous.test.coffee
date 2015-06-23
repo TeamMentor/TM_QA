@@ -21,8 +21,7 @@ describe '| flare | pages-anonymous.test |', ->
     open_Page = (mapping, next)->
       name = mapping.name
       flare["page_#{name}"] (html, $)->
-        next()
-
+          next()
     async.eachSeries Flare_API.page_Mappings, open_Page, done
 
   it 'check top level navigation',(done)->
@@ -36,7 +35,7 @@ describe '| flare | pages-anonymous.test |', ->
         { href: 'get-started', class: 'button btn-nav' } ]
       done()
 
-  it 'login',(done)->
+  it 'login workflow',(done)->
     login  =  (username, password, callback)=>
       flare.page_Get_Started (html, $)->
         code = "document.querySelector('#username').value='#{username}';
@@ -44,11 +43,10 @@ describe '| flare | pages-anonymous.test |', ->
                             document.querySelector('#btn-login').click()"
         page.chrome.eval_Script code, =>
           page.wait_For_Complete callback
-    login 'user','a',->
-      done()
 
-  return
-  it '/help',(done)->
-    page.open '/flare/help/index', (html,$)->
-      #console.log html
+    login 'user','a',->
+        done()
+
+  it.only 'write navigation page', (done)->
+    flare.page_Navigate ->
       done()
