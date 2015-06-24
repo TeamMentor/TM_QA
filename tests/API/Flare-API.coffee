@@ -1,4 +1,6 @@
-class Flare_API
+TM_API = require './TM-API'
+
+class Flare_API extends TM_API
 
   @.page_Mappings = [
     { name: 'About'       , url: 'about'       }
@@ -30,7 +32,7 @@ class Flare_API
 
 
   constructor: (page)->
-    @page = page
+    super(page)
     @.map_Pages()
 
   clear_Session: (callback)->

@@ -14,6 +14,7 @@ describe '| misc | api |', ->
       done()
 
   it '/api/graph-db/predicates', (done)->
+    @.timeout 3500
     page.open '/api/graph-db/predicates', (html, $)->
       expected_Predicates = ["title","tags","technology","guid","alias","summary","is","type","phase","search-data","contains-article","contains-query","id"]
       $('pre').text().assert_Contains expected_Predicates

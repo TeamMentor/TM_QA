@@ -31,7 +31,7 @@ describe '| jade | pages-users', ->
         @.text     .assert_Is text
 
     checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'                        }, { title: 'Search', class: 'icon-Search' }, 'Search'    )
-    checkValues(1, {id: 'nav-user-guidance', href: "/#{jade.url_Prefix}/"                   }, { title: 'Index' , class: 'icon-Index'  }, 'Index')
+    checkValues(1, {id: 'nav-user-guidance', href: "/show/"                                 }, { title: 'Index' , class: 'icon-Index'  }, 'Index')
     checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'                       }, { title: 'Info'  , class: 'icon-Info'   }, 'Docs'    )
     checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                           }, { title: 'Logout', class: 'icon-Logout' }, 'Logout'  )
     checkValues(4, {id: 'tm-support-email' , href: 'mailto:support@securityinnovation.com'  }, undefined , 'an email'  )

@@ -48,6 +48,7 @@ describe '| jade | user-account |', ->
     username = 'tm_qa_'.add_5_Random_Letters()
     password = 'aaaaaaaaa'
     email    = "#{username}@teammentor.net"
+
     jade.user_Sign_Up username, password, email, ->
       page.chrome.url (url)->
         url.assert_Contains('/user/sign-up')

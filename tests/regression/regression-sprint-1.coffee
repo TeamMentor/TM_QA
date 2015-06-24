@@ -78,9 +78,9 @@ describe '| regression-sprint-1 |', ->                                          
         $('#loginwall h4').html().assert_Is('Retrieve your password')
         done();
 
-  it 'Issue 128 - Opening /#{jade.url_Prefix}/{query} page with bad {query} should result in an "no results" page/view', (done)->
+  it 'Issue 128 - Opening /show/{query} page with bad {query} should result in an "no results" page/view', (done)->
     jade.login_As_User ->
-      page.open '/#{jade.url_Prefix}/aaaaaaa', (html)->
+      page.open '/show/aaaaaaa', (html)->
         page.html (html, $)->
           $('#containers a').length.assert_Is(0)
           done()
@@ -114,8 +114,8 @@ describe '| regression-sprint-1 |', ->                                          
     @.timeout 10000
     jade.login_As_User ->
       navigation = 'Technology,Phase,Type'
-      page.open "/#{jade.url_Prefix}/#{navigation}", (html, $)->
-        $('#navigation').html().assert_Contains ["/#{jade.url_Prefix}/Technology" , "/#{jade.url_Prefix}/Technology,Phase", "/#{jade.url_Prefix}/Technology,Phase,Type"]
+      page.open "/show/#{navigation}", (html, $)->
+        $('#navigation').html().assert_Contains ["/show/Technology" , "/show/Technology,Phase", "/show/Technology,Phase,Type"]
         done()
 
   it 'Issue 196 - What should happen when an already logged in user returns to TM', (done)->

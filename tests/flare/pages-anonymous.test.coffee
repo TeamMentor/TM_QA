@@ -51,7 +51,7 @@ describe '| flare | pages-anonymous.test |', ->
     flare.page_Navigate ->
       done()
 
-  it.only 'run search', (done)->
+  it 'run search', (done)->
     search_Text = 'security'
     flare.page_Navigate ->
       code = "document.querySelector('#search-text').value='#{search_Text}';
