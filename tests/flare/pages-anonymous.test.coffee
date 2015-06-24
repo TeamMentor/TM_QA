@@ -47,6 +47,15 @@ describe '| flare | pages-anonymous.test |', ->
     login 'user','a',->
         done()
 
-  it.only 'write navigation page', (done)->
+  it 'write navigation page', (done)->
     flare.page_Navigate ->
       done()
+
+  it.only 'run search', (done)->
+    search_Text = 'security'
+    flare.page_Navigate ->
+      code = "document.querySelector('#search-text').value='#{search_Text}';
+              document.querySelector('#search-button').click()"
+      page.chrome.eval_Script code, =>
+        page.wait_For_Complete ->
+          done()
