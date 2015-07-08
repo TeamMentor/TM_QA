@@ -1,9 +1,9 @@
 class TM_API
 
   constructor: (page)->
-    @.tm_35_Server = "https://tmdev01-uno.teammentor.net"
+    @.tm_35_Server = "https://tmdev01-www36.teammentor.net"
     @.page         = page
-    @.QA_Users     = [{ name:'user', pwd: 'a'}]
+    @.QA_Users     = [{ name:'user', pwd: '!!Tm!!1234'}]
 
   clear_Session: (callback)->
     @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
