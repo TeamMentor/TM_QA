@@ -7,3 +7,7 @@ describe '| flare | pages-anonymous.test |', ->
     page.open '/angular/html/index.html',->
       done()
 
+  it.only '/angular/html/route-test', (done)->
+    page.open '/angular/html/route-test.html',->
+      done()
+
