@@ -37,3 +37,16 @@ describe '| flare | pages-anonymous.test |', ->
 
       done()
 
+  it.only '/angular/html/simple-angular.html', (done)->
+    #page.open '/angular/html/test/simple-angular.html',->
+      #page.field '#test_Field', (data)->
+        #log data
+        #1000.wait ->
+          code = "angular.element($('input'))"
+          code = "console.log(angular.element()"
+          page.chrome.eval_Script code, (result)->
+            log result
+            done()
+      #page.fieldsaaa (fields)->
+      #  console.log fields
+
