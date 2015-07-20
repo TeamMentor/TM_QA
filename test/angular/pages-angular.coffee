@@ -7,11 +7,16 @@ describe '| flare | pages-anonymous.test |', ->
     page.open '/angular/html/index.html',->
       done()
 
-  it.only '/angular/html/pages/index', (done)->
-    page.open '/angular/html/index.html',->
+  it '/angular/flare/docs', (done)->
+    page.open '/angular/flare/docs',->
       page.html (html, $)->
         #for link in $('a')
           #log $(link).html()
+        done()
+
+  it.only '/angular/user/navigate', (done)->
+    page.open '/angular/user/navigate',->
+      page.html (html, $)->
         done()
 
   it '/angular/html/pages/index (on live page)', (done)->
