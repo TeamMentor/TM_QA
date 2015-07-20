@@ -19,6 +19,16 @@ describe '| flare | pages-anonymous.test |', ->
       page.html (html, $)->
         done()
 
+  it '/angular/user/article/{article_Id}/article_Title', (done)->
+    page.open '/angular/user/article/00000091ce5a/title',->
+      page.html (html, $)->
+        done()
+
+  it.only '/angular/guest/get_started', (done)->
+    page.open '/angular/guest/get_started',->
+      page.html (html, $)->
+        done()
+
   it '/angular/html/pages/index (on live page)', (done)->
     page.open '/angular/html/pages/index.html',->
       page.click("Features")
