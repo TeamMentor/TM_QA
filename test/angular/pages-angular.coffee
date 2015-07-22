@@ -2,6 +2,7 @@ QA_TM_Design   = require '../API/QA-TM_4_0_Design'
 
 describe '| flare | pages-anonymous.test |', ->
   page  = QA_TM_Design.create(before, after);
+  flare = page.flare_API;
 
   it '/angular/html/index', (done)->
     page.open '/angular/html/index.html',->
@@ -14,7 +15,7 @@ describe '| flare | pages-anonymous.test |', ->
           #log $(link).html()
         done()
 
-  it.only '/angular/user/navigate', (done)->
+  it '/angular/user/navigate', (done)->
     page.open '/angular/user/navigate',->
       page.html (html, $)->
         done()
@@ -24,10 +25,35 @@ describe '| flare | pages-anonymous.test |', ->
       page.html (html, $)->
         done()
 
-  it.only '/angular/guest/get_started', (done)->
-    page.open '/angular/guest/get_started',->
-      page.html (html, $)->
-        done()
+  it.only '/angular/guest/login', (done)->
+    page.open '/angular/guest/login',->
+      300.wait ->
+        page.html_Pretty (html, $)->
+          log $.html($('login_form'))
+          log html
+          done()
+
+  it 'Flare API - login', (done)->
+    username = 'aaa'
+    password = 'bbb'
+    flare.login username, password, ->
+      done()
+
+  it 'Flare API - login as QA', (done)->
+    flare.component 'login_form', ->
+      done()
+
+  it.only 'Flare API - pwd_forgot_form', (done)->
+    email = "asda@asd.com"
+    flare.component 'pwd_forgot_form', ->
+      flare.eval_In_Controller  'Pwd_Forgot_Controller', "scope.email = '#{email}';", ->
+        flare.eval_In_Controller 'Pwd_Forgot_Controller','scope.get_Password();',->
+          done()
+
+
+
+
+  return
 
   it '/angular/html/pages/index (on live page)', (done)->
     page.open '/angular/html/pages/index.html',->

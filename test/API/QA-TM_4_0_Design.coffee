@@ -5,6 +5,7 @@ NodeWebKit_Service = require 'nwr'
 Jade_API           = require './Jade-API'
 Flare_API          = require './Flare-API'
 GraphDB_API        = require './GraphDB-API'
+html               = require 'html'
 
 class QA_TM_4_0_Design
 
@@ -44,6 +45,10 @@ class QA_TM_4_0_Design
     @.chrome.html (html,$) =>
       callback(html,@.add_Cheerio_Helpers($))
 
+  html_Pretty: (callback)=>
+    @.html (raw_Html,$)=>
+      callback html.prettyPrint(raw_Html,{indent_size: 2}), $
+
   open: (url, callback)=>
     @chrome.open @tm_Server + url, =>
       @open_Delay.wait =>
@@ -52,7 +57,7 @@ class QA_TM_4_0_Design
   show: (callback)-> @nodeWebKit.show(callback)
 
   wait_For_Complete: (callback)=>
-    @chrome.page_Events.on 'loadEventFired', ()=>
+    @.chrome.page_Events.on 'loadEventFired', ()=>
       @.html callback
 
   add_Cheerio_Helpers: ($)=>
@@ -97,6 +102,13 @@ class QA_TM_4_0_Design
       attributes = data.$('input').attr()
       callback(attributes)
 
+  input: (id, value, callback)=>
+    code = "element = document.documentElement.querySelector('input##{id}');
+            element.value = '#{value}'"
+    console.log(code)
+    @chrome.eval_Script code, (err,data)=>
+      callback()
+
   textArea: (id, value, callback)=>
 
 
@@ -116,6 +128,7 @@ class QA_TM_4_0_Design
                 if(elements[i].innerText == '#{text}')
                   elements[i].click();
             }"
+    console.log code
 
     @chrome.eval_Script code, (err,data)=>
       @wait_For_Complete =>
