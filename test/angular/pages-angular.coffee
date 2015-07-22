@@ -33,6 +33,10 @@ describe '| flare | pages-anonymous.test |', ->
           log html
           done()
 
+  it.only '| component | navigate_queries' ,(done)->
+    flare.component 'navigate_queries', ->
+      done()
+
   it 'Flare API - login', (done)->
     username = 'aaa'
     password = 'bbb'
@@ -43,7 +47,7 @@ describe '| flare | pages-anonymous.test |', ->
     flare.component 'login_form', ->
       done()
 
-  it.only 'Flare API - pwd_forgot_form', (done)->
+  it 'Flare API - pwd_forgot_form', (done)->
     email = "asda@asd.com"
     flare.component 'pwd_forgot_form', ->
       flare.eval_In_Controller  'Pwd_Forgot_Controller', "scope.email = '#{email}';", ->
