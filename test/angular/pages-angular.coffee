@@ -33,7 +33,11 @@ describe '| flare | pages-anonymous.test |', ->
           log html
           done()
 
-  it.only '| component | navigate_queries' ,(done)->
+  it.only '| view | queries' ,(done)->
+    page.open '/angular/user/queries', ->
+      done()
+
+  it '| component | navigate_queries' ,(done)->
     flare.component 'navigate_queries', ->
       done()
 
