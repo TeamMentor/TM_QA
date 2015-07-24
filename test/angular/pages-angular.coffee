@@ -25,15 +25,15 @@ describe '| flare | pages-anonymous.test |', ->
       page.html (html, $)->
         done()
 
-  it.only '/angular/guest/login', (done)->
+  it '/angular/guest/login', (done)->
     page.open '/angular/guest/login',->
       300.wait ->
         page.html_Pretty (html, $)->
-          log $.html($('login_form'))
-          log html
+          #log $.html($('login_form'))
+          #log html
           done()
 
-  it.only '| view | queries' ,(done)->
+  it '| view | queries' ,(done)->
     page.open '/angular/user/queries', ->
       done()
 

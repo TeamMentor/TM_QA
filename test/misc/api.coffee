@@ -4,6 +4,8 @@ describe '| misc | api |', ->
   page = QA_TM_Design.create(before, after)
   jade = page.jade_API
 
+  @.timeout(5000)
+
   before (done)->
     jade.login_As_User ->
       done()

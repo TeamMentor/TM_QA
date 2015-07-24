@@ -2,7 +2,7 @@ QA_TM_Design   = require '../API/QA-TM_4_0_Design'
 Flare_API      = require '../API/Flare-API'
 async          = require 'async'
 
-describe '| flare | pages-anonymous.test |', ->
+xdescribe '| flare | pages-anonymous.test |', ->
   page  = QA_TM_Design.create(before, after);
   flare = page.flare_API;
 
