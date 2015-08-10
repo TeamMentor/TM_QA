@@ -30,11 +30,11 @@ describe '| jade | pages-users', ->
         @.img_attr .assert_Is img_attr  if @.img_attr
         @.text     .assert_Is text
 
-    checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'                        }, { title: 'Search', class: 'icon-Search' }, 'Search'    )
-    checkValues(1, {id: 'nav-user-guidance', href: "/show/"                                 }, { title: 'Index' , class: 'icon-Index'  }, 'Index')
-    checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'                       }, { title: 'Info'  , class: 'icon-Info'   }, 'Docs'    )
-    checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                           }, { title: 'Logout', class: 'icon-Logout' }, 'Logout'  )
-    checkValues(4, {id: 'tm-support-email' , href: 'mailto:support@securityinnovation.com'  }, undefined , 'an email'  )
+    checkValues(0, {id: 'nav-user-main'    , href: '/user/main.html'                                   }, { title: 'Search', class: 'icon-Search' }, 'Search'    )
+    checkValues(1, {id: 'nav-user-guidance', href: "/show/"                                            }, { title: 'Index' , class: 'icon-Index'  }, 'Index')
+    checkValues(2, {id: 'nav-user-help'    , href: '/help/index.html'                                  }, { title: 'Info'  , class: 'icon-Info'   }, 'Docs'    )
+    checkValues(3, {id: 'nav-user-logout'  , href: '/user/logout'                                      }, { title: 'Logout', class: 'icon-Logout' }, 'Logout'  )
+    checkValues(4, {id: 'tm-support-link'  , href: 'https://github.com/TeamMentor/TM_4_0_Design/issues',target: '_blank'}, undefined , 'here'  )
 
   before (done)->
     jade.login_As_QA  ->

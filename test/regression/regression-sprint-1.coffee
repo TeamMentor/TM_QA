@@ -357,3 +357,31 @@ describe '| regression-sprint-1 |', ->                                          
             console.log attr.title
             attr.assert_Is mappings[attr.title].assert_Is_Object()
         done()
+
+  it 'Issue 829 - Feedback link to GH based on SI users logged in', (done)->
+    jade.login_As_User ()->
+      jade.page_Home (html,$)->
+        $('#message')        .text().assert_Is('Found an issue? Open it here.')
+        $('#tm-support-link').text().assert_Is('here')
+        $('#tm-support-link').attr.length.assert_Is 2
+        $('#tm-support-link').attr().id.assert_Is('tm-support-link')
+        $('#tm-support-link').attr().href.assert_Contains('https://github.com')
+        $('#tm-support-link').attr().target.assert_Is('_blank')
+        done()
+
+  it 'Issue 829 - Feedback link to GH based on SI users logged in (No internal user)',(done)->
+    @timeout(0)
+    username = 'CxetJ'.add_5_Letters();
+    password = 'tm!34!Fw'.add_5_Random_Letters()
+    email    = username+"@teammentor.teammentor..com"
+    jade.logout ->
+      jade.user_Sign_Up username, password, email, 'firstName', 'lastName', 'company', 'jobTitle', 'country', 'state',->
+        page.chrome.url (url)->
+          url.assert_Contains('/user/main.html')
+          jade.logout ->
+            jade.login username,password,  (html, $) ->
+              $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
+              page.chrome.url (url)->
+                url.assert_Contains('/user/main.html')
+                $('#message').text().assert_Is('Found an issue? Send us an email.')
+                done()
