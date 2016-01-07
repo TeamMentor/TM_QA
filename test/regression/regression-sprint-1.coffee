@@ -54,7 +54,6 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 118 - Clicking on TM logo while logged in should not bring back the main screen', (done)->
     jade.page_Home ->
       jade.login_As_QA (html,$)->
-
         $('#team-mentor-navigation a').attr().href.assert_Is('/user/main.html')
         done()
 
@@ -201,13 +200,13 @@ describe '| regression-sprint-1 |', ->                                          
   it 'Issue 328 - Add asserts for password complexity labels ', (done)->
     jade.page_Sign_Up (html,$)->
       $($('label').get(0)).html().assert_Is("Username")
-      $($('.form-group p').get(0)).html().assert_Is("Your username should only contain letters and numbers.")
-      $($('label').get(1)).html().assert_Is("Email Address")
-      $($('.form-group p').get(1)).html().assert_Is("We&apos;ll email you a confirmation.")
-      $($('label').get(2)).html().assert_Is("Password")
-      $($('.form-group p').get(2)).html().assert_Is("Your password should be at least 8 characters long. It should have at least one of each of the following: uppercase and lowercase letters, number and special character.")
-      $($('label').get(3)).html().assert_Is("Confirm Password")
-      $($('p').get(4)).html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
+      $($('#loginwall p').get(0)).html().assert_Is("Your username should only contain letters and numbers.")
+      $($('label').get(1)).html().assert_Is("Password")
+      $($('#loginwall p').get(1)).html().assert_Is("Your password should be at least 8 characters long. It should have at least one of each of the following: uppercase and lowercase letters, number and special character.")
+      $($('label').get(2)).html().assert_Is("Confirm Password")
+      $($('label').get(3)).html().assert_Is("Email Address")
+      $($('#loginwall p').get(2)).html().assert_Is("We&apos;ll email you a confirmation.")
+      $('#summary p').html().assert_Is("TEAM Mentor was created by developers for developers using secure coding standards, code snippets and checklists built from 10+ years of targeted security assessments for Fortune 500 organizations.")
       done()
 
   it 'Issue 454 - Login/Signup options are displayed for logged in users (HTTP 500)', (done) ->
@@ -317,13 +316,15 @@ describe '| regression-sprint-1 |', ->                                          
 
       "Android"               : { title : "Android"                 , class : "icon-Android"       }
       "C++"                   : { title : "C++"                     , class : "icon-C"             }
+      "Default"               : { title : "Default"                 , class : "icon-Default"       }
       "iOS"                   : { title : "iOS"                     , class : "icon-iOS"           }
       "HTML5"                 : { title : "HTML5"                   , class : "icon-HTML5"         }
       "Java"                  : { title : "Java"                    , class : "icon-Java"          }
       ".Net"                  : { title : ".Net"                    , class : "icon-Net"           }
+      ".Net 3.5"              : { title : ".Net 3.5"                , class : "icon-Net-3-5"       }
       "PHP"                   : { title : "PHP"                     , class : "icon-PHP"           }
       "Scala"                 : { title : "Scala"                   , class : "icon-Scala"         }
-      "Technology Independant": { title : "Technology Independant"  , class : "icon-All"           }
+      "Technology Independent": { title : "Technology Independent"  , class : "icon-All"           }
       "WCF"                   : { title : "WCF"                     , class : "icon-WCF"           }
       "Web Application"       : { title : "Web Application"         , class : "icon-Web-App"       }
 
@@ -353,5 +354,34 @@ describe '| regression-sprint-1 |', ->                                          
         $('#filters #filter-icon').each (index, td)->
           using $(td),->
             attr = $(@.find('span')).attr()
+            console.log attr.title
             attr.assert_Is mappings[attr.title].assert_Is_Object()
         done()
+
+  it 'Issue 829 - Feedback link to GH based on SI users logged in', (done)->
+    jade.login_As_User ()->
+      jade.page_Home (html,$)->
+        $('#message')        .text().assert_Is('Found an issue? Open it here.')
+        $('#tm-support-link').text().assert_Is('here')
+        $('#tm-support-link').attr.length.assert_Is 2
+        $('#tm-support-link').attr().id.assert_Is('tm-support-link')
+        $('#tm-support-link').attr().href.assert_Contains('https://github.com')
+        $('#tm-support-link').attr().target.assert_Is('_blank')
+        done()
+
+  it 'Issue 829 - Feedback link to GH based on SI users logged in (No internal user)',(done)->
+    @timeout(0)
+    username = 'CxetJ'.add_5_Letters();
+    password = 'tm!34!Fw'.add_5_Random_Letters()
+    email    = username+"@teammentor.teammentor..com"
+    jade.logout ->
+      jade.user_Sign_Up username, password, email, 'firstName', 'lastName', 'company', 'jobTitle', 'country', 'state',->
+        page.chrome.url (url)->
+          url.assert_Contains('/user/main.html')
+          jade.logout ->
+            jade.login username,password,  (html, $) ->
+              $('#popular-Search-Terms h5').html().assert_Is('Popular Search Terms')
+              page.chrome.url (url)->
+                url.assert_Contains('/user/main.html')
+                $('#message').text().assert_Is('Found an issue? Send us an email.')
+                done()

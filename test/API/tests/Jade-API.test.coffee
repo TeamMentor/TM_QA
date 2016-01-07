@@ -10,7 +10,7 @@ describe '| API | tests | Jade-API.test',->
     page = {}
     using new Jade_API(page),->
       @.page.assert_Is({})
-      @.QA_Users.assert_Is([{ name:'user', pwd: 'a'}])
+      @.QA_Users.assert_Is([{ name:'user', pwd: '!!Tm!!1234'}])
 
   it 'clear_Session', (done)->
     jade.clear_Session ->

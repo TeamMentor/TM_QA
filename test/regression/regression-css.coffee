@@ -15,7 +15,7 @@ describe '| regression-css |', ->                                               
           throw (err) if err
           $css = cheerio.load(cssHtml)
           attributes = $css('.input-group').attr()
-          attributes.assert_Is {"class":"input-group","style":"background: #fafafa; border: 1px solid #dbdbdb; border-radius: 3px; display: table; height: 3em; margin: 10px 0 0 0; width: 98.5%;"}
+          attributes.assert_Is {"class":"input-group","style":"-moz-box-sizing: border-box; -webkit-box-sizing: border-box; background-color: #fafafa; border: 1px solid #dbdbdb; border-radius: 3px; box-sizing: border-box; display: table; height: 3em; margin: 10px 0 0 0; width: 98.5%;"}
 
           done()
 
@@ -57,5 +57,5 @@ describe '| regression-css |', ->                                               
               inliner html, { url: url }, (err, css)->
                 throw (err) if err
                 $ = cheerio.load(css)
-                $('#team-mentor-navigation #tm-logo').attr().assert_Is { id: 'tm-logo', style: 'background: url(\'../assets/logos/logos.png\') no-repeat; background-position: top center; height: 40px; margin: 0 auto; margin-bottom: 10px;' }
+                $('#team-mentor-navigation #tm-logo').attr().assert_Is { id: 'tm-logo', style: "-moz-box-sizing: border-box; -webkit-box-sizing: border-box; background: #fff url('../assets/logos/logos.png') no-repeat; background-position: top center; background-size: 187px; box-sizing: border-box; height: 40px; margin: 0 auto 10px auto;" }
                 done()

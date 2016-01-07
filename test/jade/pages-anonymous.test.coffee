@@ -144,7 +144,7 @@ describe '| jade | pages-anonymous |', ->
     jade.page_Pwd_Forgot (html, $)->
       $('#loginwall h4').html().assert_Is('Retrieve your password')
       $('.form-group label').html('Email Address')
-      $('#email').attr().assert_Is { type:"email", id:"email", name:"email",placeholder:"Email Address", value:"", maxlength:"256" }
+      $('#email').attr().assert_Is { type:"email", id:"email", name:"email",placeholder:"Email Address", value:"", required: "",maxlength:"256" }
       $('#forgot-password').attr('action').assert_Is('/user/pwd_reset')
       $('#btn-get-password').html().assert_Is('Get Password')
       done()
@@ -168,8 +168,8 @@ describe '| jade | pages-anonymous |', ->
 
       $('input[id=username]'         ).attr().assert_Is({ id: 'username'        , name: 'username'        , type: 'text'    , placeholder: 'Username'     , value:'', required: '', maxlength: "256"})
       $('input[id=password]'         ).attr().assert_Is({ id: 'password'        , name: 'password'        , type: 'password', placeholder: 'Password'     , value:'', required: '', maxlength: "256"})
-      $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:'', maxlength: "256"})
-      $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:'', maxlength: "256"})
+      $('input[id=confirm-password]' ).attr().assert_Is({ id: 'confirm-password', name: 'confirm-password', type: 'password', placeholder: 'Password'     , value:'',               maxlength: "256"})
+      $('input[id=email]'            ).attr().assert_Is({ id: 'email'           , name: 'email'           , type: 'email'   , placeholder: 'Email Address', value:'', required: '', maxlength: "256"})
       $('button#btn-sign-up'         ).html().assert_Is('Sign Up')
       $('button#btn-sign-up'         ).attr().assert_Is({class: 'full-width', id:'btn-sign-up', type:'submit'})
       done()

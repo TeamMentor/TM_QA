@@ -11,4 +11,4 @@ describe '| API | tests | TM-API.test',->
     page = {}
     using new TM_API(page),->
       @.page.assert_Is({})
-      @.QA_Users.assert_Is([{ name:'user', pwd: 'a'}])
+      @.QA_Users.assert_Is([{ name:'user', pwd: '!!Tm!!1234'}])

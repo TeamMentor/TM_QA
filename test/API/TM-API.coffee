@@ -19,7 +19,7 @@ class TM_API
   login_Without_MaxLength : (username, password, callback)=>
     @page_Login =>                                                                # removeAttribute required attribute to pass test
       script ="document.querySelector('#username').removeAttribute('required');
-                 document.querySelector('#password').removeAttribute('required');"
+               document.querySelector('#password').removeAttribute('required');"
       @page.chrome.eval_Script script
 
       code = "document.querySelector('#username').value='#{username}';
@@ -69,16 +69,23 @@ class TM_API
           return
       callback(null)
 
-  user_Sign_Up: (username, password, email, callback) =>
-    log 'here'
+  user_Sign_Up: (username, password, email, firstName, lastName, company, jobTitle, country, state, callback) =>
     @page_Sign_Up (html, $)=>                                                   #removeAttribute required attribute to pass some tests
       code  ="document.querySelector('#username').removeAttribute('required');
               document.querySelector('#password').removeAttribute('required');
+              document.querySelector('#email').removeAttribute('required');
+              document.querySelector('#email').type='text';
 
               document.querySelector('#username').value='#{username}';
               document.querySelector('#password').value='#{password}';
               document.querySelector('#confirm-password').value='#{password}';
               document.querySelector('#email').value='#{email}';
+              document.querySelector('#firstname').value='#{firstName}';
+              document.querySelector('#lastname').value='#{lastName}';
+              document.querySelector('#company').value='#{company}';
+              document.querySelector('#title').value='#{jobTitle}';
+              document.querySelector('#country').value='#{country}';
+              document.querySelector('#state').value='#{state}';
               document.querySelector('#btn-sign-up').click()"
       @page.chrome.eval_Script code, =>
         @page.wait_For_Complete (html, $)=>

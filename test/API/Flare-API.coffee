@@ -36,7 +36,7 @@ class Flare_API extends TM_API
     @.map_Pages()
 
   clear_Session: (callback)->
-    @page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
+    @.page.chrome.delete_Cookie 'tm-session', 'http://localhost/', callback
 
   page_Home           : (callback) => @page.open '/flare'                                       , callback
 
@@ -48,5 +48,29 @@ class Flare_API extends TM_API
 
 
 
+  component: (name, callback)=>
+    @.page.open "/angular/component/#{name}", callback
+
+  eval_In_Controller: (controller, code, callback)->
+    code = "scope = angular.element(document.documentElement.querySelector('div[ng-controller=#{controller}]')).scope();
+            #{code};
+            scope.$apply();"
+    #console.log code
+    250.wait =>             # need to find a better way to detect the digest has finished
+      @.page.chrome.eval_Script code, (err,data)=>
+        callback()
+
+  login: (username, password, callback)=>
+    @.component 'login_form',=>
+      code = "scope.username = '#{username}';
+              scope.password = '#{password}';
+              scope.login();"
+      @.eval_In_Controller 'Login_Controller', code, ->
+        callback()
+
+  login_As_QA   : (callback) =>
+    user = @.QA_Users.first()
+    @.login user.name, user.pwd, =>
+      @.page.html callback
 
 module.exports = Flare_API
